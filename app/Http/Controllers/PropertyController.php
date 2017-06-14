@@ -14,11 +14,11 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        return view('pages/property/property-overview');
+        return view('pages.property.property-overview');
     }
 
     public function propertyDetails()
     {
-    	return view('pages/property/property-details');
+    	return view('pages.property.property-details');
     }
 }

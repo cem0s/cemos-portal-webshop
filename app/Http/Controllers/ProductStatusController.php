@@ -14,7 +14,7 @@ class ProductStatusController extends Controller
      */
     public function index()
     {
-        return view('pages/product/product-status');
+        return view('pages.product.product-status');
     }
 
 }

@@ -14,12 +14,12 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view('pages/shop/shop-page');
+        return view('pages.shop.shop-page');
     }
 
     public function shopCart()
     {
-    	return view('pages/shop/shop-cart');
+    	return view('pages.shop.shop-cart');
     }
 
 }
