@@ -203,6 +203,6 @@ return [
      |
      */
     'notifications'              => [
-        'channel' => 'database'
+        'channel' => 'mail'
     ]
 ];

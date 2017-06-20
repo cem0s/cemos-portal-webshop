@@ -1,68 +1,60 @@
-@extends('layouts.app')
+@extends('layouts.layout')
+@section('title')
+    Login
+@endsection
 
-@section('content')
-<div class="container">
+@section('page-name')
+
+    WELCOME!
+   
+
+@endsection
+@section('body')
+<div class="container" ng-controller="userController">
+@if (session('status')) 
+    {{ session('status') }}      
+@endif
+
+<br><br><br>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-5 col-md-offset-3">
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
+                    <div class="modal-body">
+                                            
+                        <form name="userForm" class="form-horizontal" method="POST"  action="{{url('login')}}" >
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">  <!-- Company -->
+                               <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label"></label>
+                                        <div id="email" class="col-sm-12">
+                                            <input type="text" class="form-control" name="email" ng-model="user.email" ng-required="true"  placeholder="Email">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <span ng-show="userForm.email.$error.required && userForm.email.$touched"><br> <small><i>Email field is required</i></small></span>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-2 control-label"></label>
+                                        <div id="password" class="col-sm-12">
+                                            <input type="password" class="form-control" name="password" ng-model="user.password"  placeholder="Password">
+                                        </div>
+                                       
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary"> Log in</button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+                        </div>   
+                        </form>                   
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+
