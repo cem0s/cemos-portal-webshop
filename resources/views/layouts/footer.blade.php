@@ -34,3 +34,29 @@
 	</div>
 
 </footer>
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script>
+$(document).ready(function(){
+    $("#hide").click(function(){
+        $("#all").hide(200);
+    });
+    $("#show").click(function(){
+        $("#all").show(200);
+    });
+
+   $('.btnNext').click(function(){
+      $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    });
+
+      $('.btnPrevious').click(function(){
+      $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+    })
+});
+</script>
+
+<script src="{{ asset('slick/slick.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{url('app/lib/angular/angular.min.js')}}"></script>
+<script src="{{url('app/app.js')}}"></script>
+<script src="{{url('app/controllers/user.js')}}"></script>
+<script src="{{ asset('js/app.js') }}"></script>

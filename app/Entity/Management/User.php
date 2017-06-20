@@ -4,6 +4,9 @@ namespace App\Entity\Management;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
 
 /**
  * This class represents an User item, either an Admin or normal user.
@@ -14,8 +17,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap( {"admin" = "Admin" , "user" = "User"} )
  */
-class User
+class User implements Authenticatable
 {
+    use Notifiable;
 
 	/**
      * @ORM\Id
@@ -429,6 +433,36 @@ class User
         $this->deletedAt = $deletedAt;
 
         return $this;
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'id';
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->id;
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRememberToken()
+    {
+        
+    }
+
+    public function setRememberToken($value)
+    {
+        
+    }
+
+    public function getRememberTokenName()
+    {
+        
     }
 
 }

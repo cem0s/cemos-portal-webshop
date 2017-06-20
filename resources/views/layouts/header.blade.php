@@ -9,13 +9,15 @@
 					</ul>
 				</div>
 			</div>
+			@if (Auth::check())
 			<div class="col-md-1 col-md-offset-6">
 				<div class="socialMedia">
 					<ul>
-						<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li> <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a></li>
 					</ul>
 				</div>
 			</div>
+			@endif
 		</div>
 	</div>
 </section><!--end of slogan-->
@@ -36,10 +38,18 @@
 		</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
+				@if (Auth::check())
 					<li><a href="{{url('dashboard')}}">Dashboard</a></li>
 					<li><a href="{{url('property-overview')}}">Property</a></li>
 					<li><a href="#">Services</a></li>
-					<li><a href="#">contact</a></li>	
+					<li><a href="#">contact</a></li>
+					
+				@else 
+						
+					<li><a href="{{url('dashboard')}}">Login</a></li>
+					<li><a href="{{url('property-overview')}}">Sign up</a></li>
+				@endif
+					
 				</ul>
 			</div>	
 	</div>
@@ -51,3 +61,21 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Small modal -->
+
+
+<div class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+      <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
+      <div class="modal-footer">
+      		<form method="POST" action="{{url('logout')}}">
+      			<input type="hidden" name="_token" value="{{csrf_token()}}">
+      			<button type="submit" class="btn btn-primary btn-block">Log out</button>
+      		</form>
+      </div>
+    </div>
+  </div>
+</div>
