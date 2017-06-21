@@ -50,6 +50,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
       
+        $emailExist = $this->userRepo->checkEmail($request->all()['email']);
+        if($emailExist) {
+            return response()->json([
+                'error' => "A user with the email ".$request->all()['email']." already exists!"
+            ]);
+        } 
+
         $companyId = $this->companyRepo->create($request->all());
         $this->addressRepo->create($request->all(), $companyId);
         $user = $this->userRepo->create($request->all(), $companyId); 
@@ -62,7 +69,7 @@ class UserController extends Controller
       
         Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
 
-        return redirect()->route('login');
+        return response()->json($user, 201);
     }
 
     /**

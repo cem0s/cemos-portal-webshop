@@ -94,6 +94,16 @@ class UserRepository extends EntityRepository
 		return null;
     }
 
+    public function checkEmail($email)
+    {
+    	$repo = $this->em->getRepository(\App\Entity\Management\User::class);
+		$search = $repo->findBy(array('email'=> $email));
+		if(isset($search[0]) && !empty($search[0])){
+			return true;
+		} 
+		return false;
+    }
+
 }
 
 

@@ -52,8 +52,16 @@ app.controller('userController', ['$scope', '$filter', '$http', 'userService' , 
             });
         } else {
             userService.insertUser($scope.user).then(function(response) {
-                alert( "An activation code has been sent to your email. Please activate your account.");
-                $window.location.href = "login";
+                if(response.data.error != undefined) {
+                   $scope.saving = false;
+                   alert(response.data.error);  
+
+                } else {
+                    alert( " Thanks for signing up! An activation code has been sent to your email. Please activate your account.");
+                    $window.location.href = "login";
+                }
+                
+               
 
             }).catch(function(response) {
                 alert('This is embarassing. An error has occured. Please check the log for details');
