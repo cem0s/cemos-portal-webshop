@@ -51,7 +51,7 @@ class UserController extends Controller
     {
       
         $emailExist = $this->userRepo->checkEmail($request->all()['email']);
-        if($emailExist) {
+        if($emailExist['exist']) {
             return response()->json([
                 'error' => "A user with the email ".$request->all()['email']." already exists!"
             ]);
@@ -67,6 +67,7 @@ class UserController extends Controller
                 'name' => $user->getFirstName(). " ".$user->getLastName()
             );
       
+        //Sample recipient email
         Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
 
         return response()->json($user, 201);

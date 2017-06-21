@@ -32,7 +32,7 @@
 			</button>
 			<a class="navbar-brand" href="{{url('dashboard')}}">
 				<div class="logo">
-					<img src="images/cemos_logo.png"/>
+					<img src="{{url('images/cemos_logo.png')}}"/>
 				</div>
 			</a>
 		</div>

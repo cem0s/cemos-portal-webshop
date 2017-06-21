@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<img src="images/cemosfooterlogo.png"/>
+				<img src="{{url('images/cemosfooterlogo.png')}}"/>
 			</div>
 			<div class="col-md-3">
 				<h4 class="text-uppercase">services</h4>
