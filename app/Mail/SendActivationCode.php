@@ -29,6 +29,7 @@ class SendActivationCode extends Mailable
     public function build()
     {
         return $this->markdown('emails.activate')
+                    ->subject("Activate your account")
                     ->with('content', $this->content);
     }
 }

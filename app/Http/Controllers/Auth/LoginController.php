@@ -64,7 +64,7 @@ class LoginController extends Controller
         } else if($checkIfExists['exist'] == "no") {
             return redirect()->route('login')->with('status','Sorry, no account existed with credentials provided.');
         } else {
-            return redirect()->route('login')->with('status','Sorry, your email needs to be verified. Please check your email for verification');
+            return redirect()->route('login')->with('status','Sorry, your account needs to be activated. Please check your email for activation link.');
         }
 
         return redirect($this->loginPath())

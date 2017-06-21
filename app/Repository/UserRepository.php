@@ -48,7 +48,7 @@ class UserRepository extends EntityRepository
 	{
 		$res = array();
 		$repo = $this->em->getRepository(\App\Entity\Management\UserActivationCode::class);
-		$search = $repo->findBy(array('code'=> $code));
+		$search = $repo->findBy(array('code'=> $code));print_r($search[0]->getUserId());exit;
 		if(isset($search[0])){
 			return $res = array('exist'=> true, 'user_id'=> $search[0]->getUserId());
 		}

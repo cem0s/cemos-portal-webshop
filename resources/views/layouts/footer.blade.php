@@ -24,7 +24,15 @@
 			<div class="col-md-3">
 				<h4 class="text-uppercase">Social media</h4>
 				<ul>
-					<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+					<li>
+						<a href="#"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>&emsp;
+						<a href="#"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>&emsp;
+						<a href="#"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>&emsp;
+						<a href="#"><i class="fa fa-vimeo fa-lg" aria-hidden="true"></i></a>
+					</li>
+					<li>Have any questions?</li>
+					<li><i class="fa fa-phone fa-lg" aria-hidden="true"></i> (032) 231 1526</li>
+					<li><i class="fa fa-envelope fa-lg" aria-hidden="true"></i> cemos@cemos.ph</li>
 				</ul>
 			</div>
 		</div>
