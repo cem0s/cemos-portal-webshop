@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Auth::routes();
 Route::resource('user', 'UserController');
 Route::get('/activate/{code}', 'UserController@activate')->name('activate');
@@ -31,4 +32,3 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 });
-
