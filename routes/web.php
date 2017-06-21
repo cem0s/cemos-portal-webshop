@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+Route::resource('user', 'UserController');
+Route::get('/activate/{code}', 'UserController@activate')->name('activate');
+
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 	Route::get('/property-overview', 'PropertyController@index')->name('property-overview');
@@ -24,9 +28,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/shop-cart', 'ShopController@shopCart')->name('shop-cart');
 	Route::get('/profile', 'ProfileController@index')->name('profile-page');
 	Route::get('/calendar', 'CalendarController@index')->name('shop-cart');
-	Route::get('/activate/{code}', 'UserController@activate')->name('activate');
-	Route::resource('user', 'UserController');
+
+
 
 });
-
-Auth::routes();

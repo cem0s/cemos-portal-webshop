@@ -46,8 +46,9 @@
 					
 				@else 
 						
-					<li><a href="{{url('dashboard')}}">Login</a></li>
-					<li><a href="{{url('property-overview')}}">Sign up</a></li>
+					<li><a href="{{url('login')}}">Login</a></li>
+					<li><a href="{{url('register')}}">Sign up</a></li>
+
 				@endif
 					
 				</ul>
