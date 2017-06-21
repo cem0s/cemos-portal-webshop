@@ -44,7 +44,14 @@
                                        
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary"> Log in</button>
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary"> Log in</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <a href="{{url('password/reset')}}">Forgot Password? Reset here.</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>   

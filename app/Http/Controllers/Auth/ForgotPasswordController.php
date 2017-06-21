@@ -4,6 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+use Doctrine\ORM\EntityManager;
+use Illuminate\Support\Facades\Hash;
+use App\Mail\SendResetMail;
+use Illuminate\Support\Facades\Mail;
+
+
 
 class ForgotPasswordController extends Controller
 {
@@ -20,13 +27,34 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
+    protected $em;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
+        $this->em = $em;
         $this->middleware('guest');
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $userRepo = new \App\Repository\UserRepository($this->em);
+        $getEmail = $userRepo->checkEmail($request->all()['email']);
+
+        if($getEmail['exist']) {
+            $data = array(
+                'url' => "http://localhost:88/cemos-portal-webshop/password/reset/".$getEmail['code'],
+                'name' => $getEmail['user']->getFirstName(). " ".$getEmail['user']->getLastName()
+            );
+
+            Mail::to("vailoces.gladys@gmail.com")->send(new SendResetMail($data));
+
+            return redirect()->route('password.request')->with('status', 'Email sent to '.$request->all()['email'].' for password reset. Please check your email.');
+        }
+        return redirect()->route('password.request')->with('status', 'Email address provided doesn\'t exist.');
     }
 }
