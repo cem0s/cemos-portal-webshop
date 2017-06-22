@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManager;
 
 class ObjectRepository extends EntityRepository
 {
@@ -22,7 +21,6 @@ class ObjectRepository extends EntityRepository
 		$object->setCustomerId(1);
 		$object->setUserId(1);
 
-		
 		$this->_em->persist($object);
 		$this->_em->flush();
 		return $object;
