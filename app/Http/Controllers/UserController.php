@@ -10,16 +10,14 @@ use App\Mail\SendActivationCode;
 
 class UserController extends Controller
 {
-
+    protected $em;  
     protected $companyRepo;
     protected $addressRepo;
     protected $userRepo;
 
     public function __construct(EntityManager $em)
     {
-        $this->companyRepo = new \App\Repository\CompanyRepository($em);
-        $this->addressRepo = new \App\Repository\AddressRepository($em);
-        $this->userRepo = new \App\Repository\UserRepository($em);
+        $this->em = $em;
     }
     /**
      * Display a listing of the resource.
@@ -56,8 +54,7 @@ class UserController extends Controller
                 'error' => "A user with the email ".$request->all()['email']." already exists!"
             ]);
         } 
-
-        $companyId = $this->companyRepo->create($request->all());
+        
         $this->addressRepo->create($request->all(), $companyId);
         $user = $this->userRepo->create($request->all(), $companyId); 
         $code = $this->userRepo->addUserActivation($user->getId());

@@ -9,11 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Company
  * 
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\CompanyRepository")
  * @ORM\Table(name="company")
  * @Gedmo\Tree(type="closure")
  * @Gedmo\TreeClosure(class="App\Entity\Management\CompanyClosure")
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\ClosureTreeRepository")
  */
 class Company
 {
