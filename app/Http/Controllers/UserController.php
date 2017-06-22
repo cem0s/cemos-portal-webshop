@@ -66,9 +66,9 @@ class UserController extends Controller
                 'url' => config('app.url')."/cemos-portal/activate/".$code,
                 'name' => $user->getFirstName(). " ".$user->getLastName()
             );
-      
+
         //Sample recipient email
-        Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
+        //Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
 
         return response()->json($user, 201);
     }
