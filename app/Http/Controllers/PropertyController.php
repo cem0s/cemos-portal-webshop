@@ -21,4 +21,15 @@ class PropertyController extends Controller
     {
     	return view('pages.property.property-details');
     }
+
+    public function addProperty()
+    {
+        return view('pages.property.add-property');
+    }
+
+    public function postAddProperty(Request $request)
+    {
+        //Prints request data
+        //print_r("<pre>"); print_r($request->all());exit;
+    }
 }
