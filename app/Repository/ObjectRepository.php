@@ -3,12 +3,13 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use \App\Entity\Realestate\ResidentialObject;
 
 class ObjectRepository extends EntityRepository
 {
 	public function create($data)
 	{
-		$object = new \App\Entity\Realestate\ResidentialObject();
+		$object = new ResidentialObject();
 		$object->setName("sample name");
 		$object->setAddress1("sample address 1");
 		$object->setAddress2("sample address 2");
