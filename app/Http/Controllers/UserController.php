@@ -63,7 +63,7 @@ class UserController extends Controller
         $code = $this->userRepo->addUserActivation($user->getId());
         $data = array(
                 'code' => $code,
-                'url' => "http://localhost:88/cemos-portal-webshop/activate/".$code,
+                'url' => config('app.url')."/cemos-portal/activate/".$code,
                 'name' => $user->getFirstName(). " ".$user->getLastName()
             );
       

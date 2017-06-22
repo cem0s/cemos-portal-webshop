@@ -47,7 +47,7 @@ class ForgotPasswordController extends Controller
 
         if($getEmail['exist']) {
             $data = array(
-                'url' => "http://localhost:88/cemos-portal-webshop/password/reset/".$getEmail['code'],
+                'url' => config('app.url')."/cemos-portal/password/reset/".$getEmail['code'],
                 'name' => $getEmail['user']->getFirstName(). " ".$getEmail['user']->getLastName()
             );
 
