@@ -9,8 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * This class represents an Object item, either a Residential or a Commercial.
  * It is abstract because we never have an Object entity, it's either a residential or a commercial.
- * @ORM\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\ObjectRepository")
  * @ORM\Table(name="object")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

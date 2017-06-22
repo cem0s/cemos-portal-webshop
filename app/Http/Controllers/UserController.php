@@ -61,14 +61,14 @@ class UserController extends Controller
         $this->addressRepo->create($request->all(), $companyId);
         $user = $this->userRepo->create($request->all(), $companyId); 
         $code = $this->userRepo->addUserActivation($user->getId());
-        $data = array(
-                'code' => $code,
-                'url' => "http://localhost:88/cemos-portal-webshop/activate/".$code,
-                'name' => $user->getFirstName(). " ".$user->getLastName()
-            );
+        // $data = array(
+        //         'code' => $code,
+        //         'url' => "http://localhost:8081/cemos-portal-webshop/activate/".$code,
+        //         'name' => $user->getFirstName(). " ".$user->getLastName()
+        //     );
       
         //Sample recipient email
-        Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
+        //Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
 
         return response()->json($user, 201);
     }

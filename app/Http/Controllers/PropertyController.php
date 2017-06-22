@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Doctrine\ORM\EntityManager;
 
 class PropertyController extends Controller
 {
+    protected $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * Show the application dashboard.
@@ -29,7 +36,9 @@ class PropertyController extends Controller
 
     public function postAddProperty(Request $request)
     {
-        //Prints request data
-        //print_r("<pre>"); print_r($request->all());exit;
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $object_repo->create($request->all());
     }
+
+
 }
