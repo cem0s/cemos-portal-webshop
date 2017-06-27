@@ -14,10 +14,15 @@ class UserController extends Controller
     protected $companyRepo;
     protected $addressRepo;
     protected $userRepo;
+ 
 
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $this->companyRepo =  $em->getRepository('App\Entity\Management\Company'); 
+        $this->addressRepo =  $em->getRepository('App\Entity\Management\Address');
+        $this->userRepo =  $em->getRepository('App\Entity\Management\User');
+
     }
     /**
      * Display a listing of the resource.
@@ -47,7 +52,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      
+  
         $emailExist = $this->userRepo->checkEmail($request->all()['email']);
         if($emailExist['exist']) {
             return response()->json([
@@ -58,14 +63,14 @@ class UserController extends Controller
         $this->addressRepo->create($request->all(), $companyId);
         $user = $this->userRepo->create($request->all(), $companyId); 
         $code = $this->userRepo->addUserActivation($user->getId());
-        // $data = array(
-        //         'code' => $code,
-        //         'url' => "http://localhost:8081/cemos-portal-webshop/activate/".$code,
-        //         'name' => $user->getFirstName(). " ".$user->getLastName()
-        //     );
-      
+        $data = array(
+                'code' => $code,
+                'url' => config('app.url')."/cemos-portal/activate/".$code,
+                'name' => $user->getFirstName(). " ".$user->getLastName()
+            );
+
         //Sample recipient email
-        //Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
+        Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
 
         return response()->json($user, 201);
     }

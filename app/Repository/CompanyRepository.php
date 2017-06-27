@@ -15,6 +15,7 @@ class CompanyRepository extends EntityRepository
 		$company->setPhone($data['company_phone']);
 		$this->_em->persist($company);
 		$this->_em->flush();
+		return $company->getId();
 	}
 }
 

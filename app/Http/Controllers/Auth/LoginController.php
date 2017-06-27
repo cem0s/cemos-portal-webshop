@@ -41,7 +41,7 @@ class LoginController extends Controller
     public function __construct(EntityManager $em)
     {
         $this->middleware('guest')->except('logout');
-        $this->userRepo = new \App\Repository\UserRepository($em);
+        $this->userRepo = $em->getRepository('App\Entity\Management\User');
     }
 
     public function login(Request $request)
@@ -56,9 +56,11 @@ class LoginController extends Controller
 
         if ($checkIfExists['exist'] == "yes")
         { //this if validate if the user is on the database line 1
+            $user = $this->userRepo->getUserById($checkIfExists['user_id']);
             $request->session()->put('email',$credentials['password']); 
             $request->session()->put('user_id',$checkIfExists['user_id']); 
-            Auth::login($this->userRepo->getUserById($checkIfExists['user_id']));
+            $request->session()->put('company_id',$user->getCompanyId()); 
+            Auth::login($user);
             return redirect()->route('dashboard');
             //this redirect if user is the db line 2
         } else if($checkIfExists['exist'] == "no") {

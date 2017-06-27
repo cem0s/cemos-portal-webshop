@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Address
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\AddressRepository")
  * @ORM\Table(name="address")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

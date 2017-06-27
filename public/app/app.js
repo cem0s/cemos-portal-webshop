@@ -1,5 +1,5 @@
 var app = angular.module('cemos_portal',[])
-        .constant('API_URL', 'http://localhost:8081/cemos-portal/');
+        .constant('API_URL', 'http://localhost/cemos-portal-webshop/');
 
 
 app.service('userService', ['$http', 'API_URL', function ($http, API_URL) {

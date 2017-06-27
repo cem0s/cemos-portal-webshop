@@ -42,12 +42,12 @@ class ForgotPasswordController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        $userRepo = new \App\Repository\UserRepository($this->em);
+        $userRepo = $this->em->getRepository('App\Entity\Management\User');
         $getEmail = $userRepo->checkEmail($request->all()['email']);
 
         if($getEmail['exist']) {
             $data = array(
-                'url' => "http://localhost:88/cemos-portal-webshop/password/reset/".$getEmail['code'],
+                'url' => config('app.url')."/cemos-portal/password/reset/".$getEmail['code'],
                 'name' => $getEmail['user']->getFirstName(). " ".$getEmail['user']->getLastName()
             );
 
