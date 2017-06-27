@@ -26,9 +26,14 @@ class PropertyController extends Controller
         return view('pages.property.property-overview');
     }
 
-    public function propertyDetails()
+    public function propertyDetails(Request $request)
     {
-    	return view('pages.property.property-details');
+        $object_id = $request->route('object_id');
+
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $object_data = $object_repo->getObjectByid($object_id);
+
+    	return view('pages.property.property-details')->with('object', $object_data);
     }
 
     public function addProperty()
@@ -50,9 +55,14 @@ class PropertyController extends Controller
         $data['object_type'] = "residential"; // to be determine what type
 
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
-        $object_repo->create($data);
+        $object_data = $object_repo->create($data);
 
-        return view('pages.property.property-details');
+        if(isset($object_data) && !empty($object_data)) 
+        {
+            return redirect()->route('property-details',$object_data->getId()); 
+        }
+
+        return view('pages.property.add-property');
     }
 
 

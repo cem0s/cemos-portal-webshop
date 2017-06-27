@@ -32,4 +32,28 @@ class ObjectRepository extends EntityRepository
 		$this->_em->flush();
 		return $object;
 	}
+
+	public function getObjectByid($id) 
+	{	
+		// another way of retrieving data
+		//$object = $this->_em->getRepository('\App\Entity\Realestate\Object')->findBy(array('id' => $id));
+		$object = array();
+
+		$data = $this->_em->find('\App\Entity\Realestate\Object', $id);
+
+		if(isset($data) && !empty($data)) {
+			$object = array(
+				'address1' => $data->getAddress1(),
+				'address2' => $data->getAddress2(),
+				'postalcode' => $data->getZipcode(),
+				'town' => $data->getTown(),
+				'country' => $data->getCountry(),
+				'slug' => $data->getSlug(),
+				'company_id' => $data->getCustomerId(),
+				'user_id' => $data->getUserId(),
+			);
+		}
+
+		return $object;
+	}
 }

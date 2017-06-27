@@ -22,7 +22,7 @@ Route::get('/activate/{code}', 'UserController@activate')->name('activate');
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 	Route::get('/property-overview', 'PropertyController@index')->name('property-overview');
-	Route::get('/property-details', 'PropertyController@propertyDetails')->name('property-details');
+	Route::get('/property-details/{object_id}', 'PropertyController@propertyDetails')->name('property-details');
 	Route::get('/add-property', 'PropertyController@addProperty')->name('add-property');
 	Route::post('/add-property', 'PropertyController@postAddProperty')->name('add-property');
 	Route::get('/product-status', 'ProductStatusController@index')->name('product-status');
