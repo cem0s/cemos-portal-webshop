@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Doctrine\ORM\EntityManager;
 
 
 class ResetPasswordController extends Controller
@@ -46,7 +46,7 @@ class ResetPasswordController extends Controller
 
     public function reset(Request $request)
     {
-        $userRepo = new \App\Repository\UserRepository($this->em);
+        $userRepo = $this->em->getRepository('App\Entity\Management\User');
         $isEmailExist = $userRepo->checkEmail($request->all()['uemail']);
 
         if($isEmailExist['exist']) {

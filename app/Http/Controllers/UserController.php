@@ -14,12 +14,13 @@ class UserController extends Controller
     protected $companyRepo;
     protected $addressRepo;
     protected $userRepo;
+ 
 
     public function __construct(EntityManager $em)
     {
-        $this->companyRepo = new \App\Repository\CompanyRepository($em);
-        $this->addressRepo = new \App\Repository\AddressRepository($em);
-        $this->userRepo = new \App\Repository\UserRepository($em);
+        $this->companyRepo =  $em->getRepository('App\Entity\Management\Company'); 
+        $this->addressRepo =  $em->getRepository('App\Entity\Management\Address');
+        $this->userRepo =  $em->getRepository('App\Entity\Management\User');
     }
     /**
      * Display a listing of the resource.
@@ -49,7 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      
+  
         $emailExist = $this->userRepo->checkEmail($request->all()['email']);
         if($emailExist['exist']) {
             return response()->json([
@@ -68,7 +69,7 @@ class UserController extends Controller
             );
 
         //Sample recipient email
-        //Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
+        Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
 
         return response()->json($user, 201);
     }

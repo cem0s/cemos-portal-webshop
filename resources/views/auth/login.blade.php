@@ -39,13 +39,16 @@
                                 <div class="form-group">
                                     <label for="password" class="col-sm-2 control-label"></label>
                                         <div id="password" class="col-sm-12">
-                                            <input type="password" class="form-control" name="password" ng-model="user.password"  placeholder="Password">
+                                            <input type="password" class="form-control" name="password" ng-model="user.password" ng-required="true"  placeholder="Password">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <span ng-show="userForm.password.$error.required && userForm.password.$touched"><br><small><i>Password is required</i></small></span>
                                         </div>
                                        
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-primary"> Log in</button>
+                                        <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid"> Log in</button>
                                     </div>
                                 </div>
                                 <div class="form-group">

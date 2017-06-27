@@ -42,7 +42,7 @@ class ForgotPasswordController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        $userRepo = new \App\Repository\UserRepository($this->em);
+        $userRepo = $this->em->getRepository('App\Entity\Management\User');
         $getEmail = $userRepo->checkEmail($request->all()['email']);
 
         if($getEmail['exist']) {

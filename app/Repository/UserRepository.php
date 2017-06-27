@@ -3,19 +3,11 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Hash;
 
 
 class UserRepository extends EntityRepository
 {
-
-	protected $em;
-
-	public function __construct(EntityManager $em)
-	{
-		$this->em = $em;
-	}
 
 	public function create($data, $companyId)
 	{
@@ -29,8 +21,8 @@ class UserRepository extends EntityRepository
 		$user->setActive(0);
 		$user->setCompanyId($companyId);
 		
-		$this->em->persist($user);
-		$this->em->flush();
+		$this->_em->persist($user);
+		$this->_em->flush();
 		return $user;
 	}
 
@@ -39,15 +31,15 @@ class UserRepository extends EntityRepository
 		$code = new \App\Entity\Management\UserActivationCode();
 		$code->setUserId($userId);
 		$code->setCode(str_random(30));
-		$this->em->persist($code);
-		$this->em->flush();
+		$this->_em->persist($code);
+		$this->_em->flush();
 		return $code->getCode();
 	}
 
 	public function checkIfCodeExist($code)
 	{
 		$res = array();
-		$repo = $this->em->getRepository(\App\Entity\Management\UserActivationCode::class);
+		$repo = $this->_em->getRepository(\App\Entity\Management\UserActivationCode::class);
 		$search = $repo->findBy(array('code'=> $code));
 		if(isset($search[0])){
 			return $res = array('exist'=> true, 'user_id'=> $search[0]->getUserId());
@@ -57,19 +49,19 @@ class UserRepository extends EntityRepository
 
 	public function updateEmailVerified($userId)
 	{
-		$repo = $this->em->find('App\Entity\Management\User', $userId);
+		$repo = $this->_em->find('App\Entity\Management\User', $userId);
 		if(!empty((array)$repo)){
 			$repo->setEmailVerified(1);
 			$repo->setActive(1);
-			$this->em->merge($repo);
-			$this->em->flush();
+			$this->_em->merge($repo);
+			$this->_em->flush();
 		}
 		return true;
 	}
 
 	public function checkCredentials($credentials)
     {
-    	$repo = $this->em->getRepository(\App\Entity\Management\User::class);
+    	$repo = $this->_em->getRepository(\App\Entity\Management\User::class);
 		$search = $repo->findBy(array('email'=> $credentials['email']));
 		if(isset($search) && !empty($search)){
 			foreach ($search as $key => $value) {
@@ -88,7 +80,7 @@ class UserRepository extends EntityRepository
 
     public function getUserById($userId)
     {
-    	$repo = $this->em->find('App\Entity\Management\User', $userId);
+    	$repo = $this->_em->find('App\Entity\Management\User', $userId);
 		if(!empty((array)$repo)){
 			return $repo;
 		} 
@@ -97,8 +89,8 @@ class UserRepository extends EntityRepository
 
     public function checkEmail($email)
     {
-    	$repo = $this->em->getRepository(\App\Entity\Management\User::class);
-    	$codeRepo = $this->em->getRepository(\App\Entity\Management\UserActivationCode::class);
+    	$repo = $this->_em->getRepository(\App\Entity\Management\User::class);
+    	$codeRepo = $this->_em->getRepository(\App\Entity\Management\UserActivationCode::class);
 		$search = $repo->findBy(array('email'=> $email));
 
 		if(isset($search[0]) && !empty($search[0])){
@@ -110,12 +102,12 @@ class UserRepository extends EntityRepository
 
     public function updatePassword($data)
     {
-    	$repo = $this->em->getRepository(\App\Entity\Management\User::class);
+    	$repo = $this->_em->getRepository(\App\Entity\Management\User::class);
     	$search = $repo->findBy(array('email'=> $data['uemail']));
     	if(isset($search[0]) && !empty($search[0])){
     		$search[0]->setPassword(Hash::make($data['password']));
-    		$this->em->merge($search[0]);
-			$this->em->flush();
+    		$this->_em->merge($search[0]);
+			$this->_em->flush();
 			return $search[0];
     	}
     	return false;

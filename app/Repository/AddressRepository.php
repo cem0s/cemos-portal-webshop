@@ -3,17 +3,10 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManager;
 
 
 class AddressRepository extends EntityRepository
 {
-	protected $em;
-
-	public function __construct(EntityManager $em)
-	{
-		$this->em = $em;
-	}
 
 	public function create($data, $companyId)
 	{
@@ -26,8 +19,8 @@ class AddressRepository extends EntityRepository
 		$address->setTown($data['town']);
 		$address->setCountry("Philippines");
 		$address->setCompanyId($companyId);
-		$this->em->persist($address);
-		$this->em->flush();
+		$this->_em->persist($address);
+		$this->_em->flush();
 		return 1;
 
 	}

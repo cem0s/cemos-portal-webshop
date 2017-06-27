@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 /**
  * This class represents an User item, either an Admin or normal user.
  * It is abstract because we never have an User entity, it's either an admin or not.
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\UserRepository")
  * @ORM\Table(name="user")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
