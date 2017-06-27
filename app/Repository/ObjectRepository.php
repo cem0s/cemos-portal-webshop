@@ -25,8 +25,8 @@ class ObjectRepository extends EntityRepository
 		$object->setSlug($data['slug']);
 		$object->setObjectTypeId(1);  //to be replace
 		$object->setRegionId(1); //to be replace
-		$object->setCustomerId(1); //to be replace
-		$object->setUserId(1); //to be replace
+		$object->setCustomerId($data['company_id']); //note::customer refers to company
+		$object->setUserId($data['user_id']);
 
 		$this->_em->persist($object);
 		$this->_em->flush();

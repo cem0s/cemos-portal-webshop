@@ -38,10 +38,14 @@ class PropertyController extends Controller
 
     /* TO DO:
     * Identify what type of object to be created
+    * Redirect to property details
     */
     public function postAddProperty(Request $request)
     {
+
         $data = $request->all();
+        $data['company_id'] = $request->session()->get('company_id');
+        $data['user_id'] = $request->session()->get('user_id');
         $data['slug'] = strtolower(str_replace(' ', '-', $data['address1']));
         $data['object_type'] = "residential"; // to be determine what type
 
