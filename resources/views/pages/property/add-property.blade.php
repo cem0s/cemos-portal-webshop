@@ -30,7 +30,7 @@
                                         </div>
 	                                </div>
 	                                <div class="form-group">
-	                                    <label for="address1" class="col-sm-2 control-label"></label>
+	                                    <label for="address2" class="col-sm-2 control-label"></label>
                                         <div id="address2" class="col-sm-12">
                                             <input type="text" class="form-control" name="address2" required  placeholder="Address 2">
                                         </div>
@@ -39,9 +39,27 @@
                                         </div>
 	                                </div>
 	                                <div class="form-group">
-	                                  	<label for="address1" class="col-sm-2 control-label"></label>
+	                                  	<label for="postalcode" class="col-sm-2 control-label"></label>
                                         <div id="postalcode" class="col-sm-12">
                                             <input type="text" class="form-control" name="postalcode" required  placeholder="Postal Code">
+                                        </div>
+                                        <div class="col-sm-12">
+                                          
+                                        </div>
+	                                </div>
+	                                <div class="form-group">
+	                                  	<label for="town" class="col-sm-2 control-label"></label>
+                                        <div id="town" class="col-sm-12">
+                                            <input type="text" class="form-control" name="town" required  placeholder="Town">
+                                        </div>
+                                        <div class="col-sm-12">
+                                          
+                                        </div>
+	                                </div>
+	                                <div class="form-group">
+	                                  	<label for="country" class="col-sm-2 control-label"></label>
+                                        <div id="country" class="col-sm-12">
+                                            <input type="text" class="form-control" name="country" required  placeholder="Country">
                                         </div>
                                         <div class="col-sm-12">
                                           

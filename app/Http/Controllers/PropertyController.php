@@ -36,10 +36,17 @@ class PropertyController extends Controller
         return view('pages.property.add-property');
     }
 
+    /* TO DO:
+    * Identify what type of object to be created
+    */
     public function postAddProperty(Request $request)
     {
+        $data = $request->all();
+        $data['slug'] = strtolower(str_replace(' ', '-', $data['address1']));
+        $data['object_type'] = "residential"; // to be determine what type
+
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
-        $object_repo->create($request->all());
+        $object_repo->create($data);
 
         return view('pages.property.property-details');
     }
