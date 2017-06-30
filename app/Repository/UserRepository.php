@@ -9,21 +9,61 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository extends EntityRepository
 {
 
-	public function create($data, $companyId)
+	public function create($data)
 	{
-		$user = new \App\Entity\Management\User();
-		$user->setFirstName($data['first_name']);
-		$user->setLastName($data['last_name']);
-		$user->setEmail($data['email']);
-		$user->setUsername($data['first_name'].$data['first_name']);
-		$user->setEmailVerified(0);
-		$user->setPassword(Hash::make($data['password']));
-		$user->setActive(0);
-		$user->setCompanyId($companyId);
-		
-		$this->_em->persist($user);
-		$this->_em->flush();
-		return $user;
+		$result = array();
+
+		$isEmailExist = $this->checkEmail($data['email']);
+	
+		if($isEmailExist['exist']) {
+
+			$result = array(
+					'exist' => true
+				);
+
+		} else {
+
+			$companyRepo = $this->_em->getRepository('App\Entity\Management\Company');
+			$addressRepo = $this->_em->getRepository('App\Entity\Management\Address');
+
+			$companyId = $companyRepo->create($data);
+			$addressId = $addressRepo->create($data, $companyId);
+			$invoiceAddressId = $addressRepo->createInvoiceAddress($data, $companyId);
+
+			$user = new \App\Entity\Management\User();
+			$user->setFirstName($data['first_name']);
+			$user->setLastName($data['last_name']);
+			$user->setEmail($data['email']);
+			$user->setUsername($data['first_name'].$data['first_name']);
+			$user->setEmailVerified(0);
+			$user->setPassword(Hash::make($data['password']));
+			$user->setActive(0);
+			$user->setCompanyId($companyId);
+			
+			$this->_em->persist($user);
+			$this->_em->flush();
+
+			$code = $this->addUserActivation($user->getId());
+
+			$result = array(
+					'exist' => false,
+					'user' => array(
+						'id' 			=> $user->getId(),
+						'firstname' 	=> $user->getFirstName(),
+						'lastname' 		=> $user->getLastName(),
+						'email' 		=> $user->getEmail(),
+						'emailVerified' => $user->getEmailVerified(),
+						'username' 		=> $user->getUsername(),
+						'active' 		=> $user->getActive(),
+						'company_id' 	=> $user->getCompanyId(),
+						),
+					'userObj' => $user,
+					'code' => $code
+				);
+		}
+
+			
+		return $result;
 	}
 
 	public function addUserActivation($userId)
@@ -80,12 +120,41 @@ class UserRepository extends EntityRepository
 
     public function getUserById($userId)
     {
-    	$repo = $this->_em->find('App\Entity\Management\User', $userId);
-		if(!empty((array)$repo)){
-			return $repo;
+    	$user = $this->_em->find('App\Entity\Management\User', $userId);
+		if(!empty((array)$user)){
+			return $user;
 		} 
 		return null;
     }
+
+    public function getUserArrayById($userId)
+    {
+    	$companyRepo = $this->_em->getRepository('App\Entity\Management\Company');
+    	$addressRepo = $this->_em->getRepository('App\Entity\Management\Address');
+    	$user = $this->_em->find('App\Entity\Management\User', $userId);
+
+		if(!empty((array)$user)){
+			return array(
+					'user' => array(
+						'id' 			=> $user->getId(),
+						'firstname' 	=> $user->getFirstName(),
+						'lastname' 		=> $user->getLastName(),
+						'email' 		=> $user->getEmail(),
+						'emailVerified' => $user->getEmailVerified(),
+						'username' 		=> $user->getUsername(),
+						'active' 		=> $user->getActive(),
+						'company_id' 	=> $user->getCompanyId(),
+						'created_at' 	=> $user->getCreatedAt()->format('c'),
+					),
+					'company' => $companyRepo->getCompanyById($user->getCompanyId()),
+					'address' => $addressRepo->getAddressByCompanyId($user->getCompanyId()),
+					'invoiceaddress' => $addressRepo->getInvoiceAddressByCompanyId($user->getCompanyId()),
+				);
+		} 
+		return null;
+    }
+
+
 
     public function checkEmail($email)
     {
@@ -111,6 +180,54 @@ class UserRepository extends EntityRepository
 			return $search[0];
     	}
     	return false;
+    }
+
+    public function updateProfilePic($userId, $path)
+    {
+    	$user = $this->getUserById($userId);
+    	if(!empty((array)$user)){
+			$user->setProfilePic($path);
+			$this->_em->merge($user);
+			$this->_em->flush();
+			return true;
+		} 
+		return false;
+    }
+
+    public function updateUser($data)
+    {
+
+		$companyRepo = $this->_em->getRepository('App\Entity\Management\Company');
+		$addressRepo = $this->_em->getRepository('App\Entity\Management\Address');
+
+		$companyId = $companyRepo->create($data);
+		$addressId = $addressRepo->create($data, $companyId);
+
+		$user = $this->getUserById($data['user']['id']);
+    	if(!empty((array)$user)){
+			$user->setFirstName($data['user']['firstname']);
+			$user->setLastName($data['user']['lastname']);
+			$user->setEmail($data['user']['email']);
+			$user->setUsername($data['user'] ['firstname'].$data['user']['firstname']);
+			$user->setCompanyId($companyId);
+			
+			$this->_em->merge($user);
+			$this->_em->flush();
+		} 
+
+			
+		return array(
+			'user' => array(
+				'id' 			=> $user->getId(),
+				'firstname' 	=> $user->getFirstName(),
+				'lastname' 		=> $user->getLastName(),
+				'email' 		=> $user->getEmail(),
+				'emailVerified' => $user->getEmailVerified(),
+				'username' 		=> $user->getUsername(),
+				'active' 		=> $user->getActive(),
+				'company_id' 	=> $user->getCompanyId(),
+				),
+		);
     }
 }
 

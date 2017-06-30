@@ -58,11 +58,11 @@
                                     <div class="col-xs-12 radio ">
                                           Payment Method <br> <br>
                                           <label id="show" class="radioWrap">
-                                            <input type="radio" name="isDebit" id="optionsRadios1" value="Debit" checked>
+                                            <input type="radio" name="isDebit" ng-model="user.isDebit" id="optionsRadios1" value="Debit" checked>
                                                 Direct debit
                                           </label>
                                           <label id="hide">
-                                            <input type="radio" name="isDebit" id="optionsRadios2" value="Invoice">
+                                            <input type="radio" name="isDebit"  ng-model="user.isDebit" id="optionsRadios2" value="Invoice">
                                                 By invoice (3.50$ per invoice)
                                           </label>
                                     </div>
@@ -227,7 +227,6 @@
                                         </nav>
                                     </div>
                                 </div>
-
                             </div>
                         </div>   
                         </form>                   

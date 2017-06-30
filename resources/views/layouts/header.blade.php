@@ -11,10 +11,26 @@
 			</div>
 			@if (Auth::check())
 			<div class="col-md-1 col-md-offset-6">
-				<div class="socialMedia">
+				{{-- <div class="socialMedia">
 					<ul>
-						<li> <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a></li>
+						<li></li>
 					</ul>
+				</div> --}}
+				<div class="dropdown">
+				  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+				  	@if(Auth::user()->getProfilePic() == "")
+						<img src="{{url('images/user-avatar.png')}}" width="20" height="20"/>
+					@else 
+						<img src="{{Auth::user()->getProfilePic()}}" width="20" height="20"/>
+					@endif
+				  	{{Auth::user()->getFirstName()}}
+				  <span class="caret"></span></button>
+				  <ul class="dropdown-menu">
+				    <li>
+				    	<a href="{{url('profile')}}" >Profile</a>
+				    </li>
+				    <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">Log out</a></li>
+				  </ul>
 				</div>
 			</div>
 			@endif
@@ -72,10 +88,10 @@
       <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
       <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
       <div class="modal-footer">
-      		<form method="POST" action="{{url('logout')}}">
-      			<input type="hidden" name="_token" value="{{csrf_token()}}">
-      			<button type="submit" class="btn btn-primary btn-block">Log out</button>
-      		</form>
+  		<form method="POST" action="{{url('logout')}}">
+  			<input type="hidden" name="_token" value="{{csrf_token()}}">
+  			<button type="submit" class="btn btn-primary btn-block">Log out</button>
+  		</form>
       </div>
     </div>
   </div>
