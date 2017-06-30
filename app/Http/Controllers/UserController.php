@@ -16,7 +16,9 @@ class UserController extends Controller
 
     public function __construct(EntityManager $em)
     {
+
         $this->userRepo =  $em->getRepository('App\Entity\Management\User');
+
     }
     /**
      * Display a listing of the resource.
@@ -54,7 +56,7 @@ class UserController extends Controller
                 'error' => "A user with the email ".$request->all()['email']." already exists!"
             ]);
         } 
-
+        
         $data = array(
                 'url' => config('app.url')."/cemos-portal/activate/".$userData['code'],
                 'name' => $userData['user']['firstname']. " ".$userData['user']['lastname']
