@@ -9,10 +9,18 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository extends EntityRepository
 {
 
+	/**
+     * This create new user account
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $data userdata
+     * @return user array
+     */
 	public function create($data)
 	{
+		//Initialize return array
 		$result = array();
 
+		//Check if email exists
 		$isEmailExist = $this->checkEmail($data['email']);
 	
 		if($isEmailExist['exist']) {
@@ -22,14 +30,20 @@ class UserRepository extends EntityRepository
 				);
 
 		} else {
-
+			//Initialize company and address repo
 			$companyRepo = $this->_em->getRepository('App\Entity\Management\Company');
 			$addressRepo = $this->_em->getRepository('App\Entity\Management\Address');
 
+			//Create the company
 			$companyId = $companyRepo->create($data);
+
+			//Create new address
 			$addressId = $addressRepo->create($data, $companyId);
+
+			//Create new invoice address
 			$invoiceAddressId = $addressRepo->createInvoiceAddress($data, $companyId);
 
+			//Create the user
 			$user = new \App\Entity\Management\User();
 			$user->setFirstName($data['first_name']);
 			$user->setLastName($data['last_name']);
@@ -43,6 +57,7 @@ class UserRepository extends EntityRepository
 			$this->_em->persist($user);
 			$this->_em->flush();
 
+			//Create user activation code
 			$code = $this->addUserActivation($user->getId());
 
 			$result = array(
@@ -66,6 +81,12 @@ class UserRepository extends EntityRepository
 		return $result;
 	}
 
+	/**
+     * This create the user activation code. Code is saved in the database for checking once the user activates his/her account.
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $userId
+     * @return code string
+     */
 	public function addUserActivation($userId)
 	{
 		$code = new \App\Entity\Management\UserActivationCode();
@@ -76,6 +97,12 @@ class UserRepository extends EntityRepository
 		return $code->getCode();
 	}
 
+	/**
+     * This check if the given code exists
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $code string
+     * @return array
+     */
 	public function checkIfCodeExist($code)
 	{
 		$res = array();
@@ -87,6 +114,13 @@ class UserRepository extends EntityRepository
 		return $res;
 	}
 
+
+	/**
+     * This update the user account to verified
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $userId 
+     * @return boolean
+     */
 	public function updateEmailVerified($userId)
 	{
 		$repo = $this->_em->find('App\Entity\Management\User', $userId);
@@ -96,6 +130,7 @@ class UserRepository extends EntityRepository
 			$this->_em->merge($repo);
 			$this->_em->flush();
 
+			//Logs activity
 			$this->addLog(array(
 				'user_id' => $repo->getId(),
 				'company_id' => $repo->getCompanyId(),
@@ -108,6 +143,12 @@ class UserRepository extends EntityRepository
 		return true;
 	}
 
+	/**
+     * This check if the credentials provided exists
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $credentials array
+     * @return array
+     */
 	public function checkCredentials($credentials)
     {
     	$repo = $this->_em->getRepository(\App\Entity\Management\User::class);
@@ -127,6 +168,12 @@ class UserRepository extends EntityRepository
         
     }
 
+    /**
+     * This get the user object for Auth purposes
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $userId 
+     * @return object
+     */
     public function getUserById($userId)
     {
     	$user = $this->_em->find('App\Entity\Management\User', $userId);
@@ -136,6 +183,13 @@ class UserRepository extends EntityRepository
 		return null;
     }
 
+
+    /**
+     * This gets all the user info
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $userId 
+     * @return array
+     */
     public function getAllUserInfo($userId)
     {
     	$companyRepo = $this->_em->getRepository('App\Entity\Management\Company');
@@ -162,11 +216,15 @@ class UserRepository extends EntityRepository
 					'logs' => $logs->getLogs($userId)
 				);
 		} 
-		return null;
+		return array();
     }
 
-
-
+    /**
+     * This checks if the given email exists
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $email 
+     * @return array
+     */
     public function checkEmail($email)
     {
     	$repo = $this->_em->getRepository(\App\Entity\Management\User::class);
@@ -180,6 +238,12 @@ class UserRepository extends EntityRepository
 		return array('exist'=>false);
     }
 
+    /**
+     * This updates the password only if the user request for reset in password
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $data 
+     * @return array
+     */
     public function updatePassword($data)
     {
     	$repo = $this->_em->getRepository(\App\Entity\Management\User::class);
@@ -189,6 +253,7 @@ class UserRepository extends EntityRepository
     		$this->_em->merge($search[0]);
 			$this->_em->flush();
 
+			//Log activity
 			$this->addLog(array(
 				'user_id' => $search[0]->getId(),
 				'company_id' => $search[0]->getCompanyId(),
@@ -198,17 +263,27 @@ class UserRepository extends EntityRepository
 			));
 			return $search[0];
     	}
-    	return false;
+    	return array;
     }
 
+    /**
+     * This updates the profile picture
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $userId 
+     * @param $path 
+     * @return boolean
+     */
     public function updateProfilePic($userId, $path)
     {
+    	//Get the user
     	$user = $this->getUserById($userId);
     	if(!empty((array)$user)){
+    		//Update profile pic path
 			$user->setProfilePic($path);
 			$this->_em->merge($user);
 			$this->_em->flush();
 
+			//Log activity
 			$this->addLog(array(
 				'user_id' => $user->getId(),
 				'company_id' => $user->getCompanyId(),
@@ -221,6 +296,12 @@ class UserRepository extends EntityRepository
 		return false;
     }
 
+    /**
+     * This updates the user information
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $data 
+     * @return array
+     */
     public function updateUser($data)
     {
 
@@ -241,6 +322,8 @@ class UserRepository extends EntityRepository
 			$this->_em->merge($user);
 			$this->_em->flush();
 		} 
+
+		//Log activity
 		$this->addLog(array(
 				'user_id' => $user->getId(),
 				'company_id' => $user->getCompanyId(),
@@ -263,10 +346,16 @@ class UserRepository extends EntityRepository
 		);
     }
 
+    /**
+     * This logs all activity
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $data 
+     * @return boolean
+     */
     private function addLog($data)
     {
     	$log = $this->_em->getRepository('App\Entity\Management\CompanyActivityLog');
-    	$log->create($data);
+    	$log->create($data); 
     	return 1;
     }
 }

@@ -44,6 +44,12 @@ class LoginController extends Controller
         $this->userRepo = $em->getRepository('App\Entity\Management\User');
     }
 
+    /**
+     * This overrides the log in function from AuthenticatesUsers class. 
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $request userdata
+     * @return Response
+     */
     public function login(Request $request)
     {
        
@@ -52,17 +58,23 @@ class LoginController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
+
+        //Check the credentials if already existed in the user table
         $checkIfExists = $this->userRepo->checkCredentials($credentials);
 
         if ($checkIfExists['exist'] == "yes")
-        { //this if validate if the user is on the database line 1
+        { 
             $user = $this->userRepo->getUserById($checkIfExists['user_id']);
+
+            //Add necessary data to session
             $request->session()->put('email',$credentials['password']); 
             $request->session()->put('user_id',$checkIfExists['user_id']); 
             $request->session()->put('company_id',$user->getCompanyId()); 
+
+            //Auth login uses the user object variable.
             Auth::login($user);
             return redirect()->route('dashboard');
-            //this redirect if user is the db line 2
+          
         } else if($checkIfExists['exist'] == "no") {
             return redirect()->route('login')->with('status','Sorry, no account existed with credentials provided.');
         } else {
