@@ -263,7 +263,7 @@ class UserRepository extends EntityRepository
 			));
 			return $search[0];
     	}
-    	return array;
+    	return array();
     }
 
     /**
