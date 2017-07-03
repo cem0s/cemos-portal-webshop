@@ -23,8 +23,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-    	$user = $this->userRepo->getUserArrayById(Auth::user()->getId());
-
+    	$user = $this->userRepo->getAllUserInfo(Auth::user()->getId());
+ 
       return view('pages.profile.profile')->with('userData', $user);
     }
 

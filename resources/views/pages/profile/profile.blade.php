@@ -58,6 +58,7 @@
 							<div class="table-responsive table_bg">
 								<h4><i class="fa fa-list-alt fa-fw" aria-hidden="true"></i> Activity Log</h4><hr>
 									<div style="height:390px;overflow-y:scroll;;">
+										@if(isset($userData['logs']) && !empty($userData['logs']))
 										<table class="table">
 											<thead>
 												<tr>
@@ -65,17 +66,22 @@
 												</tr>
 											</thead>
 											<tbody>
+												@foreach ($userData['logs'] as $key => $logValue)
 												<tr>
 													<td>
-														<a href="#" class="list-group-item " data-href="#">
-						        							<h5 class="list-group-item-heading">Log 1</h5>
-						        							<p class="list-group-item-text">Fusce nisl arcu, mattis non consequat et, vestibulum at dolor. Pellentesque in orci nisi. Pellentesque.</p>
-						        						</a>
+														<div class="list-group-item">
+						        							<h5 class="list-group-item-heading">Log #{{$logValue['log_id']}}</h5>
+						        							<p style="font-size: 11px;"><i>Created on {{date('F d, Y', strtotime($logValue['created_at']))}}</i></p>
+						        							<p class="list-group-item-text">{{$logValue['data']}}</p>
+						        						</div>
 					        						</td>
 												</tr>
-												
+												@endforeach
 											</tbody>
 										</table>
+										@else
+										<p>No logs found.</p>
+										@endif
 									</div>
 							</div>
 						</div>	<!--End of table-->

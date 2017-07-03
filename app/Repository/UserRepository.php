@@ -34,7 +34,7 @@ class UserRepository extends EntityRepository
 			$user->setFirstName($data['first_name']);
 			$user->setLastName($data['last_name']);
 			$user->setEmail($data['email']);
-			$user->setUsername($data['first_name'].$data['first_name']);
+			$user->setUsername($data['first_name'].$data['last_name']);
 			$user->setEmailVerified(0);
 			$user->setPassword(Hash::make($data['password']));
 			$user->setActive(0);
@@ -95,6 +95,15 @@ class UserRepository extends EntityRepository
 			$repo->setActive(1);
 			$this->_em->merge($repo);
 			$this->_em->flush();
+
+			$this->addLog(array(
+				'user_id' => $repo->getId(),
+				'company_id' => $repo->getCompanyId(),
+				'data' => 'Your account has verified.',
+				'category' => 'user',
+				'action' => 'update'
+			));
+
 		}
 		return true;
 	}
@@ -127,10 +136,11 @@ class UserRepository extends EntityRepository
 		return null;
     }
 
-    public function getUserArrayById($userId)
+    public function getAllUserInfo($userId)
     {
     	$companyRepo = $this->_em->getRepository('App\Entity\Management\Company');
     	$addressRepo = $this->_em->getRepository('App\Entity\Management\Address');
+    	$logs = $this->_em->getRepository('App\Entity\Management\CompanyActivityLog');
     	$user = $this->_em->find('App\Entity\Management\User', $userId);
 
 		if(!empty((array)$user)){
@@ -149,6 +159,7 @@ class UserRepository extends EntityRepository
 					'company' => $companyRepo->getCompanyById($user->getCompanyId()),
 					'address' => $addressRepo->getAddressByCompanyId($user->getCompanyId()),
 					'invoiceaddress' => $addressRepo->getInvoiceAddressByCompanyId($user->getCompanyId()),
+					'logs' => $logs->getLogs($userId)
 				);
 		} 
 		return null;
@@ -177,6 +188,14 @@ class UserRepository extends EntityRepository
     		$search[0]->setPassword(Hash::make($data['password']));
     		$this->_em->merge($search[0]);
 			$this->_em->flush();
+
+			$this->addLog(array(
+				'user_id' => $search[0]->getId(),
+				'company_id' => $search[0]->getCompanyId(),
+				'data' => 'You updated your password.',
+				'category' => 'user',
+				'action' => 'update'
+			));
 			return $search[0];
     	}
     	return false;
@@ -189,6 +208,14 @@ class UserRepository extends EntityRepository
 			$user->setProfilePic($path);
 			$this->_em->merge($user);
 			$this->_em->flush();
+
+			$this->addLog(array(
+				'user_id' => $user->getId(),
+				'company_id' => $user->getCompanyId(),
+				'data' => 'You updated your profile picture.',
+				'category' => 'user',
+				'action' => 'update'
+			));
 			return true;
 		} 
 		return false;
@@ -208,13 +235,19 @@ class UserRepository extends EntityRepository
 			$user->setFirstName($data['user']['firstname']);
 			$user->setLastName($data['user']['lastname']);
 			$user->setEmail($data['user']['email']);
-			$user->setUsername($data['user'] ['firstname'].$data['user']['firstname']);
+			$user->setUsername($data['user'] ['firstname'].$data['user']['lastname']);
 			$user->setCompanyId($companyId);
 			
 			$this->_em->merge($user);
 			$this->_em->flush();
 		} 
-
+		$this->addLog(array(
+				'user_id' => $user->getId(),
+				'company_id' => $user->getCompanyId(),
+				'data' => 'You updated your profile.',
+				'category' => 'user',
+				'action' => 'update'
+			));
 			
 		return array(
 			'user' => array(
@@ -228,6 +261,13 @@ class UserRepository extends EntityRepository
 				'company_id' 	=> $user->getCompanyId(),
 				),
 		);
+    }
+
+    private function addLog($data)
+    {
+    	$log = $this->_em->getRepository('App\Entity\Management\CompanyActivityLog');
+    	$log->create($data);
+    	return 1;
     }
 }
 

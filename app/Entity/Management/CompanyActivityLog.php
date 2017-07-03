@@ -8,8 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * CompanyActivityLog
- * @ORM\Entity(repositoryClass="\App\Repository\CompanyActivityLogRepository")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\ActivityLogRepository")
  * @ORM\Table(name="company_activity_log")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
@@ -44,18 +43,25 @@ class CompanyActivityLog
     private $userId;
     
     /**
-     * @var array
+     * @var string
      *
      * @ORM\Column(name="data", type="string", nullable=false)
      */
     private $data;
 
     /**
-     * @var array
+     * @var string
      *
      * @ORM\Column(name="category", type="string", nullable=false)
      */
     private $category;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="action", type="string", nullable=false)
+     */
+    private $action;
     
     /**
      * @var \DateTime
@@ -181,6 +187,30 @@ class CompanyActivityLog
     public function getCategory()
     {
         return $this->category;
+    }
+
+     /**
+     * Set action
+     *
+     * @param string $action
+     * @return CompanyActivityLog
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+    
+ 
+     /**
+     * Get action
+     *
+     * @return string 
+     */
+    public function getAction()
+    {
+        return $this->action;
     }
 
     

@@ -14,10 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::resource('user', 'UserController');
+Route::get('/activate/{code}', 'UserController@activate')->name('activate');
 
 Auth::routes();
-
-Route::get('/activate/{code}', 'UserController@activate')->name('activate');
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
@@ -32,7 +32,5 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::post('/update-pic', 'ProfileController@updatePic')->name('update-pic');
 	Route::post('/add-property', 'PropertyController@postAddProperty')->name('add-property');
-
-	Route::resource('user', 'UserController');
 
 });

@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function __construct(EntityManager $em)
     {
-
+        $this->middleware('auth', ['only' => ['show', 'update']]);
         $this->userRepo =  $em->getRepository('App\Entity\Management\User');
 
     }
@@ -48,7 +48,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+   
         $userData = $this->userRepo->create($request->all());
         
         if($userData['exist']) {
@@ -76,7 +76,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $userData = $this->userRepo->getUserArrayById($id);
+        $userData = $this->userRepo->getAllUserInfo($id);
         return response()->json($userData, 201);
     }
 
