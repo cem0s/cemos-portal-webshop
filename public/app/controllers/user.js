@@ -44,7 +44,8 @@ app.controller('userController', ['$scope', '$filter', '$http', 'userService' , 
     $scope.save = function(modalstate) 
     {
         $scope.saving = true;
-        
+        var c = $("#captcha").val();
+    
         if (modalstate === 'edit'){
             userService.updateUser($scope.user).then(function(response) {
                 if(response.data.error != undefined) {
@@ -61,7 +62,13 @@ app.controller('userController', ['$scope', '$filter', '$http', 'userService' , 
                 alert('This is embarassing. An error has occured. Please check the log for details');
             });
         } else {
+            if(c == "") {
+                alert('Please check captcha form.')
+                $scope.saving = false;
+                return false;
+            }
             userService.insertUser($scope.user).then(function(response) {
+               
                 if(response.data.error != undefined) {
                    $scope.saving = false;
                    alert(response.data.error);  
@@ -72,7 +79,6 @@ app.controller('userController', ['$scope', '$filter', '$http', 'userService' , 
                 }
                 
                
-
             }).catch(function(response) {
                 alert('This is embarassing. An error has occured. Please check the log for details');
             });

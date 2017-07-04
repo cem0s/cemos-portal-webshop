@@ -23,7 +23,7 @@
 							@if(Auth::user()->getProfilePic() == "")
 								<img src="{{url('images/user-avatar.png')}}" class="img-responsive" style="height: 200px;width: 226px;" />
 							@else 
-								<img src="{{Auth::user()->getProfilePic()}}" class="img-responsive" style="height: 200px;width: 226px;"/>
+								<img src="{{Auth::user()->getProfilePic()}}" class="img-responsive" />
 							@endif
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 													<td>
 														<div class="list-group-item">
 						        							<h5 class="list-group-item-heading">Log #{{$logValue['log_id']}}</h5>
-						        							<p style="font-size: 11px;"><i>Created on {{date('F d, Y', strtotime($logValue['created_at']))}}</i></p>
+						        							<p style="font-size: 11px;"><i>Created on {{date('F d, Y H:i:s A', strtotime($logValue['created_at']))}}</i></p>
 						        							<p class="list-group-item-text">{{$logValue['data']}}</p>
 						        						</div>
 					        						</td>
@@ -173,6 +173,31 @@
 												</th>
 												<td class="align_middle">
 													<div class="Profile_names"><p>{{$userData['address']['zipcode']}}</p></div>				
+												</td>
+											</tr><!--end of stripe-->
+											<tr class="text-capitalize">
+												<th scope="row">
+												</th>
+											</tr><!--end of stripe-->
+											<tr class="text-capitalize">
+												<th scope="row">
+													<div class="Profile_names"><p>Company:</p></div>
+												</th>
+											</tr><!--end of stripe-->
+											<tr class="text-capitalize">
+												<th scope="row">
+													<div class="Profile_names"><p>Name:</p></div>
+												</th>
+												<td class="align_middle">
+													<div class="Profile_names"><p>{{$userData['company']['name']}}</p></div>				
+												</td>
+											</tr><!--end of stripe-->
+											<tr class="text-capitalize">
+												<th scope="row">
+													<div class="Profile_names"><p>Phone:</p></div>
+												</th>
+												<td class="align_middle">
+													<div class="Profile_names"><p>{{$userData['company']['phone']}}</p></div>				
 												</td>
 											</tr><!--end of stripe-->
 									

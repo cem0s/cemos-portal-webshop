@@ -31,3 +31,10 @@
     }
 }
 
+function callback(){
+    // console.log("The user has already solved the captcha, now you can submit your form.");
+    $('#captcha').val(grecaptcha.getResponse().length);
+    if(grecaptcha.getResponse().length !== 0){
+       // console.log("The captcha has been already solved");
+    }
+}

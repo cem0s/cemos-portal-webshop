@@ -51,6 +51,11 @@
                                         <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid"> Log in</button>
                                     </div>
                                 </div>
+                                @if (session('failedAttempt')) 
+                                    {{ session('failedAttempt') }}  <br>
+                                    <div class="g-recaptcha" data-sitekey="6LdQuicUAAAAAI-mcIX4BycZ_5S2z-jabke6T53h" data-callback="callback" ></div>
+                                    <br>    
+                                @endif
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <a href="{{url('password/reset')}}">Forgot Password? Reset here.</a>

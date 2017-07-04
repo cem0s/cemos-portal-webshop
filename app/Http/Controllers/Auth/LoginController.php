@@ -31,7 +31,28 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/dashboard';
+
+     /**
+     * userRepo
+     *
+     * @var
+     */
     protected $userRepo;
+
+     /**
+     * maxLoginAttempts
+     *
+     * @var
+     */
+    protected $maxLoginAttempts;
+
+     /**
+     * lockoutTime
+     *
+     * @var
+     */
+    protected $lockoutTime;
+ 
 
     /**
      * Create a new controller instance.
@@ -42,6 +63,22 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->userRepo = $em->getRepository('App\Entity\Management\User');
+        $this->lockoutTime  = 1;    //lockout for 1 minute (value is in minutes)
+        $this->maxLoginAttempts = 2;  //lockout after 2 attempts
+    }
+
+
+    /**
+     * Determine if the user has too many failed login attempts.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function hasTooManyLoginAttempts(Request $request)
+    {
+        return $this->limiter()->tooManyAttempts(
+            $this->throttleKey($request), $this->maxLoginAttempts, $this->lockoutTime
+        );
     }
 
     /**
@@ -52,10 +89,19 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+
        
         $this->validate($request, [
             'email' => 'required|email', 'password' => 'required',
         ]);
+
+        // 2) Check if the user has surpassed their alloed maximum of login attempts
+        // We'll key this by the username and the IP address of the client making 
+        // these requests into this application. 
+        if ($this->hasTooManyLoginAttempts($request)) {
+
+            return redirect()->route('login')->with('failedAttempt','You have 2 or more failed attempts. Please verify you are human.');
+        }
 
         $credentials = $request->only('email', 'password');
 
@@ -73,9 +119,14 @@ class LoginController extends Controller
 
             //Auth login uses the user object variable.
             Auth::login($user);
+            $request->session()->regenerate();
+            $this->clearLoginAttempts($request);
+
             return redirect()->route('dashboard');
           
         } else if($checkIfExists['exist'] == "no") {
+            $this->incrementLoginAttempts($request);
+    
             return redirect()->route('login')->with('status','Sorry, no account existed with credentials provided.');
         } else {
             

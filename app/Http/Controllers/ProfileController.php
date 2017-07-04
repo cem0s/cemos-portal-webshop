@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Auth;
+use Image;
 
 class ProfileController extends Controller
 {
@@ -40,10 +41,12 @@ class ProfileController extends Controller
     {
     	$file = $request->file('profile-pic');
       //The public directory for profile images
-    	$destinationPath = public_path().'\images';
+    	$destinationPath = public_path().'\images\\';
     	
       //Move the file to the destination path
-    	$file->move($destinationPath,$file->getClientOriginalName());
+    	//$file->move($destinationPath,$file->getClientOriginalName());
+
+        Image::make($file)->resize(226, 226)->save($destinationPath.$file->getClientOriginalName());
 
       //Updates the profile picture path in the user table
     	$isUploaded = $this->userRepo->updateProfilePic($request->all()['user_id'], 'images\\'.$file->getClientOriginalName());
