@@ -58,11 +58,11 @@
                                     <div class="col-xs-12 radio ">
                                           Payment Method <br> <br>
                                           <label id="show" class="radioWrap">
-                                            <input type="radio" name="isDebit" id="optionsRadios1" value="Debit" checked>
+                                            <input type="radio" name="isDebit" ng-model="user.isDebit" id="optionsRadios1" value="Debit" checked>
                                                 Direct debit
                                           </label>
                                           <label id="hide">
-                                            <input type="radio" name="isDebit" id="optionsRadios2" value="Invoice">
+                                            <input type="radio" name="isDebit"  ng-model="user.isDebit" id="optionsRadios2" value="Invoice">
                                                 By invoice (3.50$ per invoice)
                                           </label>
                                     </div>
@@ -207,7 +207,14 @@
                                            <span ng-show="userForm.confirm_password.$error.required && userForm.confirm_password.$touched"><br><small><i>Password confirmation is required.</i></small></span>
                                         </div>
                                 </div>
-                                <div class="col-sm-12 g-recaptcha" data-sitekey="6LcK9BoUAAAAAB1oU3BjRVhgWYYNRSc1DWhiHJSs"></div>
+                                <div class="g-recaptcha" data-sitekey="6LdQuicUAAAAAI-mcIX4BycZ_5S2z-jabke6T53h" data-callback="callback" ></div>
+                                 <div class="form-group">
+                                   <label for="cap" class="col-sm-2 control-label"></label>
+                                        <div id="cap" class="col-sm-12">
+                                            <input type="hidden" class="form-control" id="captcha" name="captcha" ng-model="user.captcha">
+                                        </div>
+                                      
+                                </div>
                                 <div class="form-group">
                                     <div class=" col-sm-12 checkboxWrap">
                                         <div class="checkbox ">
@@ -217,6 +224,7 @@
                                         </div>
                                     </div>
                                 </div>
+                               
                                 <div class="form-group">
                                     <div class="login_pager col-sm-12">  <!-- Pager -->
                                         <nav aria-label="..." id="tab3">
@@ -227,7 +235,6 @@
                                         </nav>
                                     </div>
                                 </div>
-
                             </div>
                         </div>   
                         </form>                   

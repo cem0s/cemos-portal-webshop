@@ -41,17 +41,34 @@ app.controller('userController', ['$scope', '$filter', '$http', 'userService' , 
     // }
 
     //save new record / update existing record
-    $scope.save = function(modalstate) {
-       
+    $scope.save = function(modalstate) 
+    {
         $scope.saving = true;
-        
+        var c = $("#captcha").val();
+    
         if (modalstate === 'edit'){
             userService.updateUser($scope.user).then(function(response) {
+                if(response.data.error != undefined) {
+                   $scope.saving = false;
+                   alert(response.data.error);  
+
+                } else {
+                    $scope.saving = false;
+                    alert( "Profile successfully updated.");
+                    $window.location.href = "profile";
+                }
+
             }).catch(function(response) {
                 alert('This is embarassing. An error has occured. Please check the log for details');
             });
         } else {
+            if(c == "") {
+                alert('Please check captcha form.')
+                $scope.saving = false;
+                return false;
+            }
             userService.insertUser($scope.user).then(function(response) {
+               
                 if(response.data.error != undefined) {
                    $scope.saving = false;
                    alert(response.data.error);  
@@ -62,14 +79,24 @@ app.controller('userController', ['$scope', '$filter', '$http', 'userService' , 
                 }
                 
                
-
             }).catch(function(response) {
                 alert('This is embarassing. An error has occured. Please check the log for details');
             });
         }
-
        
     }
+
+    $scope.editModal = function(id) 
+    {
+        userService.getUserById(id).then(function(response) {
+                $scope.user = response.data;
+
+            }).catch(function(response) {
+                alert('This is embarassing. An error has occured. Please check the log for details');
+            });
+        $('#edit-profile').modal('show');
+    }
+
 
     // //delete record
     // $scope.confirmDelete = function(id) {

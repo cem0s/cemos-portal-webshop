@@ -10,17 +10,13 @@ use App\Mail\SendActivationCode;
 
 class UserController extends Controller
 {
-    protected $em;  
-    protected $companyRepo;
-    protected $addressRepo;
+
     protected $userRepo;
  
 
     public function __construct(EntityManager $em)
     {
-        $this->em = $em;
-        $this->companyRepo =  $em->getRepository('App\Entity\Management\Company'); 
-        $this->addressRepo =  $em->getRepository('App\Entity\Management\Address');
+        $this->middleware('auth', ['only' => ['show', 'update']]);
         $this->userRepo =  $em->getRepository('App\Entity\Management\User');
 
     }
@@ -52,27 +48,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-  
-        $emailExist = $this->userRepo->checkEmail($request->all()['email']);
-        if($emailExist['exist']) {
+        //Gladys: Creates the user
+        $userData = $this->userRepo->create($request->all());
+        
+        //Gladys: If user existed
+        if($userData['exist']) {
             return response()->json([
                 'error' => "A user with the email ".$request->all()['email']." already exists!"
             ]);
         } 
         
-        $this->addressRepo->create($request->all(), $companyId);
-        $user = $this->userRepo->create($request->all(), $companyId); 
-        $code = $this->userRepo->addUserActivation($user->getId());
         $data = array(
-                'code' => $code,
-                'url' => config('app.url')."/cemos-portal/activate/".$code,
-                'name' => $user->getFirstName(). " ".$user->getLastName()
+                'url' => config('app.url')."/cemos-portal/activate/".$userData['code'],
+                'name' => $userData['user']['firstname']. " ".$userData['user']['lastname']
             );
 
-        //Sample recipient email
-        Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data));
-
-        return response()->json($user, 201);
+        //Gladys: Send activation code through email,
+        Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data)); 
+     
+        return response()->json($userData['userObj'], 201);
     }
 
     /**
@@ -83,7 +77,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $userData = $this->userRepo->getAllUserInfo($id);
+        return response()->json($userData, 201);
     }
 
     /**
@@ -94,7 +89,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -106,7 +101,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $userData = $this->userRepo->updateUser($request->all());
+        if(empty($userData)) {
+            return response()->json([
+                'error' => "Oops. Error in updating your profile. Kindly check your data."
+            ]);
+        }
+        return response()->json($userData, 201);
+
     }
 
     /**
@@ -120,10 +122,18 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * This activates the user account 
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param $code activation code
+     * @return Response
+     */
     public function activate($code)
     {
+        //Check if code exists
         $isExisted = $this->userRepo->checkIfCodeExist($code);
         if(isset($isExisted['exist'])){
+            //Updates the user account to active and verified
             $updateEmailVerified = $this->userRepo->updateEmailVerified($isExisted['user_id']);
             return redirect()->route('login')->with('status','Your email has verified. Please log in.');
         }

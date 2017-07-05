@@ -90,6 +90,11 @@ class User implements Authenticatable
     private $regions;
 
     /**
+     * @ORM\Column(name="profile_pic", type="string", nullable=true)
+     */
+    protected $profilePic;
+
+    /**
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
@@ -390,6 +395,30 @@ class User implements Authenticatable
     public function getScope()
     {
         return $this->scope;
+    }
+
+
+    /**
+     * Set profilePic
+     *
+     * @param string $profilePic
+     * @return User
+     */
+    public function setProfilePic($profilePic)
+    {
+        $this->profilePic = $profilePic;
+
+        return $this;
+    }
+
+    /**
+     * Get profilePic
+     *
+     * @return string
+     */
+    public function getProfilePic()
+    {
+        return $this->profilePic;
     }
 
     /**

@@ -1,5 +1,5 @@
 var app = angular.module('cemos_portal',[])
-        .constant('API_URL', 'http://localhost/cemos-portal-webshop/');
+        .constant('API_URL', 'http://localhost:88/cemos-portal/');
 
 
 app.service('userService', ['$http', 'API_URL', function ($http, API_URL) {
@@ -10,17 +10,18 @@ app.service('userService', ['$http', 'API_URL', function ($http, API_URL) {
 	// 	return $http.get(API_URL + 'brand/allBrands');
 	// }
 
-	// this.getBrandById = function (id) {
-	// 	return $http.get(brand_api + '/' + id);
-	// }
+	this.getUserById = function (id) {
+		return $http.get(userApi + '/' + id);
+	}
 
 	this.insertUser = function (userData) {
 		return $http.post(userApi, userData);
 	}
 
-	// this.updateBrand = function (brandData) {
-	// 	return $http.put(brand_api + '/' + brandData.id, brandData);
-	// }
+	this.updateUser = function (userData) {
+        console.log(userData);
+		return $http.put(userApi + '/' + userData.user.id, userData);
+	}
 
 	// this.deleteBrand= function (id) {
 	// 	return $http.delete(brand_api + '/' + id);

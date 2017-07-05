@@ -42,7 +42,7 @@
 	</div>
 
 </footer>
-<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+
 <script>
 $(document).ready(function(){
     $("#hide").click(function(){
@@ -61,9 +61,14 @@ $(document).ready(function(){
     })
 });
 </script>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>
 
 <script src="{{ asset('slick/slick.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{url('js/custom.js')}}"></script>
 <script src="{{url('app/lib/angular/angular.min.js')}}"></script>
 <script src="{{url('app/app.js')}}"></script>
 <script src="{{url('app/controllers/user.js')}}"></script>
