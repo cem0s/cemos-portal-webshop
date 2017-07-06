@@ -21,7 +21,7 @@
 				  	@if(Auth::user()->getProfilePic() == "")
 						<img src="{{url('images/user-avatar.png')}}" width="20" height="20"/>
 					@else 
-						<img src="{{Auth::user()->getProfilePic()}}" width="20" height="20"/>
+						<img src="{{asset(Auth::user()->getProfilePic())}}" width="20" height="20"/>
 					@endif
 				  	{{Auth::user()->getFirstName()}}
 				  <span class="caret"></span></button>

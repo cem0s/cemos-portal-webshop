@@ -15,7 +15,14 @@
 			<table id="prod-status" class=" table table-borderless dashboard_head">
 				<thead>
 					<tr  id="dashboard_icons" class="nav nav-tabs">
-						  <th class="text-center col-md-3"><a data-toggle="tab" href="#home"><i class="fa fa-home black" aria-hidden="true" title="Property"></i><p>+50</p></a></th>
+						  <th class="text-center col-md-3"><a data-toggle="tab" href="#home"><i class="fa fa-home black" aria-hidden="true" title="Property"></i><p>
+						  	@if($data['property']['count'] >50)
+						  	+50
+						  	@else
+						  	{{$data['property']['count']}}
+						  	@endif
+
+						  </p></a></th>
 						  <th class="text-center col-md-3"><a data-toggle="tab" href="#menu1"><i class="fa fa-check black" aria-hidden="true" title="Delivered"></i><p>+50</p></a></th>
 						  <th class="text-center col-md-3"><a data-toggle="tab" href="#menu2"><i class="fa fa-list black" aria-hidden="true" title="Status"></i><p>+50</p></a></th>
 						  <th class="text-center col-md-3"><a data-toggle="tab" href="#menu3"><i class="fa fa-file-text black" aria-hidden="true" title="Memos"></i><p>+50</p></a></th>
@@ -39,54 +46,30 @@
 						</tr>
 					  </thead>
 					  <tbody>
-							<tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>House 0</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-										Talamban, Cebu City				
-								</td>
-								<td class="align_middle" width="20%">
-										Gladys Vailoces
-									
-								</td>
-								<td class="align_middle" width="15%">
-									<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
-								</td>
-							</tr><!--end of stripe-->
-							<tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>House 1</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-										Talamban, Cebu City				
-								</td>
-								<td class="align_middle" width="20%">
-										Gladys Vailoces
-									
-								</td>
-								<td class="align_middle" width="15%">
-									<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
-								</td>
-							</tr><!--end of stripe--><tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>House 2</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-										Talamban, Cebu City				
-								</td>
-								<td class="align_middle" width="20%">
-										Gladys Vailoces
-									
-								</td>
-								<td class="align_middle" width="15%">
-									<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
-								</td>
-							</tr><!--end of stripe-->
-						
+					  		@if(isset($data['property']['property']) && !empty($data['property']['property']))
+					  			@foreach($data['property']['property'] as $key => $value)
+						  			<tr>
+										<th scope="row" width="25%">
+											<div class="product_name"><p>{{$value['name']}}</p></div>
+											<div class="product_date"> <p>Created on {{date('F d, Y H:i:s A', strtotime($value['createdat']))}}</p></div>
+										</th>
+										<td class="align_middle" width="40%">
+												{{$value['address1']}},	{{$value['town']}},	{{$value['country']}}, {{$value['zipcode']}}				 	
+										</td>
+										<td class="align_middle" width="20%">
+												{{$value['user']['user']['firstname']}}	{{$value['user']['user']['lastname']}}		
+											
+										</td>
+										<td class="align_middle" width="15%">
+											<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
+										</td>
+									</tr><!--end of stripe-->
+					  			@endforeach
+					  		@else 
+					  		<tr><td>
+					  			No data found.
+					  		</td></tr>
+							@endif
 					  </tbody>
 				</table>
 			</div>

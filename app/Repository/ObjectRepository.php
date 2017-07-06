@@ -38,7 +38,7 @@ class ObjectRepository extends EntityRepository
 		// another way of retrieving data
 		//$object = $this->_em->getRepository('\App\Entity\Realestate\Object')->findBy(array('id' => $id));
 		$object = array();
-
+		$objectTypeRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectType');
 		$data = $this->_em->find('\App\Entity\Realestate\Object', $id);
 
 		if(isset($data) && !empty($data)) {
@@ -51,9 +51,50 @@ class ObjectRepository extends EntityRepository
 				'slug' => $data->getSlug(),
 				'company_id' => $data->getCustomerId(),
 				'user_id' => $data->getUserId(),
+				'objecttype' => $objectTypeRepo->getObjectTypeById($data->getObjectTypeId()),
 			);
 		}
 
 		return $object;
 	}
+
+	public function getAllObjects()
+	{
+		$data = array();
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('o')
+		   ->from('App\Entity\Realestate\Object', 'o');
+
+		$queryResult = $qb->getQuery()->getArrayResult();
+		
+		$userRepo = $this->_em->getRepository('App\Entity\Management\User');
+		$objectTypeRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectType');
+
+		if(!empty($queryResult)){
+			foreach ($queryResult as $key => $value) {
+				$data[] = array(
+						'id' => $value['id'],
+						'name' => $value['name'],
+						'address1' => $value['address1'],
+						'address2' => $value['address2'],
+						'zipcode' => $value['zipcode'],
+						'country' => $value['country'],
+						'town' => $value['town'],
+						'slug' => $value['slug'],
+						'objecttype' => $objectTypeRepo->getObjectTypeById($value['objectTypeId']),
+						'user' => $userRepo->getAllUserInfo($value['userId']),
+						'createdat' => $value['createdAt']->format('c'),
+						'discr' => $value['discr']
+					);
+			}
+		}
+
+		
+		return array(
+				'property' => $data,
+				'count' => count($qb->getQuery()->getArrayResult())
+			);
+	}
+
 }

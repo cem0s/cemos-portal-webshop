@@ -9,6 +9,12 @@
 @endsection
 
 @section('body')
+	<div class="icon-bar">
+	  <a href="{{url('shop/1')}}" class="alt-color" title="Shop"><i class="fa fa-shopping-cart"></i></a> 
+	  <a href="#" title="Edit Property"><i class="fa fa-pencil" style="color:#B15022;"></i></a> 
+	  <a href="#" class="alt-color" title="Product Status"><i class="fa fa-bar-chart"></i></a>
+	  <a href="#" title="Property Details"><i class="fa fa-file-text-o" style="color:#B15022;"></i></a> 
+	</div>
 	<div id="property_detailsTabs" class="container">
 		<div class="row">
 			<ul class="nav nav-tabs" role="tablist">
@@ -31,12 +37,12 @@
 
 							  <div class="carousel-inner" role="listbox">
 									<div class="item active">
-										<img src="images/pd1.jpg" alt="...">
+										<img src="{{asset('images/pd1.jpg')}}" alt="...">
 										<div class="carousel-caption">
 										</div>
 									</div>
 									<div class="item">
-										<img src="images/pd1.jpg" alt="...">
+										<img src="{{asset('images/pd1.jpg')}}" alt="...">
 											<div class="carousel-caption">
 										</div>
 									</div>
@@ -115,12 +121,12 @@
 
 							  <div class="carousel-inner" role="listbox">
 									<div class="item active">
-										<img src="images/pd2.jpg" alt="...">
+										<img src="{{asset('images/pd2.jpg')}}" alt="...">
 										<div class="carousel-caption">
 										</div>
 									</div>
 									<div class="item">
-										<img src="images/pd1.jpg" alt="...">
+										<img src="{{asset('images/pd1.jpg')}}" alt="...">
 											<div class="carousel-caption">
 										</div>
 									</div>
@@ -191,12 +197,12 @@
 
 							  <div class="carousel-inner" role="listbox">
 									<div class="item active">
-										<img src="images/pd3.jpg" alt="...">
+										<img src="{{asset('images/pd3.jpg')}}" alt="...">
 										<div class="carousel-caption">
 										</div>
 									</div>
 									<div class="item">
-										<img src="images/pd2.jpg" alt="...">
+										<img src="{{asset('images/pd2.jpg')}}" alt="...">
 											<div class="carousel-caption">
 										</div>
 									</div>
@@ -267,12 +273,12 @@
 
 								  <div class="carousel-inner" role="listbox">
 										<div class="item active">
-											<img src="images/pd4.jpg" alt="...">
+											<img src="{{asset('images/pd4.jpg')}}" alt="...">
 											<div class="carousel-caption">
 											</div>
 										</div>
 										<div class="item">
-											<img src="images/pd3.jpg" alt="...">
+											<img src="{{asset('images/pd3.jpg')}}" alt="...">
 												<div class="carousel-caption">
 											</div>
 										</div>

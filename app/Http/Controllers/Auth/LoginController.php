@@ -113,7 +113,7 @@ class LoginController extends Controller
             $user = $this->userRepo->getUserById($checkIfExists['user_id']);
 
             //Add necessary data to session
-            $request->session()->put('email',$credentials['password']); 
+            $request->session()->put('email',$credentials['email']); 
             $request->session()->put('user_id',$checkIfExists['user_id']); 
             $request->session()->put('company_id',$user->getCompanyId()); 
 

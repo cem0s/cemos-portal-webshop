@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Product
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\ProductRepository")
  * @ORM\Table(name="product")
  */
 class Product 
@@ -57,6 +57,13 @@ class Product
      * @ORM\Column(name="enabled", nullable=true)
      */
     private $enabled;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string", nullable=false)
+     */
+    private $category;
 
     /**
      * @var \DateTime
@@ -206,6 +213,29 @@ class Product
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     * @return Product
+     */
+    public function setCategory($category='')
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
