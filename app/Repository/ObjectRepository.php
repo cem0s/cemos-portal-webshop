@@ -10,7 +10,7 @@ use \App\Entity\Realestate\ObjectProperty;
 class ObjectRepository extends EntityRepository
 {
 	public function create($data = array())
-	{
+	{	
 		$object = new CommercialObject();
 
 		if ($data['object_type'] === "residential") {
@@ -32,7 +32,7 @@ class ObjectRepository extends EntityRepository
 		$this->_em->persist($object);
 		$this->_em->flush();
 
-		//$property = $this->createObjectProperty($object->getId(), $data);
+		$property = $this->createObjectProperty($object->getId(), $data);
 
 		return $object;
 	}
@@ -42,17 +42,17 @@ class ObjectRepository extends EntityRepository
 		$property = new ObjectProperty();
 
 		$property->setObjectId($objectId);
-		$property->setPropertyType($data['']);
-		$property->setBuilt($data['']);
-		$property->setBuiltIn($data['']);
-		$property->setArea($data['']);
-		$property->setRooms($data['']);
-		$property->setFloors($data['']);
-		$property->setOccupied($data['']);
-		$property->setOwnerName($data['']);
-		$property->setOwnerTel($data['']);
-		$property->setOwnerMob($data['']);
-		$property->setOwnerEmail($data['']);
+		$property->setPropertyType($data['buildingtype']);
+		$property->setBuilt($data['built']);
+		$property->setBuiltIn($data['builtin']);
+		$property->setArea($data['area']);
+		$property->setRooms($data['noofrooms']);
+		$property->setFloors($data['nooffloors']);
+		$property->setOccupied($data['occupied']);
+		$property->setOwnerName($data['name']);
+		$property->setOwnerTel($data['telno']);
+		$property->setOwnerMob($data['mobno']);
+		$property->setOwnerEmail($data['emailadd']);
 
 		$this->_em->persist($property);
 		$this->_em->flush();

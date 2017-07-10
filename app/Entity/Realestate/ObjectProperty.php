@@ -119,6 +119,28 @@ use Gedmo\Mapping\Annotation as Gedmo;
     }
 
     /**
+     * Set object_id
+     *
+     * @param string $objectId
+     * @return Object
+     */
+    public function setObjectId($objectId)
+    {
+        $this->objectId = $objectId;
+
+        return $this;
+    }
+
+    /** Get object_id
+     *
+     * @return integer
+     */
+    public function getObjectId()
+    {
+        return $this->objectId;
+    }
+
+    /**
      * Set property_type
      *
      * @param string $propertyType
