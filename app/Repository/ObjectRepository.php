@@ -5,10 +5,11 @@ namespace App\Repository;
 use Doctrine\ORM\EntityRepository;
 use \App\Entity\Realestate\ResidentialObject;
 use \App\Entity\Realestate\CommercialObject;
+use \App\Entity\Realestate\ObjectProperty;
 
 class ObjectRepository extends EntityRepository
 {
-	public function create($data)
+	public function create($data = array())
 	{
 		$object = new CommercialObject();
 
@@ -30,10 +31,35 @@ class ObjectRepository extends EntityRepository
 
 		$this->_em->persist($object);
 		$this->_em->flush();
+
+		//$property = $this->createObjectProperty($object->getId(), $data);
+
 		return $object;
 	}
 
-	public function getObjectByid($id) 
+	private function createObjectProperty($objectId = 0, $data = array())
+	{
+		$property = new ObjectProperty();
+
+		$property->setObjectId($objectId);
+		$property->setPropertyType($data['']);
+		$property->setBuilt($data['']);
+		$property->setBuiltIn($data['']);
+		$property->setArea($data['']);
+		$property->setRooms($data['']);
+		$property->setFloors($data['']);
+		$property->setOccupied($data['']);
+		$property->setOwnerName($data['']);
+		$property->setOwnerTel($data['']);
+		$property->setOwnerMob($data['']);
+		$property->setOwnerEmail($data['']);
+
+		$this->_em->persist($property);
+		$this->_em->flush();
+		return $property;
+	}
+
+	public function getObjectByid($id = 0) 
 	{	
 		// another way of retrieving data
 		//$object = $this->_em->getRepository('\App\Entity\Realestate\Object')->findBy(array('id' => $id));
