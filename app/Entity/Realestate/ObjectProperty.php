@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="object_property")
  */
 
-abstract class ObjectProperty
+class ObjectProperty
 {
 
 

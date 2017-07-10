@@ -43,6 +43,7 @@ class ObjectRepository extends EntityRepository
 
 		if(isset($data) && !empty($data)) {
 			$object = array(
+				'id' => $data->getId(),
 				'address1' => $data->getAddress1(),
 				'address2' => $data->getAddress2(),
 				'postalcode' => $data->getZipcode(),
@@ -52,10 +53,35 @@ class ObjectRepository extends EntityRepository
 				'company_id' => $data->getCustomerId(),
 				'user_id' => $data->getUserId(),
 				'objecttype' => $objectTypeRepo->getObjectTypeById($data->getObjectTypeId()),
+				'objectProp' => $this->getObjPropByObjId($id)
+
+
 			);
 		}
 
 		return $object;
+	}
+
+	private function getObjPropByObjId($id)
+	{
+		$objPropRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectProperty')->findBy(array('objectId' => $id));
+
+		if(!empty($objPropRepo[0])){
+			return array(
+				'id' => $objPropRepo[0]->getId(),
+				'propertyType' => $objPropRepo[0]->getPropertyType(),
+				'built' => $objPropRepo[0]->getBuilt(),
+				'builtin' => $objPropRepo[0]->getBuiltIn(),
+				'area' => $objPropRepo[0]->getArea(),
+				'rooms' => $objPropRepo[0]->getRooms(),
+				'floors' => $objPropRepo[0]->getFloors(),
+				'occupied' => $objPropRepo[0]->getOccupied(),
+				'ownerName' => $objPropRepo[0]->getOwnerName(),
+				'ownerTel' => $objPropRepo[0]->getOwnerTel(),
+				'ownerEmail' => $objPropRepo[0]->getOwnerEmail(),
+				'ownerMob' => $objPropRepo[0]->getOwnerMob(),
+				);
+		}
 	}
 
 	public function getAllObjects()

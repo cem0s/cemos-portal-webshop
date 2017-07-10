@@ -42,36 +42,15 @@
 	</div>
 
 </footer>
+		
 
-
-<script>
-$(document).ready(function(){
-    $("#hide").click(function(){
-        $("#all").hide(200);
-    });
-    $("#show").click(function(){
-        $("#all").show(200);
-    });
-
-   $('.btnNext').click(function(){
-      $('.nav-tabs > .active').next('li').find('a').trigger('click');
-    });
-
-      $('.btnPrevious').click(function(){
-      $('.nav-tabs > .active').prev('li').find('a').trigger('click');
-    })
-});
-</script>
-<script>
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown(); 
-    });
-</script>
-
-<script src="{{ asset('slick/slick.min.js') }}"></script>
-<script src="{{url('js/custom.js')}}"></script>
-<script src="{{url('js/tab.js')}}"></script>
-<script src="{{url('app/lib/angular/angular.min.js')}}"></script>
-<script src="{{url('app/app.js')}}"></script>
-<script src="{{url('app/controllers/user.js')}}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{asset('slick/slick.min.js') }}"></script>
+<script src="{{asset('js/custom.js')}}"></script>
+<script src="{{asset('js/tab.js')}}"></script>
+<script src="{{asset('app/lib/angular/angular.min.js')}}"></script>
+<script src="{{asset('app/app.js')}}"></script>
+<script src="{{asset('app/controllers/user.js')}}"></script>
+<script src="{{asset('js/app.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+<script src="{{asset('js/jquery.iframe-transport.min.js') }}"></script>
+<script src="{{asset('js/jquery.fileupload.min.js') }}"></script>

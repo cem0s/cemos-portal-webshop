@@ -10,7 +10,7 @@
 
 @section('body')
 	<div class="icon-bar">
-	  <a href="{{url('shop/1')}}" class="alt-color" title="Shop"><i class="fa fa-shopping-cart"></i></a> 
+	  <a href="{{url('shop/'.$object["id"].'')}}" class="alt-color" title="Shop"><i class="fa fa-shopping-cart"></i></a> 
 	  <a href="#" title="Edit Property"><i class="fa fa-pencil" style="color:#B15022;"></i></a> 
 	  <a href="#" class="alt-color" title="Product Status"><i class="fa fa-bar-chart"></i></a>
 	  <a href="#" title="Property Details"><i class="fa fa-file-text-o" style="color:#B15022;"></i></a> 

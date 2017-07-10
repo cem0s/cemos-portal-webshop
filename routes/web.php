@@ -28,7 +28,10 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/products-form', 'ShopController@productsForm')->name('products-form');
 	Route::get('/shop/{object_id}', 'ShopController@index')->name('shop');
 	Route::get('/shop-photography', 'ShopController@photography')->name('shop-photography');
+	Route::post('/upload', 'ShopController@uploadFloors')->name('upload-floors');
+	Route::delete('/upload', 'ShopController@deleteFloorImage')->name('delete-floor');
 	Route::get('/shop-cart', 'ShopController@shopCart')->name('shop-cart');
+	Route::get('/show-cart', 'ShopController@showCart')->name('show-cart');
 	Route::get('/profile', 'ProfileController@index')->name('profile-page');
 	Route::get('/calendar', 'CalendarController@index')->name('shop-cart');
 

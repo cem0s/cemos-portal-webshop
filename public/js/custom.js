@@ -1,3 +1,22 @@
+$(document).ready(function(){
+    $("#hide").click(function(){
+        $("#all").hide(200);
+    });
+    $("#show").click(function(){
+        $("#all").show(200);
+    });
+
+   $('.btnNext').click(function(){
+      $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    });
+
+      $('.btnPrevious').click(function(){
+      $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+    })
+
+    $('.dropdown-toggle').dropdown(); 
+});
+
  function readURL(input, defaultPath) 
  {
     var val = $(input).val().toLowerCase(); 
@@ -38,3 +57,4 @@ function callback(){
        // console.log("The captcha has been already solved");
     }
 }
+

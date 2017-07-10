@@ -8,6 +8,7 @@
 @endsection
 
 @section('body')
+
 	<div class="wizard">
         <div class="wizard-inner">
             <div class="connecting-line"></div>
@@ -23,14 +24,14 @@
                 <li role="presentation" class="disabled">
                     <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Fill Up Forms">
                         <span class="round-tab">
-                            <i class="glyphicon glyphicon-pencil"></i>
+                            <i class="fa fa-pencil"></i>
                         </span>
                     </a>
                 </li>
                 <li role="presentation" class="disabled">
                     <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Review Order">
                         <span class="round-tab">
-                            <i class="glyphicon glyphicon-picture"></i>
+                            <i class="fa fa-check-square-o"></i>
                         </span>
                     </a>
                 </li>
@@ -170,8 +171,7 @@
 	            </ul>
 	        </div>
 	        <div class="tab-pane" role="tabpanel" id="step3">
-	            <h3>Step 3</h3>
-	            <p>This is step 3</p>
+	            <div class="container" id="checkout"></div>
 	            <ul class="list-inline pull-right">
 	                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
 	                <li><button type="button" class="btn btn-primary btn-info-full next-step">Submit</button></li>
@@ -184,6 +184,78 @@
 	        <div class="clearfix"></div>
 	    </div>
     </div>
-	
+
+
+    <div id="brochure1" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Template 1</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p><img src="{{asset('images/templates/brochure-1.jpg')}}" class="img-responsive"></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<div id="brochure2" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Template 2</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p><img src="{{asset('images/templates/brochure-2.jpg')}}" class="img-responsive"></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<div id="brochure3" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Template 3</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p><img src="{{asset('images/templates/brochure-3.jpg')}}" class="img-responsive"></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<div id="brochure4" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Template 4</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p><img src="{{asset('images/templates/brochure-4.jpg')}}" class="img-responsive"></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+	<script src="{{asset('js/jquery.iframe-transport.min.js') }}"></script>
+	<script src="{{asset('js/jquery.fileupload.min.js') }}"></script>
 @endsection
 
