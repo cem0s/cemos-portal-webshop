@@ -12,7 +12,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="object_property")
  */
 
+
 class ObjectProperty
+
 {
 
 
@@ -116,6 +118,28 @@ class ObjectProperty
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set object_id
+     *
+     * @param string $objectId
+     * @return Object
+     */
+    public function setObjectId($objectId)
+    {
+        $this->objectId = $objectId;
+
+        return $this;
+    }
+
+    /** Get object_id
+     *
+     * @return integer
+     */
+    public function getObjectId()
+    {
+        return $this->objectId;
     }
 
     /**

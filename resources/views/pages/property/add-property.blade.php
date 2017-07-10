@@ -149,9 +149,9 @@
 		                                        </div>
 			                                </div>
 			                                <div class="form-group">
-			                                    <label for="buildingtype" control-label">Built</label>
-		                                        <div id="buildingtype" class="col-sm-12">
-		                                            <select class="form-control" name="buildingtype">
+			                                    <label for="built" control-label">Built</label>
+		                                        <div id="built" class="col-sm-12">
+		                                            <select class="form-control" name="built">
 		                                            	<option value="">-- Please select --</option>
 		                                            	<option value="new building">New building</option>
 		                                            	<option value="existing building">Existing building</option>
