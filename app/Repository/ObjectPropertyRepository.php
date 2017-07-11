@@ -14,7 +14,7 @@ class ObjectPropertyRepository extends EntityRepository
             'objectId' => $id
         );
 
-        $objectProps = $objectPropertyRepo->findBy($criteria);
+        $objectProps = $objectPropertyRepo->findOneBy($criteria);
         $data = null;
         if(isset($objectProps) && !empty($objectProps))
         {
