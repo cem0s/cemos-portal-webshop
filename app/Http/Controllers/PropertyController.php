@@ -33,6 +33,9 @@ class PropertyController extends Controller
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
         $object_data = $object_repo->getObjectByid($object_id);
 
+        print_r('<pre>');
+        print_r($object_data);exit;
+
     	return view('pages.property.property-details')->with('object', $object_data);
     }
 
@@ -52,7 +55,7 @@ class PropertyController extends Controller
         $data['company_id'] = $request->session()->get('company_id');
         $data['user_id'] = $request->session()->get('user_id');
         $data['slug'] = strtolower(str_replace(' ', '-', $data['address1']));
-        $data['object_type'] = "residential"; // to be determine what type
+        $data['object_type'] = $data['buildingtype'];
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
         $object_data = $object_repo->create($data);
 
