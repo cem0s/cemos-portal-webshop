@@ -80,7 +80,7 @@ class ObjectRepository extends EntityRepository
 				'company_id' => $data->getCustomerId(),
 				'user_id' => $data->getUserId(),
 				'objecttype' => $objectTypeRepo->getObjectTypeById($data->getObjectTypeId()),
-				'objectProp' => $this->getObjPropByObjId($id)
+				'objectProp' => $this->getObjPropByObjId($id),
 				'object_property' => $objectPropertyRepo->getObjectPropertyByObjectId($id),
 			);
 		}
