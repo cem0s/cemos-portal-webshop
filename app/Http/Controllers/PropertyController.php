@@ -33,9 +33,6 @@ class PropertyController extends Controller
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
         $object_data = $object_repo->getObjectByid($object_id);
 
-        print_r('<pre>');
-        print_r($object_data);exit;
-
     	return view('pages.property.property-details')->with('object', $object_data);
     }
 
