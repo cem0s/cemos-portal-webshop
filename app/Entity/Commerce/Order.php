@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Order
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\OrderRepository")
  * @ORM\Table(name="`order`")
  */
 class Order
@@ -51,7 +51,7 @@ class Order
     /**
      * @var integer
      *
-     * @ORM\Column(name="invoice_address_id", type="integer", nullable=false)
+     * @ORM\Column(name="invoice_address_id", type="integer", nullable=true)
      * @ORM\OneToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */

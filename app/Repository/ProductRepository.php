@@ -37,6 +37,27 @@ class ProductRepository extends EntityRepository
 		return array();
 	}
 
+	/**
+     * This gets product by id
+     * @author Gladys Vailoces <gladys@cemos.ph>
+     * @param id integer
+     * @return product array
+     */
+	public function getProductById($id)
+	{
+		$product = $this->_em->find('App\Entity\Commerce\Product', $id);
+		$obj = (array)$product;
+		
+		if(!empty($obj)) {
+			return array(
+				'id' => $product->getId(),
+				'name' => $product->getName(),
+				'description' => $product->getDescription(),
+				'price' => $product->getPrice(),
+				'category' => $product->getCategory()
+			);
+		}
+	}
 
 
 }

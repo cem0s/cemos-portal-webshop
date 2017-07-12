@@ -47,6 +47,7 @@
 <script src="{{asset('slick/slick.min.js') }}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
 <script src="{{asset('js/tab.js')}}"></script>
+<script src="{{asset('js/order.js')}}"></script>
 <script src="{{asset('app/lib/angular/angular.min.js')}}"></script>
 <script src="{{asset('app/app.js')}}"></script>
 <script src="{{asset('app/controllers/user.js')}}"></script>
@@ -54,3 +55,4 @@
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script src="{{asset('js/jquery.iframe-transport.min.js') }}"></script>
 <script src="{{asset('js/jquery.fileupload.min.js') }}"></script>
+

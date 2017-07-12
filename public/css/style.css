@@ -965,11 +965,17 @@ span.round-tab:hover {
 
 }
 
+#checkout {
+	padding: 10px;
+
+}
+
 .labelForDetails {
-	background-color: #edbfbf;
+	background-color: #ca7129;
 	padding: 1px;
 	padding-left: 13px;
 	margin-bottom: 9px;
+	color: white;
 }
 
 .thumb-dropdown .dropdown-menu > li {
@@ -986,4 +992,20 @@ span.round-tab:hover {
 }
 .thumb-dropdown .dropdown-menu > li > a:hover .thumbnail  {
     display: block;    
+}
+
+.chtable {
+	margin-left: 600px;
+}
+
+.customImage {
+	height: 150px;
+	margin:auto;
+}
+
+#formBody {
+	display: none;
+}
+#formSuccess {
+	display: none;
 }

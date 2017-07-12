@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Doctrine\ORM\EntityManager;
 use App\UploadHandler;
+use Cart;
 
 class ShopController extends Controller
 {
@@ -233,7 +234,7 @@ class ShopController extends Controller
                         $html.= '<h4>Appointment Preference</h4>';
                     $html.= '</div>';
                     $html.= '<br>';
-                    $html.= 'Preference Date <br><input id="preference_date" class="form-control" name="preference_date" placeholder="dd-mm-yyyy" type="text">';
+                    $html.= 'Preference Date <br><input id="p_preference_date" class="form-control" name="p_preference_date" placeholder="dd-mm-yyyy" type="text">';
                     $html.= '<input type="hidden" name="id" id="id" value='.substr($photoIds, 0, -1).'>';
                 $html .= '</div>';
                 $html .= '<div class="col-md-4">';
@@ -244,7 +245,11 @@ class ShopController extends Controller
                 $html .= '</div>';
             $html .= '</div>';
         $html .= '</div>';
-
+        $html .= '  <script>';
+        $html .= ' $(document).ready(function () {';
+        $html .= '  $( "#p_preference_date" ).datepicker();';
+        $html .= '} );';
+        $html .= '</script>';
         return $html;
     }
 
@@ -270,7 +275,7 @@ class ShopController extends Controller
                         $html.= '<h4>Appointment Preference</h4>';
                     $html.= '</div>';
                     $html.= '<br>';
-                    $html.= 'Preference Date <br><input id="preference_date" class="form-control" name="preference_date" placeholder="dd-mm-yyyy" type="text">';
+                    $html.= 'Preference Date <br><input id="v_preference_date" class="form-control" name="v_preference_date" placeholder="dd-mm-yyyy" type="text">';
                 $html .= '</div>';
                 $html .= '<div class="col-md-4">';
                     $html.= '<div class="labelForDetails">';
@@ -281,7 +286,11 @@ class ShopController extends Controller
                 $html .= '</div>';
             $html .= '</div>';
         $html.= '</div>';
-
+        $html .= '  <script>';
+        $html .= ' $(document).ready(function () {';
+        $html .= '  $( "#v_preference_date" ).datepicker();';
+        $html .= '} );';
+        $html .= '</script>';
   
         return $html;
     }
@@ -308,7 +317,7 @@ class ShopController extends Controller
                         $html.= '<h4>Appointment Preference</h4>';
                     $html.= '</div>';
                     $html.= '<br>';
-                    $html.= 'Preference Date <br><input id="preference_date" class="form-control date-picker" name="preference_date" placeholder="dd-mm-yyyy" type="text">';
+                    $html.= 'Preference Date <br><input id="b_preference_date" class="form-control date-picker" name="b_preference_date" placeholder="dd-mm-yyyy" type="text">';
                     $html.= '<input type="hidden" name="id" id="id" value='.substr($marketIds, 0, -1).'>';
                 $html .= '</div>';
                 $html .= '<div class="col-md-4">';
@@ -331,7 +340,11 @@ class ShopController extends Controller
                 $html .= '</div>';
             $html .= '</div>';
         $html.= '</div>';
-
+        $html .= '  <script>';
+        $html .= ' $(document).ready(function () {';
+        $html .= '  $( "#b_preference_date" ).datepicker();';
+        $html .= '} );';
+        $html .= '</script>';
         return $html;
     }
 
@@ -357,7 +370,7 @@ class ShopController extends Controller
                         $html.= '<h4>Appointment Preference</h4>';
                     $html.= '</div>';
                     $html.= '<br>';
-                    $html.= 'Preference Date <br><input id="preference_date" class="form-control date-picker" name="preference_date" placeholder="dd-mm-yyyy" type="text">';
+                    $html.= 'Preference Date <br><input id="f_preference_date" class="form-control date-picker" name="f_preference_date" placeholder="dd-mm-yyyy" type="text">';
                     $html.= '<input type="hidden" name="id" id="id" value='.substr($archiIds, 0, -1).'>';
                 $html .= '</div>';
                 $html .= '<div class="col-md-4">';
@@ -385,7 +398,7 @@ class ShopController extends Controller
             $html .= '</div>';
             $html.= '<hr>Floors <br><br>';
             $html.= '<div class= "floorplanner_1">';
-                $html.= '<div class="row">';
+                $html.= '<div class="row floors">';
                     $html .= '<div class="col-md-4">';
                         $html.= '<div class="labelForDetails">';
                             $html.= '<h4>Floor 1</h4>';
@@ -413,7 +426,11 @@ class ShopController extends Controller
                 $html .= '</div>';
             $html .= '</div>';
         $html.= '</div>';
-    
+        $html .= '  <script>';
+        $html .= ' $(document).ready(function () {';
+        $html .= '  $( "#f_preference_date" ).datepicker();';
+        $html .= '} );';
+        $html .= '</script>';
         return $html;
     }
 
@@ -548,7 +565,189 @@ class ShopController extends Controller
     public function showCart()
     {
         $data = $_GET;
-        print_r("<pre>");print_r($data);exit;
-        return "test";
+ 
+        $cart = Cart::destroy();
+        $objId = $data['data']['objDetails']['objectId'];
+        foreach ($data['data'] as $key => $value) {
+            switch ($key) {
+                case 'photography':
+                    $ids = explode(',', $value['id']);
+                    foreach ($ids as $idKey => $idVal) {
+                        $value['object_id'] = $objId;
+                        $productDetails = $this->productRepo->getProductById($idVal);
+
+                        $product = array(
+                                'id' => $idVal,
+                                'qty' => 1,
+                                'price' => $productDetails['price'],
+                                'name' => $productDetails['name'],
+                                'details' => $value
+                            );
+                        Cart::add($idVal, $productDetails['name'], 1, $productDetails['price'], array('photoComment'=>$value['photoComment'],'objectId'=> $objId, 'preferenceDate'=> $value['p_preference_date']));
+                   
+                    }
+                    
+                    break;
+                case 'video':
+                    $ids = explode(',', $value['id']);
+                    foreach ($ids as $idKey => $idVal) {
+                        $value['object_id'] = $objId;
+                        $productDetails = $this->productRepo->getProductById($idVal);
+                        $product = array(
+                                'id' => $idVal,
+                                'qty' => 1,
+                                'price' => $productDetails['price'],
+                                'name' => $productDetails['name'],
+                                'details' => $value
+                            );
+                        Cart::add($idVal, $productDetails['name'], 1, $productDetails['price'], array('videoComment'=>$value['videoComment'],'objectId'=> $objId, 'preferenceDate'=> $value['v_preference_date']));
+
+                    }
+                    break;
+                case 'market':
+                    $ids = explode(',', $value['id']);
+                    foreach ($ids as $idKey => $idVal) {
+                        $value['object_id'] = $objId;
+                        $productDetails = $this->productRepo->getProductById($idVal);
+                        $product = array(
+                                'id' => $idVal,
+                                'qty' => 1,
+                                'price' => $productDetails['price'],
+                                'name' => $productDetails['name'],
+                                'details' => $value
+                            );
+                        Cart::add($idVal, $productDetails['name'], 1, $productDetails['price'], array('giveAwayText'=>$value['giveAwayText'],'objectId'=> $objId, 'preferenceDate'=> $value['b_preference_date'],'template'=> $value['template']));
+
+                    }
+                    break;
+                case 'archi':
+                    $ids = explode(',', $value['id']);
+                    foreach ($ids as $idKey => $idVal) {
+                        $value['object_id'] = $objId;
+                        $productDetails = $this->productRepo->getProductById($idVal);
+                        $product = array(
+                                'id' => $idVal,
+                                'qty' => 1,
+                                'price' => $productDetails['price'],
+                                'name' => $productDetails['name'],
+                                'details' => $value
+                            );
+                        $isAddFurniture = false;
+                        $isMirroHor = false;
+                        $isMirrorVer = false;
+                        $isSitePlan = false;
+                        $is3D = false;
+                        if(isset($value['add_furniture'])) {
+                            $isAddFurniture = true;
+                        }
+                        if(isset($value['mirror_hor'])) {
+                            $isMirroHor = true;
+                        }
+                        if(isset($value['mirror_ver'])) {
+                            $isMirrorVer = true;
+                        }
+                        if(isset($value['situate_plan'])) {
+                            $isSitePlan = true;
+                        }
+                        if(isset($value['3d_indication'])) {
+                            $is3D = true;
+                        }
+                        Cart::add($idVal, $productDetails['name'], 1, $productDetails['price'], array('floorComments'=>$value['floorComments'],'objectId'=> $objId,'addFurniture'=> $isAddFurniture,'isMirroHor'=> $isMirroHor,'isMirrorVer'=> $isMirrorVer,'isSitePlan'=> $isSitePlan,'is3D'=> $is3D, 'floors' => $value['floors'], 'preferenceDate' => $value['f_preference_date']));
+
+                    }
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+        }
+        
+        echo $this->getCartList();
+      
     }
+
+    /**
+     * HTML format for cart list
+     * @author Gladys Vailoces <gladys@cemos.ph> 
+     * @return string
+     */
+    private function getCartList()
+    {
+
+        $html = "";
+        $cartItems = Cart::content();
+        $count = 1;
+        $html .= "<strong>No. of Products on Cart : <span id='countP'> ".Cart::count()."</span></strong> <hr><div class='table-responsive'>";
+            $html .= "<table class='table table-striped table-hover'>";
+                $html .= "<thead style='background-color:#ca7129;color:white;'>";
+                    $html .= "<tr>";
+                        $html .= "<th>#</th>";
+                        $html .= "<th>Product</th>";
+                        $html .= "<th>Quantity</th>";
+                        $html .= "<th>Price</th>";
+                        $html .= "<th>Action</th>";
+                    $html .= "</tr>";
+                $html .= "</tr>";
+                $html .= "</thead>";
+                $html .= "<tbody>";
+                foreach ($cartItems as $key => $value) {
+                    $html .= "<tr id='".$key."'>";
+                        $html .= "<td>".$count++."</td>";
+                        $html .= "<td>".$value->name."</td>";
+                        $html .= "<td>".$value->qty."</td>";
+                        $html .= "<td>&#8369 ".$value->price()."</td>";
+                        $html .= "<td><button class='btn btn-primary' onclick='removeItem(\"".$key."\")'><i class='fa fa-trash fa-lg'></i></button>  <span id=spin_".$key." class='hidden'><i class='fa fa-spinner fa-spin  fa-fw'></i></span></td>";
+                    $html .= "</tr>";
+                }
+                $html .= "</tbody>";
+            $html .= "</table>";
+        $html .= "</div>";
+        $html .= "<div class='chtable'>";
+            $html .= "<table class='table'>";
+                $html .= "<tbody>";
+                    $html .= "<tr>";
+                        $html .= "<th>Sub total</th>";
+                        $html .= "<td>&#8369 <span id='subtotal'> ".Cart::subtotal()."</span></td>";
+                    $html .= "</tr>";
+                    $html .= "<tr>";
+                        $html .= "<th>Tax (21 %)</th>";
+                        $html .= "<td>&#8369 <span id='tax'>".Cart::tax()."</span></td>";
+                    $html .= "</tr>";
+                    $html .= "<tr>";
+                        $html .= "<th>Total</th>";
+                        $html .= "<td>&#8369 <span id='total'>".Cart::total()."</span></td>";
+                    $html .= "</tr>";
+                $html .= "</tbody>";
+            $html .= "</table>";
+        $html .= "</div>";
+    
+        return $html;
+
+    }
+
+    /**
+     * Remove item from cart
+     * @author Gladys Vailoces <gladys@cemos.ph> 
+     * @param Request 
+     * @return true
+     */
+    public function removeItem(Request $request)
+    {
+   
+        Cart::remove($request->all()['id']);
+        echo 1;
+    }
+
+    /**
+     * Get new cart total
+     * @author Gladys Vailoces <gladys@cemos.ph> 
+     * @return string
+     */
+    public function getNewCartTotal()
+    {
+        echo json_encode(array('subtotal' => Cart::subtotal(),'total' => Cart::total(), 'tax'=>Cart::tax(),'count'=> Cart::count()));
+    }
+
+  
 }

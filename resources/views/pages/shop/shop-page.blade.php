@@ -14,7 +14,7 @@
             <div class="connecting-line"></div>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Choose Services">
+                    <a href="#step1" data-toggle="tab"  aria-controls="step1" role="tab" title="Choose Services">
                         <span class="round-tab">
                             <i class="fa fa-shopping-cart"></i>
                         </span>
@@ -85,7 +85,7 @@
 								@if(!empty($data)) 
 									@foreach($data['Photo'] as $key => $value) 
 									<tr>
-										<td>{{$value['name']}}</td>
+										<td><b>{{$value['name']}}</b></td>
 										<td>&#8369 {{$value['price']}}</td>
 										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
 									</tr>
@@ -103,7 +103,7 @@
 								@if(!empty($data)) 
 									@foreach($data['Archi'] as $key => $value) 
 									<tr>
-										<td>{{$value['name']}}</td>
+										<td><b>{{$value['name']}}</b></td>
 										<td>&#8369 {{$value['price']}}</td>
 										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
 									</tr>
@@ -121,7 +121,7 @@
 								@if(!empty($data)) 
 									@foreach($data['Market'] as $key => $value) 
 									<tr>
-										<td>{{$value['name']}}</td>
+										<td><b>{{$value['name']}}</b></td>
 										<td>&#8369 {{$value['price']}}</td>
 										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
 									</tr>
@@ -139,7 +139,7 @@
 								@if(!empty($data)) 
 									@foreach($data['Video'] as $key => $value) 
 									<tr>
-										<td>{{$value['name']}}</td>
+										<td><b>{{$value['name']}}</b></td>
 										<td>&#8369 {{$value['price']}}</td>
 										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
 									</tr>
@@ -171,10 +171,10 @@
 	            </ul>
 	        </div>
 	        <div class="tab-pane" role="tabpanel" id="step3">
-	            <div class="container" id="checkout"></div>
-	            <ul class="list-inline pull-right">
-	                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-	                <li><button type="button" class="btn btn-primary btn-info-full next-step">Submit</button></li>
+	            <div class="container" id="checkout"></div>    
+            	<ul class="list-inline pull-right">
+	                <li><p style="color: green;display: none; " id="emptyCartNotif"><i class="fa fa-warning"></i> Your Cart is Empty. </p><button type="button" class="btn btn-default prev-step">Previous</button></li>
+	                <li><button type="button" class="btn btn-primary btn-info-full next-step" id="submitOrder" onclick="orderNow()">Submit Order</button></li>
 	            </ul>
 	        </div>
 	        <div class="tab-pane" role="tabpanel" id="complete">
@@ -184,7 +184,15 @@
 	        <div class="clearfix"></div>
 	    </div>
     </div>
+    <div class="container" id="formBody">
+    	<img src="{{asset('images/loading-spinner.gif')}}" class="img-responsive customImage" > <br> <hr>
+    	<p style="text-align: center;">Processing your orders...</p>
+    </div>
+     <div class="container" id="formSuccess">
+    	   <img src="{{asset('images/gi.png')}}" class="img-responsive customImage" > <br> <hr>
+    	<p style="text-align: center;">Success! <br> Your orders are now saved. <br><br> <a href="{{url('property-details/'.session('object_id').'')}}" class="btn btn-info">Go back to Property Overview</a></p>
 
+    </div>
 
     <div id="brochure1" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
@@ -254,8 +262,7 @@
 		    </div>
 		</div>
 	</div>
-	<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-	<script src="{{asset('js/jquery.iframe-transport.min.js') }}"></script>
-	<script src="{{asset('js/jquery.fileupload.min.js') }}"></script>
+
+	
 @endsection
 

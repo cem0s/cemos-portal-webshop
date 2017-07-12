@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //Initialize tooltips
-    $('.nav-tabs > li a[title]').tooltip();
+    //$('.nav-tabs > li a[title]').tooltip();
     
     //Wizard
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -26,6 +26,8 @@ $(document).ready(function () {
 
     });
 });
+
+
 
 function nextTab(elem) {
    
@@ -107,6 +109,8 @@ function nextTab(elem) {
             $(elem).next().find('a[data-toggle="tab"]').click();
         }
     } else if(tab == "#step2") {
+        $('#emptyCartNotif').css('display','none');
+        $('#submitOrder').attr('disabled',false);
         var divIds = [];
         var reqData = [];
         var data = {};
@@ -118,33 +122,36 @@ function nextTab(elem) {
         $.each(divIds, function(i, val){
             data[val] = {};
             $('#step2 .container').find('div#' + val).find('[name]').each(function() {
-                if ($(this).is(':checkbox')) {
-                    if ($(this).prop('checked')) {
-                        data[val][$(this).attr('name')] = ($(this).val());
-                    }
-                } else if ($(this).is(':radio')) {
-                    if ($(this).prop('checked')) {
-                        if ($(this).attr('target-audience')) {
-                            data[val][$(this).attr('name')] = ($(this).attr('target-audience'));
-                        } else {
+                if(val == "archi") {
+                   var fp = new getFloorPlanData(val);
+                    data[val] = fp;
+                } else {
+                    if ($(this).is(':checkbox')) {
+                        if ($(this).prop('checked')) {
                             data[val][$(this).attr('name')] = ($(this).val());
                         }
-                    }
-                } else {
-                    if($(this).prop('required')){
-                        if(!$(this).val()){
-                            reqData.push($(this).attr('name'));
-                        } else {
-                            $(this).next().next('.alert-danger').addClass('hidden');
+                    } else if ($(this).is(':radio')) {
+                        if ($(this).prop('checked')) {
+                            if ($(this).attr('target-audience')) {
+                                data[val][$(this).attr('name')] = ($(this).attr('target-audience'));
+                            } else {
+                                data[val][$(this).attr('name')] = ($(this).val());
+                            }
                         }
+                    } else {
+                        if($(this).prop('required')){
+                            if(!$(this).val()){
+                                reqData.push($(this).attr('name'));
+                            } else {
+                                $(this).next().next('.alert-danger').addClass('hidden');
+                            }
+                        }
+                        data[val][$(this).attr('name')] = ($(this).val());
                     }
-                    data[val][$(this).attr('name')] = ($(this).val());
                 }
-
+                    
             });
         });
-        
-        console.log(data);
 
         if(reqData.length >0){
             $.each(reqData, function(i, val){ 
@@ -165,6 +172,7 @@ function nextTab(elem) {
                'data': data
             },
             success: function(data){
+            
                 $("html, body").animate({ scrollTop: 0 }, "50");   
                 $("#step3 #checkout").html("");
                 $("#step3 #checkout").html(data);
@@ -210,7 +218,7 @@ function addFloor(id)
 function addFloorForm(id)
 {
     var form = '<div class="floorplanner_'+id+'">';
-            form += '<hr><div class="row">';
+            form += '<hr><div class="row floors">';
                 form += '<div class="col-md-4">';
                     form += '<div class="labelForDetails">';
                     form += '<h4>Floor '+id+'</4>';
@@ -277,3 +285,38 @@ function deleteImage(e)
   
 
 }
+
+var getFloorPlanData = function(v)
+{
+    var field = {};
+    field['id'] = $('#'+v).find('input#id').val();
+    field['floorComments'] = $('#'+v).find('textarea[name=floorComments]').val();
+    field['f_preference_date'] = $('#'+v).find('input[name=f_preference_date]').val();
+    if ($('#'+v).find('input[name="add_furniture"]').is(':checked')) {
+        field['add_furniture'] = $('#'+v).find('input[name="add_furniture"]').val();
+    }
+    if ($('#'+v).find('input[name="mirror_hor"]').is(':checked')) {
+        field['mirror_hor'] = $('#'+v).find('input[name="mirror_hor"]').val();
+    }
+    if ($('#'+v).find('input[name="mirror_ver"]').is(':checked')) {
+        field['mirror_ver'] = $('#'+v).find('input[name="mirror_ver"]').val();
+    }
+    if ($('#'+v).find('input[name="situate_plan"]').is(':checked')) {
+        field['situate_plan'] = $('#'+v).find('input[name="situate_plan"]').val();
+    }
+    if ($('#'+v).find('input[name="3d_indication"]').is(':checked')) {
+        field['3d_indication'] = $('#'+v).find('input[name="3d_indication"]').val();
+    }
+
+
+    field['floors'] ={};
+    $('#step2').find('div#' + v).find('div.floors').each(function(index) {
+        field['floors'][index] = {};
+        $(this).find('[name]').each(function() {
+            field['floors'][index][$(this).attr('name')] = ($(this).val());
+        });
+    });
+
+    return field;
+}
+

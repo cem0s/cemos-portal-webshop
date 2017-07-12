@@ -19,7 +19,7 @@ Route::get('/activate/{code}', 'UserController@activate')->name('activate');
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => ['auth','web']], function(){
 	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 	Route::get('/property-overview', 'PropertyController@index')->name('property-overview');
 	Route::get('/property-details/{object_id}', 'PropertyController@propertyDetails')->name('property-details');
@@ -28,14 +28,19 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/products-form', 'ShopController@productsForm')->name('products-form');
 	Route::get('/shop/{object_id}', 'ShopController@index')->name('shop');
 	Route::get('/shop-photography', 'ShopController@photography')->name('shop-photography');
-	Route::post('/upload', 'ShopController@uploadFloors')->name('upload-floors');
-	Route::delete('/upload', 'ShopController@deleteFloorImage')->name('delete-floor');
 	Route::get('/shop-cart', 'ShopController@shopCart')->name('shop-cart');
-	Route::get('/show-cart', 'ShopController@showCart')->name('show-cart');
+	Route::get('/show-cart', 'ShopController@showCart')->name('show-cart');	
+	Route::get('/new-cart-total', 'ShopController@getNewCartTotal')->name('new-cart-total');
 	Route::get('/profile', 'ProfileController@index')->name('profile-page');
 	Route::get('/calendar', 'CalendarController@index')->name('shop-cart');
+	Route::get('/order', 'OrderController@order')->name('order');
+	Route::get('/order-status/{object_id}', 'OrderController@orderStatus')->name('order-status');
 
 	Route::post('/update-pic', 'ProfileController@updatePic')->name('update-pic');
 	Route::post('/add-property', 'PropertyController@postAddProperty')->name('add-property');
+	Route::post('/remove-item', 'ShopController@removeItem')->name('remove-item');
+	Route::post('/upload', 'ShopController@uploadFloors')->name('upload-floors');
+
+	Route::delete('/upload', 'ShopController@deleteFloorImage')->name('delete-floor');
 
 });

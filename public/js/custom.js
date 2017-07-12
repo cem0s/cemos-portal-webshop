@@ -15,6 +15,7 @@ $(document).ready(function(){
     })
 
     $('.dropdown-toggle').dropdown(); 
+
 });
 
  function readURL(input, defaultPath) 
@@ -50,7 +51,8 @@ $(document).ready(function(){
     }
 }
 
-function callback(){
+function callback()
+{
     // console.log("The user has already solved the captcha, now you can submit your form.");
     $('#captcha').val(grecaptcha.getResponse().length);
     if(grecaptcha.getResponse().length !== 0){
@@ -58,3 +60,51 @@ function callback(){
     }
 }
 
+
+
+function getCartTotal(id)
+{
+    $.ajax({
+        url: '/cemos-portal/new-cart-total', 
+        success: function(res) {
+            var d = JSON.parse(res);
+            if (d) {
+                $('#subtotal').html(d.subtotal);
+                $('#total').html(d.total);
+                $('#tax').html(d.tax);
+                $('#countP').html(d.count);
+                $('#'+id).remove();
+            }
+           
+            if(d.total <= 0){
+                $('#emptyCartNotif').css('display','inline');
+                $('#submitOrder').attr('disabled', true);
+            }
+            
+        }
+    });
+}
+
+function removeItem(id) 
+{
+
+    $.ajax({
+        url: '/cemos-portal/remove-item', 
+        type: 'POST', 
+        data: { id: id},
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+        beforeSend: function() {
+            $('#spin_'+id).removeClass('hidden');
+        }, 
+        success: function(res) {
+            if (res == 1) {
+                getCartTotal(id);
+            }
+            else {
+                alert("Oops, there's an error in removing the item. Kindly contact the website admin.");
+            }
+        }
+    });
+}

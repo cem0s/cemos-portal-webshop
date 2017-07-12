@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * OrderProduct
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\OrderProductRepository")
  * @ORM\Table(name="order_product")
  */
 
