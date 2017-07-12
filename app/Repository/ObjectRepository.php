@@ -65,6 +65,7 @@ class ObjectRepository extends EntityRepository
 		//$object = $this->_em->getRepository('\App\Entity\Realestate\Object')->findBy(array('id' => $id));
 		$object = array();
 		$objectTypeRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectType');
+		$objectPropertyRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectProperty');
 		$data = $this->_em->find('\App\Entity\Realestate\Object', $id);
 
 		if(isset($data) && !empty($data)) {
@@ -80,8 +81,7 @@ class ObjectRepository extends EntityRepository
 				'user_id' => $data->getUserId(),
 				'objecttype' => $objectTypeRepo->getObjectTypeById($data->getObjectTypeId()),
 				'objectProp' => $this->getObjPropByObjId($id)
-
-
+				'object_property' => $objectPropertyRepo->getObjectPropertyByObjectId($id),
 			);
 		}
 
@@ -135,6 +135,7 @@ class ObjectRepository extends EntityRepository
 						'town' => $value['town'],
 						'slug' => $value['slug'],
 						'objecttype' => $objectTypeRepo->getObjectTypeById($value['objectTypeId']),
+						'object_property' => "",
 						'user' => $userRepo->getAllUserInfo($value['userId']),
 						'createdat' => $value['createdAt']->format('c'),
 						'discr' => $value['discr']

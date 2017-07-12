@@ -214,3 +214,7 @@
 		
 	</div>
 @endsection
+
+<!-- To do -->
+<!-- Get the building type for dymanic data -->
+<!-- Make javascript to change property type depending on the building type -->
