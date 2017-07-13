@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth','web']], function(){
 
 	Route::post('/update-pic', 'ProfileController@updatePic')->name('update-pic');
 	Route::post('/add-property', 'PropertyController@postAddProperty')->name('add-property');
+	Route::post('/edit-property', 'PropertyController@postEditProperty')->name('edit-property');
 	Route::post('/remove-item', 'ShopController@removeItem')->name('remove-item');
 	Route::post('/upload', 'ShopController@uploadFloors')->name('upload-floors');
 
