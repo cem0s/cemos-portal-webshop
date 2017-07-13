@@ -71,7 +71,7 @@
 													<td>
 														<div class="list-group-item">
 						        							<h5 class="list-group-item-heading">Log #{{$logValue['log_id']}}</h5>
-						        							<p style="font-size: 11px;"><i>Created on {{date('F d, Y H:i:s A', strtotime($logValue['created_at']))}}</i></p>
+						        							<p class="customP">Created on {{date('F d, Y H:i:s A', strtotime($logValue['created_at']))}}</p>
 						        							<p class="list-group-item-text">{{$logValue['data']}}</p>
 						        						</div>
 					        						</td>

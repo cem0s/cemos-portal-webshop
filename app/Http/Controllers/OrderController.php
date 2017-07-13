@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Doctrine\ORM\EntityManager;
 use Cart;
+use CustomPaginator;
 
 class OrderController extends Controller
 {
@@ -53,7 +54,10 @@ class OrderController extends Controller
     public function orderStatus($objId)
     {
     	$data = $this->orderRepo->getOrders($objId);
-    	
-    	return view('pages.order.order-status')->with('orderData', $data);
+    
+    	//data should be in array
+    	$paginatedSearchResults = CustomPaginator::getPaginator($data, 10);
+
+    	return view('pages.order.order-status')->with('orderData', array('oData' => $paginatedSearchResults, 'objId' => $objId));
     }
 }
