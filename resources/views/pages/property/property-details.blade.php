@@ -264,7 +264,7 @@
 				</div>
 
 				<div role="tabpanel" class="tab-pane" id="settings">
-						<div class=" row carouselWrap">
+					<div class=" row carouselWrap">
 							<div id="carousel-example-generic" class="carousel slide" data-ride="carousel"> 
 
 							  <ol class="carousel-indicators">
