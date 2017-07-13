@@ -28,7 +28,7 @@ class OrderRepository extends EntityRepository
 		$this->addLog(array(
 				'user_id' => $data['user_id'],
 				'company_id' => $data['company_id'],
-				'data' => 'You created new order.',
+				'data' => 'You created new order for object id '.$data['object_id'].' with order id '.$order->getId().'.',
 				'category' => 'order',
 				'action' => 'create' 
 			));

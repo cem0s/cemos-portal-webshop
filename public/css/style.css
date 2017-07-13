@@ -553,7 +553,6 @@ td.align_middle {
 }
 
 .profile_bg{
-	background:#d2d2d2;
 	padding:10px;	
 	
 }
@@ -798,6 +797,7 @@ td.align_middle {
     width: 90px;
     background-color: #ede3e3;
     position: fixed;
+    z-index: 9;
 }
 
 .icon-bar a {

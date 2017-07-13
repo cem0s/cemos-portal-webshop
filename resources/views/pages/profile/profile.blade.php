@@ -21,9 +21,9 @@
 					<div class="profile_bg text-center">
 						<div class="profile-pic">
 							@if(Auth::user()->getProfilePic() == "")
-								<img src="{{url('images/user-avatar.png')}}" class="img-responsive" style="height: 200px;width: 226px;" />
+								<img src="{{url('images/user-avatar.png')}}" class="img-circle" style="height: 200px;width: 226px;" />
 							@else 
-								<img src="{{Auth::user()->getProfilePic()}}" class="img-responsive" />
+								<img src="{{Auth::user()->getProfilePic()}}" class="img-circle" />
 							@endif
 						</div>
 					</div>
