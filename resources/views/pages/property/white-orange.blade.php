@@ -5,20 +5,20 @@
 				<h2></h2>
 				<p class="set1">
 					<a href="{{url('property-details')}}/{{$value['id']}}">
-						<i class="fa fa-twitter"></i>
+						<i class="fa fa-home" title="Property details"></i>
 					</a>
 					<a href="#">
-						<i class="fa fa-facebook"></i>
+						<i class="fa fa-pencil" title="Edit property details"></i>
 					</a>
 				</p>
 				<hr>
 				<hr>
 				<p class="set2">
 					<a href="#">
-						<i class="fa fa-instagram"></i>
+						<i class="fa fa-shopping-cart" title="Shop products"></i>
 					</a>
 					<a href="#">
-						<i class="fa fa-dribbble"></i>
+						<i class="fa fa-bars" title="Product status"></i>
 					</a>
 				</p>
 			</div>
