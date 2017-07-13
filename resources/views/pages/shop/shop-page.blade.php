@@ -48,7 +48,7 @@
 							<h2 class="text-center text-uppercase"> photography</h2>
 							<div class="cont">
 								<img src="{{url('images/s1.jpg')}}" class="img_responsive" width="100%"/>
-								<div class="overlay">
+								<div class="overlay1">
 									<div class="text">
 										<table class="table" style="color: white;">
 												<tr>
@@ -79,7 +79,7 @@
 							<h2 class="text-center text-uppercase">architectural</h2>
 							<div class="cont">
 								<img src="{{url('images/s2.jpg')}}" class="img_responsive" width="100%"/>
-								<div class="overlay">
+								<div class="overlay1">
 									<div class="text">
 										<table class="table" style="color: white;">
 												<tr>
@@ -110,7 +110,7 @@
 							<h2 class="text-center text-uppercase">marketing</h2>
 							<div class="cont">
 								<img src="{{url('images/s4.jpg')}}" class="img_responsive" width="100%"/>
-								<div class="overlay">
+								<div class="overlay1">
 									<div class="text">
 										<table class="table" style="color: white;">
 												<tr>
@@ -140,7 +140,7 @@
 							<h2 class="text-center text-uppercase">video</h2>
 							<div class="cont">
 								<img src="{{url('images/s5.jpg')}}" class="img_responsive" width="100%"/>
-								<div class="overlay">
+								<div class="overlay1">
 									<div class="text">
 										<table class="table" style="color: white;">
 												<tr>

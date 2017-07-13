@@ -1020,7 +1020,7 @@ span.round-tab:hover {
 	position: relative;
 }
 
-.overlay {
+.overlay1 {
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -1033,7 +1033,7 @@ span.round-tab:hover {
   opacity: .8
 }
 
-.cont:hover .overlay {
+.cont:hover .overlay1 {
   bottom: 0;
   height: 100%;
 }
