@@ -42,6 +42,11 @@ class PropertyController extends Controller
         return view('pages.property.add-property');
     }
 
+    public function editProperty()
+    {
+        return view('pages.property.edit-property');
+    }
+
     /* TO DO:
     * Identify what type of object to be created
     * Redirect to property details

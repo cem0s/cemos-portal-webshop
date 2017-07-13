@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth','web']], function(){
 	Route::get('/property-overview', 'PropertyController@index')->name('property-overview');
 	Route::get('/property-details/{object_id}', 'PropertyController@propertyDetails')->name('property-details');
 	Route::get('/add-property', 'PropertyController@addProperty')->name('add-property');
+	Route::get('/edit-property/{object_id}', 'PropertyController@editProperty')->name('edit-property');
 	Route::get('/product-status', 'ProductStatusController@index')->name('product-status');
 	Route::get('/products-form', 'ShopController@productsForm')->name('products-form');
 	Route::get('/shop/{object_id}', 'ShopController@index')->name('shop');
