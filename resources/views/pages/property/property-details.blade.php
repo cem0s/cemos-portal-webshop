@@ -65,37 +65,37 @@
 								<div class="col-md-6 no-padding">
 									<h5 class=" col-md-6 no-padding"> Address:</h5>
 									<p class="col-md-6">
-										<?php echo $object['address1']?><br>
-										<?php echo $object['postalcode']?><br>
-										<?php echo $object['town']?><br>
-										<?php echo $object['country']?><br>
+										{{ $object['address1'] }}<br>
+										{{ $object['postalcode'] }}<br>
+										{{ $object['town'] }}<br>
+										{{ $object['country'] }}<br>
 									</p>
 								</div>
 								<div class="col-md-6">
 									<h5 class=" col-md-6"> Details:</h5>
 									<p class="col-md-6">
-										Build in : <?php echo $object['object_property']['built_in']?><br>
-										Surface: <?php echo $object['object_property']['area']?><br>
-										Floors: <?php echo $object['object_property']['no_floors']?><br>
-										Rooms: <?php echo $object['object_property']['no_rooms']?><br>
-										Occupied: <?php echo $object['object_property']['occupied']?><br>
+										Build in : {{ $object['object_property']['built_in'] }}<br>
+										Surface: {{ $object['object_property']['area'] }} <br>
+										Floors: {{ $object['object_property']['no_floors'] }}<br>
+										Rooms:  {{ $object['object_property']['no_rooms'] }} <br>
+										Occupied: {{ $object['object_property']['occupied'] }} <br>
 									</p>
 								</div>
 								<div class="col-md-6 no-padding">
 									<h5 class=" col-md-6 no-padding"> Property type:</h5>
 									<p class="col-md-6">
 										Commercial<br>
-										<?php echo $object['object_property']['property_type']?><br>
-										<?php echo $object['object_property']['built']?><br>
+										{{  $object['object_property']['property_type'] }} <br>
+										{{  $object['object_property']['built'] }} <br>
 									</p>
 								</div>
 								<div class="col-md-6">
 									<h5 class="col-md-6"> Client info:</h5>
 									<p class="col-md-6">
-										<?php echo $object['object_property']['owner_name']?><br>
-										<?php echo $object['object_property']['owner_tel']?><br>
-										<?php echo $object['object_property']['owner_mob']?><br>
-										<?php echo $object['object_property']['owner_email']?><br>
+										{{  $object['object_property']['owner_name'] }} <br> 
+										{{  $object['object_property']['owner_tel'] }} <br> 
+										{{  $object['object_property']['owner_mob'] }} <br> 
+										{{  $object['object_property']['owner_email'] }} <br> 
 									</p>
 								</div>
 						</div>
