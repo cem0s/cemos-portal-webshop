@@ -21,9 +21,10 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        // $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
-        // $all_property = $object_repo->findAll();
-        return view('pages.property.property-overview');
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $all_property = $object_repo->getAllObjects();
+
+        return view('pages.property.property-overview')->with('objects', $all_property['property']);
     }
 
     public function propertyDetails(Request $request)
