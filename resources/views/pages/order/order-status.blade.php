@@ -9,13 +9,18 @@
 
 @section('body')
 <div class="icon-bar">
-  <a href="{{url('shop/'.$orderData["objId"].'')}}" class="alt-color" title="Shop"><i class="fa fa-shopping-cart"></i></a> 
+  <a href="{{url('shop/'.$orderData["objData"]['id'].'')}}" class="alt-color" title="Shop"><i class="fa fa-shopping-cart"></i></a> 
   <a href="#" title="Edit Property"><i class="fa fa-pencil" style="color:#B15022;"></i></a> 
-  <a href="{{url('order-status/'.$orderData["objId"].'')}}" class="alt-color" title="Order Status"><i class="fa fa-bar-chart"></i></a>
+  <a href="{{url('order-status/'.$orderData["objData"]['id'].'')}}" class="alt-color" title="Order Status"><i class="fa fa-bar-chart"></i></a>
   <a href="#" title="Property Details"><i class="fa fa-file-text-o" style="color:#B15022;"></i></a> 
 </div>
 
 <div class="container">
+	<?php
+		if(isset($orderData['objData'])){
+			echo "<h3>".$orderData['objData']['address1']."</h3><small>".$orderData['objData']['town'].", Philippines, ".$orderData['objData']['postalcode']."</small><hr>";
+		}
+	?>
 	<table class="table table-striped table-hover">
 		<thead style='background-color:#ca7129;color:white;'>
 			<tr>
@@ -29,8 +34,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			@if(!empty($orderData['oData']))
-	
+
+			@if(count($orderData['oData']) > 0)
+				
 				@foreach($orderData['oData'] as $key =>  $value)
 					
 				<tr>
@@ -60,11 +66,13 @@
 				
 				@endforeach 
 			@else 
-				<p>No orders this time.</p>
+				<tr>
+					<td colspan="8"><p>No orders this time.</p></td>
+				</tr>
 			@endif
 		</tbody>
 	</table>
-	 <?php echo $orderData['oData']->setPath(url('order-status/'.$orderData['objId']))->render(); ?>
+	 <?php echo $orderData['oData']->setPath(url('order-status/'.$orderData['objData']['id']))->render(); ?>
 </div>
 
 @endsection

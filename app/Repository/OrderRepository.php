@@ -42,8 +42,10 @@ class OrderRepository extends EntityRepository
 		$orderLines = array();
 		$orderArray = array();
 		$orderPRepo = $this->_em->getRepository('App\Entity\Commerce\OrderProduct');
+		$objectRepo = $this->_em->getRepository('App\Entity\Realestate\Object');
 		$ordersByObject = $this->getOrdersByObjId($objId);
-		
+		$objDetails  = $objectRepo->getObjectByid($objId);
+
 		if(!empty($ordersByObject)) {
 			foreach ($ordersByObject as $key => $value) {
 				$orderArray[] = $orderPRepo->getOrderProductByOrderId($value['id']);
@@ -59,7 +61,7 @@ class OrderRepository extends EntityRepository
 			}
 		}
 	
-		return $orderLines;
+		return array('orderData'=>$orderLines,'objData' => $objDetails);
 
 	}
 
