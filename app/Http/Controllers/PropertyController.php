@@ -21,9 +21,10 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        // $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
-        // $all_property = $object_repo->findAll();
-        return view('pages.property.property-overview');
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $all_property = $object_repo->getAllObjects();
+
+        return view('pages.property.property-overview')->with('objects', $all_property['property']);
     }
 
     public function propertyDetails(Request $request)
@@ -39,6 +40,16 @@ class PropertyController extends Controller
     public function addProperty()
     {
         return view('pages.property.add-property');
+    }
+
+    public function editProperty(Request $request)
+    {
+        $object_id = $request->route('object_id');
+
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $object_data = $object_repo->getObjectByid($object_id);
+
+        return view('pages.property.edit-property')->with('object', $object_data);
     }
 
     /* TO DO:
@@ -62,6 +73,11 @@ class PropertyController extends Controller
         }
 
         return view('pages.property.add-property');
+    }
+
+    public function postEditProperty(Request $request)
+    {
+        $data = $request->all();
     }
 
 
