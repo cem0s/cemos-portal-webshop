@@ -78,6 +78,8 @@ class PropertyController extends Controller
     public function postEditProperty(Request $request)
     {
         $data = $request->all();
+        print_r('<pre>');
+        print_r($data);exit;
     }
 
 
