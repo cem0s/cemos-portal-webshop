@@ -39,7 +39,7 @@ class ObjectRepository extends EntityRepository
 
 	public function update($objectId = 0, $data = array())
 	{
-		$object = $this->_em->find('\App\Entity\Realestate\Object', $id);
+		$object = $this->_em->find('\App\Entity\Realestate\Object', $objectId);
 
 		$object->setName($data['address1']);
 		$object->setAddress1($data['address1']);
@@ -83,12 +83,11 @@ class ObjectRepository extends EntityRepository
 	{
 		$objectPropertyRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectProperty');
         $criteria = array(
-            'objectId' => objectId
+            'objectId' => $objectId
         );
 
         $objectProps = $objectPropertyRepo->findOneBy($criteria);
 
-        $objectProps->setObjectId($objectId);
 		$objectProps->setPropertyType($data['buildingtype']);
 		$objectProps->setBuilt($data['built']);
 		$objectProps->setBuiltIn($data['builtin']);
@@ -101,9 +100,9 @@ class ObjectRepository extends EntityRepository
 		$objectProps->setOwnerMob($data['mobno']);
 		$objectProps->setOwnerEmail($data['emailadd']);
 
-		$this->_em->merge($property);
+		$this->_em->merge($objectProps);
 		$this->_em->flush();
-		return $property;
+		return $objectProps;
 	}
 
 	public function getObjectByid($id = 0) 
