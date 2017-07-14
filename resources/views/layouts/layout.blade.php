@@ -15,7 +15,7 @@
 		<link href="{{ asset('css/poverviewhover.css') }}" rel="stylesheet">
 		<link href="{{ asset('slick/slick.css') }}" rel="stylesheet">
 		<link href="{{ asset('slick/slick-theme.css') }}" rel="stylesheet">
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<link href="{{ asset('css/jquery-ui.css')}}" rel="stylesheet" >
 		<link href="{{ asset('css/calendarCemos.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/poverviewhover.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/dropzone.css') }}" rel="stylesheet">
@@ -25,11 +25,20 @@
 		<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 		<script src='https://www.google.com/recaptcha/api.js'></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>
+		<script src="{{ asset('js/dropzone.min.js')}}"></script>
 
 		<script src="{{asset('js/form-dropzone.js')}}"></script>
 		<script src="{{asset('js/floorplanner-dropzone.js')}}"></script>
-			
+		<script src="{{asset('js/waypoints.min.js') }}"></script> 
+		<script src="{{asset('js/jquery.counterup.min.js') }}"></script>
+		<script>
+		    jQuery(document).ready(function( $ ) {
+		        $('.counter').counterUp({
+		            delay: 10,
+		            time: 1000
+		        });
+		    });
+		</script>
 
 
 		
