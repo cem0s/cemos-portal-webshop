@@ -165,7 +165,7 @@ body{
 #dashboard_wrap .table_border {
 	background: #e6e6e6;
 	padding:10px;
-	margin-bottom:100px;
+	margin-bottom:50px;
 }
 
 #dashboard_wrap .product_th{
@@ -1087,7 +1087,7 @@ span.round-tab:hover {
 }
 
 .card-text {
-	color: green;
+	color: #32395c;
 	font-size: 14px;
 	font-weight: 600;
 	text-transform: uppercase;

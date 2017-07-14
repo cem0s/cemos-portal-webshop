@@ -16,7 +16,7 @@
 			<div class="col-md-3">
 				<div class="card" style="width: 26rem;">
 				  <div class="card-block">
-				    <h3 class="card-title"><a href="#property"><i class="fa fa-home fa-3x black" aria-hidden="true" title="Property"></i></a></h3>
+				    <h3 class="card-title"><a href="#property"><i class="fa fa-home fa-3x black" aria-hidden="true" title="Property" style="color: #C8592A;"></i></a></h3>
 				    <p class="card-text">New Properties </p>
 				    <span class="counter" style="display: inline-block; width: 32%">{{$data['property']['count']}}</span>
 				  </div>
@@ -25,27 +25,27 @@
 			<div class="col-md-3">
 				<div class="card" style="width: 26rem;">
 				 	<div class="card-block">
-					    <h3 class="card-title"><a href="#delivered"> <i class="fa fa-check fa-3x black" aria-hidden="true" title="Delivered"></i></a></h3>
+					    <h3 class="card-title"><a href="#delivered"> <i class="fa fa-check fa-3x black" aria-hidden="true" title="Delivered" style="color: #C8592A;"></i></a></h3>
 					    <p class="card-text">Delivered </p>
-					    <p><span class="counter" style="display: inline-block; width: 32%">50</span></p>
+					   <span class="counter" style="display: inline-block; width: 32%">50</span>
 				  </div>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="card" style="width: 26rem;">
 					<div class="card-block">
-					    <h3 class="card-title"><a href="#status"><i class="fa fa-list fa-3x black" aria-hidden="true" title="Status"></i></a></h3>
+					    <h3 class="card-title"><a href="#status"><i class="fa fa-list fa-3x black" aria-hidden="true" title="Status" style="color: #C8592A;"></i></a></h3>
 					    <p class="card-text">Order Status</p>
-					    <p><span class="counter" style="display: inline-block; width: 32%">50</span></p>
+					   <span class="counter" style="display: inline-block; width: 32%">50</span>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="card" style="width: 26rem;">
 					<div class="card-block">
-					    <h3 class="card-title"><a href="#message"><i class="fa fa-file-text fa-3x black" aria-hidden="true" title="Messages"></i></a></h3>
+					    <h3 class="card-title"><a href="#message"><i class="fa fa-file-text fa-3x black" aria-hidden="true" title="Messages" style="color: #C8592A;"></i></a></h3>
 					    <p class="card-text">Messages</p>
-					    <p><span class="counter" style="display: inline-block; width: 32%">50</span></p>
+					    <span class="counter" style="display: inline-block; width: 32%">50</span>
 					</div>
 				</div>
 			</div>
@@ -72,7 +72,7 @@
 		</div> --}}
 	</div>
 
-
+	<hr>
 	<div  id="dashboard_wrap" class="container">
 		<div id="property">Properties</div>
 		<div id ="home" class="table_border prod-status-table "><!--tab1-->
