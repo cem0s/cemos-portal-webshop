@@ -51,8 +51,17 @@
 			                                        <div id="country" class="col-sm-12">
 				                                        <select class="form-control" name="country" required>
 			                                            	<option value="">Please select</option>
-			                                            	<option value="ph">Philippines</option>
-			                                            	<option value="others">Others</option>
+			                                            	@if($object['country']=="ph")
+			                                            		<option value="ph" selected="selected">Philippines</option>
+			                                            	@else
+			                                            		<option value="ph">Philippines</option>
+			                                            	@endif
+
+			                                            	@if($object['country']=="others")
+			                                            		<option value="others" selected="selected">Others</option>
+			                                            	@else
+			                                            		<option value="others">Others</option>
+			                                            	@endif
 			                                            </select>
 			                                        </div>
 				                                </div>
@@ -73,8 +82,18 @@
 		                                        <div id="builtin" class="col-sm-12">
 		                                            <select class="form-control" name="builtin">
 		                                            	<option value="">-- Please select --</option>
-		                                            	<option value="before 1960">Before 1960</option>
-		                                            	<option value="after 1960">After 1960</option>
+		                                            	@if($object['object_property']['built_in']=="before 1960")
+		                                            		<option value="before 1960" selected="selected">Before 1960</option>
+		                                            	@else
+		                                            		<option value="before 1960">Before 1960</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['built_in']=="after 1960")
+		                                            		<option value="after 1960" selected="selected">After 1960</option>
+		                                            	@else
+		                                            		<option value="after 1960">After 1960</option>
+		                                            	@endif
+		                                            	
+		                                            	
 		                                            </select>
 		                                        </div>
 			                                </div>
@@ -83,11 +102,31 @@
 		                                        <div id="area" class="col-sm-12">
 		                                            <select class="form-control" name="area">
 		                                            	<option value="">-- Please select --</option>
-		                                            	<option value="below 172">< 172 m2</option>
-		                                            	<option value="176 - 250">176 - 250 m2</option>
-		                                            	<option value="251 - 350">251 - 350 m2</option>
-		                                            	<option value="351 - 500">351 - 500 m2</option>
-		                                            	<option value="above 500">> 500 m2</option>
+		                                            	@if($object['object_property']['area'] ="below 172")
+		                                            		<option value="below 172" selected="selected">< 172 m2</option>
+		                                            	@else
+		                                            		<option value="below 172">< 172 m2</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['area'] ="176 - 250")
+		                                            		<option value="176 - 250" selected="selected">176 - 250 m2</option>
+		                                            	@else
+		                                            		<option value="176 - 250">176 - 250 m2</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['area'] ="251 - 350")
+		                                            		<option value="251 - 350" selected="selected">251 - 350 m2</option>
+		                                            	@else
+		                                            		<option value="251 - 350">251 - 350 m2</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['area'] ="351 - 500")
+		                                            		<option value="351 - 500" selected="selected">351 - 500 m2</option>
+		                                            	@else
+		                                            		<option value="351 - 500">351 - 500 m2</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['area'] ="above 500")
+		                                            		<option value="above 500" selected="selected">> 500 m2</option>
+		                                            	@else
+		                                            		<option value="above 500">> 500 m2</option>
+		                                            	@endif
 		                                            </select>
 		                                        </div>
 			                                </div>
@@ -108,8 +147,16 @@
 		                                        <div id="occupied" class="col-sm-12">
 		                                            <select class="form-control" name="occupied">
 		                                            	<option value="">-- Please select --</option>
-		                                            	<option value="Yes">Yes</option>
-		                                            	<option value="No">No</option>
+		                                            	@if($object['object_property']['occupied']=="Yes")
+		                                            		<option value="Yes" selected="selected">Yes</option>
+		                                            	@else
+		                                            		<option value="Yes">Yes</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['occupied']=="No")
+		                                            		<option value="No" selected="selected">No</option>
+		                                            	@else
+		                                            		<option value="No">No</option>
+		                                            	@endif
 		                                            </select>
 		                                        </div>
 			                                </div>
@@ -142,9 +189,21 @@
 		                                        <div id="buildingtype" class="col-sm-12">
 		                                            <select class="form-control" name="buildingtype">
 		                                            	<option value="">-- Please select --</option>
-		                                            	<option value="appartment">Appartment</option>
-		                                            	<option value="house">House</option>
-		                                            	<option value="others">Others</option>
+		                                            	@if($object['object_property']['property_type']=="appartment")
+		                                            		<option value="appartment" selected="selected">Appartment</option>
+		                                            	@else
+		                                            		<option value="appartment">Appartment</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['property_type']=="house")
+		                                            		<option value="house" selected="selected">House</option>
+		                                            	@else
+		                                            		<option value="house">House</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['property_type']=="others")
+		                                            		<option value="others" selected="selected">Others</option>
+		                                            	@else
+		                                            		<option value="others">Others</option>
+		                                            	@endif
 		                                            </select>
 		                                        </div>
 			                                </div>
@@ -153,8 +212,18 @@
 		                                        <div id="built" class="col-sm-12">
 		                                            <select class="form-control" name="built">
 		                                            	<option value="">-- Please select --</option>
-		                                            	<option value="new building">New building</option>
-		                                            	<option value="existing building">Existing building</option>
+		                                            	@if($object['object_property']['built']=="new building")
+		                                            		<option value="new building" selected="selected">New building</option>
+		                                            	@else
+		                                            		<option value="new building">New building</option>
+		                                            	@endif
+		                                            	@if($object['object_property']['built']=="existing building")
+		                                            		<option value="existing building" selected="selected">Existing building</option>
+		                                            	@else
+		                                            		<option value="existing building">Existing building</option>
+		                                            	@endif
+		                                            	
+		                                            	
 		                                            </select>
 		                                        </div>
 			                                </div>
