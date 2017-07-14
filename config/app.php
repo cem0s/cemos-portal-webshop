@@ -244,6 +244,7 @@ return [
         'Doctrine'      => LaravelDoctrine\ORM\Facades\Doctrine::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        'CustomPaginator' => App\CustomPaginator::class,
 
     ],
 

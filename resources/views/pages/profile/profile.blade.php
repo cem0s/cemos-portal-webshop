@@ -21,9 +21,9 @@
 					<div class="profile_bg text-center">
 						<div class="profile-pic">
 							@if(Auth::user()->getProfilePic() == "")
-								<img src="{{url('images/user-avatar.png')}}" class="img-responsive" style="height: 200px;width: 226px;" />
+								<img src="{{url('images/user-avatar.png')}}" class="img-circle" style="height: 200px;width: 226px;" />
 							@else 
-								<img src="{{Auth::user()->getProfilePic()}}" class="img-responsive" />
+								<img src="{{Auth::user()->getProfilePic()}}" class="img-circle" />
 							@endif
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 													<td>
 														<div class="list-group-item">
 						        							<h5 class="list-group-item-heading">Log #{{$logValue['log_id']}}</h5>
-						        							<p style="font-size: 11px;"><i>Created on {{date('F d, Y H:i:s A', strtotime($logValue['created_at']))}}</i></p>
+						        							<p class="customP">Created on {{date('F d, Y H:i:s A', strtotime($logValue['created_at']))}}</p>
 						        							<p class="list-group-item-text">{{$logValue['data']}}</p>
 						        						</div>
 					        						</td>
