@@ -272,7 +272,7 @@
 						<div class="form-group">
 		                	<div class="col-sm-12">
 		                		<div class="form-actions right">
-									<button type="submit" class="btn btn-primary"> Update </button>
+									<button type="submit" class="btn btn-primary" style="float: right; margin-right: 15px;"> Update </button>
 								</div>
 		                    </div>
 		                </div>
