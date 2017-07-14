@@ -9,6 +9,12 @@
 @endsection
 
 @section('body')
+	<div class="icon-bar">
+	  <a href="{{url('shop/'.$object['id'].'')}}" class="alt-color" title="Shop"><i class="fa fa-shopping-cart"></i></a> 
+	  <a href="{{url('edit-property/'.$object['id'].'')}}" title="Edit Property"><i class="fa fa-pencil" style="color:#B15022;"></i></a> 
+	  <a href="{{url('order-status/'.$object['id'].'')}}" class="alt-color" title="Order Status"><i class="fa fa-bar-chart"></i></a>
+	  <a href="{{url('property-details/'.$object['id'].'')}}" title="Property Details"><i class="fa fa-file-text-o" style="color:#B15022;"></i></a> 
+	</div>
 	<div id="addProperty" class="container">
 		<div class="panel panel-default">
 			<div class="panel-body">
