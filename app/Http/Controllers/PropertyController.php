@@ -75,9 +75,16 @@ class PropertyController extends Controller
         return view('pages.property.add-property');
     }
 
-    public function postEditProperty(Request $request)
+    public function postEditProperty(Request $request, $object_id = 0)
     {
         $data = $request->all();
+
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $data['slug'] = strtolower(str_replace(' ', '-', $data['address1']));
+        $data['object_type'] = $data['buildingtype'];
+        $object_data = $object_repo->update($object_id, $data);
+
+        return redirect()->route('property-details',$object_data->getId()); 
     }
 
 
