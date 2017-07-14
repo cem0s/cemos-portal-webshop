@@ -164,7 +164,7 @@ body{
 
 #dashboard_wrap .table_border {
 	background: #e6e6e6;
-	padding:10px;
+	padding:5px;
 	margin-bottom:50px;
 }
 
@@ -1382,4 +1382,18 @@ span.round-tab:hover {
         width: 100%;
         margin-bottom: .75rem
     }
+}
+.table-responsive {
+    max-height:400px;
+}
+
+.custParagraph{
+	text-transform: uppercase;
+
+}
+
+.counterUpCss {
+	display: inline-block; 
+	width: 32%;
+	font-size: 30px;
 }

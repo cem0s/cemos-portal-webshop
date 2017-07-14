@@ -13,68 +13,58 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
-				<div class="card" style="width: 26rem;">
-				  <div class="card-block">
-				    <h3 class="card-title"><a href="#property"><i class="fa fa-home fa-3x black" aria-hidden="true" title="Property" style="color: #C8592A;"></i></a></h3>
-				    <p class="card-text">New Properties </p>
-				    <span class="counter" style="display: inline-block; width: 32%">{{$data['property']['count']}}</span>
-				  </div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="card" style="width: 26rem;">
-				 	<div class="card-block">
-					    <h3 class="card-title"><a href="#delivered"> <i class="fa fa-check fa-3x black" aria-hidden="true" title="Delivered" style="color: #C8592A;"></i></a></h3>
-					    <p class="card-text">Delivered </p>
-					   <span class="counter" style="display: inline-block; width: 32%">50</span>
-				  </div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="card" style="width: 26rem;">
-					<div class="card-block">
-					    <h3 class="card-title"><a href="#status"><i class="fa fa-list fa-3x black" aria-hidden="true" title="Status" style="color: #C8592A;"></i></a></h3>
-					    <p class="card-text">Order Status</p>
-					   <span class="counter" style="display: inline-block; width: 32%">50</span>
+			<a href="#property">
+				<div class="col-md-3">
+					<div class="card" style="width: 26rem;">
+					  <div class="card-block">
+					    <h3 class="card-title"><i class="fa fa-home fa-3x black" aria-hidden="true" title="Property" style="color: #C8592A;"></i></h3>
+					    <p class="card-text"> New Properties </p>
+					    <span class="counter counterUpCss">{{$data['property']['count']}}</span>
+					  </div>
 					</div>
 				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="card" style="width: 26rem;">
-					<div class="card-block">
-					    <h3 class="card-title"><a href="#message"><i class="fa fa-file-text fa-3x black" aria-hidden="true" title="Messages" style="color: #C8592A;"></i></a></h3>
-					    <p class="card-text">Messages</p>
-					    <span class="counter" style="display: inline-block; width: 32%">50</span>
+			</a>
+			<a href="#delivered"> 
+				<div class="col-md-3">
+					<div class="card" style="width: 26rem;">
+					 	<div class="card-block">
+						    <h3 class="card-title"><i class="fa fa-check fa-3x black" aria-hidden="true" title="Delivered" style="color: #C8592A;"></i></h3>
+						    <p class="card-text">Delivered </p>
+						   <span class="counter counterUpCss" style="display: inline-block; width: 32%">50</span>
+					  </div>
 					</div>
 				</div>
-			</div>
+			</a>
+			<a href="#status">
+				<div class="col-md-3">
+					<div class="card" style="width: 26rem;">
+						<div class="card-block">
+						    <h3 class="card-title"><i class="fa fa-list fa-3x black" aria-hidden="true" title="Status" style="color: #C8592A;"></i></h3>
+						    <p class="card-text">Order Status</p>
+						   <span class="counter counterUpCss" style="display: inline-block; width: 32%">50</span>
+						</div>
+					</div>
+				</div>
+			</a>
+			<a href="#message">
+				<div class="col-md-3">
+					<div class="card" style="width: 26rem;">
+						<div class="card-block">
+						    <h3 class="card-title"><i class="fa fa-file-text fa-3x black" aria-hidden="true" title="Messages" style="color: #C8592A;"></i></h3>
+						    <p class="card-text">Messages</p>
+						    <span class="counter counterUpCss" style="display: inline-block; width: 32%">50</span>
+						</div>
+					</div>
+				</div>
+			</a>
 		</div>
 
-		{{-- <div class="table-responsive table_bg2 col-md-12">
-			<table id="prod-status" class=" table table-borderless dashboard_head">
-				<thead>
-					<tr id="dashboard_icons" class="nav nav-tabs">
-						  <th class="text-center col-md-3"><a data-toggle="tab" href="#home"><i class="fa fa-home black" aria-hidden="true" title="Property"></i><p>
-						  	@if($data['property']['count'] >50)
-						  	 <span class="counter" style="display: inline-block; width: 32%">50</span>
-						  	@else
-						  	 <span class="counter" style="display: inline-block; width: 32%">{{$data['property']['count']}}</span>
-						  	@endif
-
-						  </p></a></th>
-						  <th class="text-center col-md-3"><a data-toggle="tab" href="#menu1"><i class="fa fa-check black" aria-hidden="true" title="Delivered"></i><p><span class="counter" style="display: inline-block; width: 32%">50</span></p></a></th>
-						  <th class="text-center col-md-3"><a data-toggle="tab" href="#menu2"><i class="fa fa-list black" aria-hidden="true" title="Status"></i><p><span class="counter" style="display: inline-block; width: 32%">50</span></p></a></th>
-						  <th class="text-center col-md-3"><a data-toggle="tab" href="#menu3"><i class="fa fa-file-text black" aria-hidden="true" title="Memos"></i><p><span class="counter" style="display: inline-block; width: 32%">50</span></p></a></th>
-					</tr>
-				 </thead>
-			</table>
-		</div> --}}
+		
 	</div>
 
 	<hr>
 	<div  id="dashboard_wrap" class="container">
-		<div id="property">Properties</div>
+		<div id="property" class="custParagraph">Properties</div><hr>
 		<div id ="home" class="table_border prod-status-table "><!--tab1-->
 			<div class="table-responsive table_bg">
 				<table id="prod-status" class="table table-striped table-bordered table-hover">
@@ -116,7 +106,7 @@
 			</div>
 		</div><!--end of tab1-->
 
-		<div id="delivered">Delivered</div>				
+		<div id="delivered" class="custParagraph">Delivered</div><hr>			
 		<div id ="menu1" class="table_border prod-status-table "><!-- tab2-->
 			<div class="table-responsive table_bg">
 				<table id="prod-status" class="table table-striped table-bordered table-hover">
@@ -179,7 +169,7 @@
 			</div>
 		</div><!--end of tab2-->
 					
-		<div id="status">Status</div>			
+		<div id="status" class="custParagraph">Status</div><hr>			
 		<div id ="menu2" class="table_border prod-status-table "><!-- tab3-->
 			<div class="table-responsive table_bg">
 				<table id="prod-status" class="table table-striped table-bordered table-hover">
@@ -272,7 +262,7 @@
 			</div>
 		</div><!--end of tab3-->
 
-		<div id="message">Messages</div>			
+		<div id="message" class="custParagraph">Messages</div><hr>			
 		<div id ="menu3" class="table_border prod-status-table "><!-- tab4-->
 			<div class="table-responsive table_bg">
 				<table id="prod-status" class="table table-striped table-bordered table-hover">
@@ -335,5 +325,8 @@
 			</div>
 		</div><!--end of tab4-->
 					
+
 	</div><!--end of shop page-->
+	
+</div>
 @endsection
