@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * This class represents an Status item, either a Order or a OrderProduct.
  * It is abstract because we never have an Object entity, it's either a residential or a commercial.
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\StatusRepository")
  * @ORM\Table(name="status")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

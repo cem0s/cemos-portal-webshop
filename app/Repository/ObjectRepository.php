@@ -37,6 +37,26 @@ class ObjectRepository extends EntityRepository
 		return $object;
 	}
 
+	public function update($objectId = 0, $data = array())
+	{
+		$object = $this->_em->find('\App\Entity\Realestate\Object', $objectId);
+
+		$object->setName($data['address1']);
+		$object->setAddress1($data['address1']);
+		$object->setAddress2($data['address2']);
+		$object->setZipcode($data['postalcode']);
+		$object->setTown($data['town']);
+		$object->setCountry($data['country']);
+		$object->setSlug($data['slug']);
+
+		$this->_em->merge($object);
+		$this->_em->flush();
+
+		$property = $this->updateObjectProperty($object->getId(), $data);
+
+		return $object;
+	}
+
 	private function createObjectProperty($objectId = 0, $data = array())
 	{
 		$property = new ObjectProperty();
@@ -59,12 +79,39 @@ class ObjectRepository extends EntityRepository
 		return $property;
 	}
 
+	private function updateObjectProperty($objectId = 0, $data = array())
+	{
+		$objectPropertyRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectProperty');
+        $criteria = array(
+            'objectId' => $objectId
+        );
+
+        $objectProps = $objectPropertyRepo->findOneBy($criteria);
+
+		$objectProps->setPropertyType($data['buildingtype']);
+		$objectProps->setBuilt($data['built']);
+		$objectProps->setBuiltIn($data['builtin']);
+		$objectProps->setArea($data['area']);
+		$objectProps->setRooms($data['noofrooms']);
+		$objectProps->setFloors($data['nooffloors']);
+		$objectProps->setOccupied($data['occupied']);
+		$objectProps->setOwnerName($data['name']);
+		$objectProps->setOwnerTel($data['telno']);
+		$objectProps->setOwnerMob($data['mobno']);
+		$objectProps->setOwnerEmail($data['emailadd']);
+
+		$this->_em->merge($objectProps);
+		$this->_em->flush();
+		return $objectProps;
+	}
+
 	public function getObjectByid($id = 0) 
 	{	
 		// another way of retrieving data
 		//$object = $this->_em->getRepository('\App\Entity\Realestate\Object')->findBy(array('id' => $id));
 		$object = array();
 		$objectTypeRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectType');
+		$objectPropertyRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectProperty');
 		$data = $this->_em->find('\App\Entity\Realestate\Object', $id);
 
 		if(isset($data) && !empty($data)) {
@@ -79,9 +126,8 @@ class ObjectRepository extends EntityRepository
 				'company_id' => $data->getCustomerId(),
 				'user_id' => $data->getUserId(),
 				'objecttype' => $objectTypeRepo->getObjectTypeById($data->getObjectTypeId()),
-				'objectProp' => $this->getObjPropByObjId($id)
-
-
+				'objectProp' => $this->getObjPropByObjId($id),
+				'object_property' => $objectPropertyRepo->getObjectPropertyByObjectId($id),
 			);
 		}
 
@@ -135,6 +181,7 @@ class ObjectRepository extends EntityRepository
 						'town' => $value['town'],
 						'slug' => $value['slug'],
 						'objecttype' => $objectTypeRepo->getObjectTypeById($value['objectTypeId']),
+						'object_property' => "",
 						'user' => $userRepo->getAllUserInfo($value['userId']),
 						'createdat' => $value['createdAt']->format('c'),
 						'discr' => $value['discr']

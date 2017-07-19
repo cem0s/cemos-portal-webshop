@@ -14,7 +14,7 @@
             <div class="connecting-line"></div>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Choose Services">
+                    <a href="#step1" data-toggle="tab"  aria-controls="step1" role="tab" title="Choose Services">
                         <span class="round-tab">
                             <i class="fa fa-shopping-cart"></i>
                         </span>
@@ -46,108 +46,129 @@
 					<div class="row">
 						<div class="col-md-3">
 							<h2 class="text-center text-uppercase"> photography</h2>
-							<img src="{{url('images/s1.jpg')}}" class="img_responsive" width="100%"/>
+							<div class="cont">
+								<img src="{{url('images/s1.jpg')}}" class="img_responsive" width="100%"/>
+								<div class="overlay1">
+									<div class="text">
+										<table class="table" style="color: white;">
+												<tr>
+													<td></td>
+													<td></td>
+													<td><i class="fa fa-cart-arrow-down fa-2x"></i></td>
+												</tr>
+											@if(!empty($data)) 
+												@foreach($data['Photo'] as $key => $value) 
+												<tr>
+													<td><b>{{$value['name']}}</b></td>
+													<td style="width: 200px;">&#8369 {{$value['price']}}</td>
+													<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
+												</tr>
+												@endforeach
+											@endif
+										</table>
+									</div>
+								</div>
+							</div>
 							<div class="Wrap_iconPage text-right">
-								<a href="{{url('shop-photography')}}"  title="Show Services Details"><i class="fa fa-arrow-circle-right  fa-2x" aria-hidden="true"></i></a>
+								<a href="{{url('shop-photography')}}"  title="Show Services Details"><i class="fa fa-search-plus  fa-2x" aria-hidden="true"></i></a>
+								<a href="" class="next-step" title="Show Cart"><i class="fa fa-shopping-cart fa-2x"></i></a>
+								
 							</div>
 						</div>
 						<div class="col-md-3 ">
 							<h2 class="text-center text-uppercase">architectural</h2>
-							<img src="{{url('images/s2.jpg')}}" class="img_responsive" width="100%"/>
-							<div class="Wrap_iconPage text-right">
-								<i class="fa fa-arrow-circle-right  fa-2x" aria-hidden="true"  title="Show Services"></i>
+							<div class="cont">
+								<img src="{{url('images/s2.jpg')}}" class="img_responsive" width="100%"/>
+								<div class="overlay1">
+									<div class="text">
+										<table class="table" style="color: white;">
+												<tr>
+													<td></td>
+													<td></td>
+													<td><i class="fa fa-cart-arrow-down fa-2x"></i></td>
+												</tr>
+											@if(!empty($data)) 
+												@foreach($data['Archi'] as $key => $value) 
+												<tr>
+													<td><b>{{$value['name']}}</b></td>
+													<td style="width: 200px;">&#8369 {{$value['price']}}</td>
+													<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
+												</tr>
+												@endforeach
+											@endif
+										</table>		
+									</div>
+								</div>
 							</div>
+							<div class="Wrap_iconPage text-right">
+								<i class="fa fa-search-plus  fa-2x" aria-hidden="true"  title="Show Services"></i>
+								<a href="" class="next-step" title="Show Cart"><i class="fa fa-shopping-cart fa-2x"></i></a>
+							</div>
+
 						</div>
 						<div class="col-md-3 ">
 							<h2 class="text-center text-uppercase">marketing</h2>
-							<img src="{{url('images/s4.jpg')}}" class="img_responsive" width="100%"/>
+							<div class="cont">
+								<img src="{{url('images/s4.jpg')}}" class="img_responsive" width="100%"/>
+								<div class="overlay1">
+									<div class="text">
+										<table class="table" style="color: white;">
+												<tr>
+													<td></td>
+													<td></td>
+													<td><i class="fa fa-cart-arrow-down fa-2x"></i></td>
+												</tr>
+											@if(!empty($data)) 
+												@foreach($data['Market'] as $key => $value) 
+												<tr>
+													<td><b>{{$value['name']}}</b></td>
+													<td style="width: 200px;">&#8369 {{$value['price']}}</td>
+													<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
+												</tr>
+												@endforeach
+											@endif
+										</table>	
+									</div>
+								</div>
+							</div>
 							<div class="Wrap_iconPage text-right">
-								<i class="fa fa-arrow-circle-right  fa-2x" aria-hidden="true"  title="Show Services"></i>
+								<i class="fa fa-search-plus  fa-2x" aria-hidden="true"  title="Show Services"></i>
+								<a href="" class="next-step" title="Show Cart"><i class="fa fa-shopping-cart fa-2x"></i></a>
 							</div>
 						</div>
 						<div class="col-md-3 ">
 							<h2 class="text-center text-uppercase">video</h2>
-							<img src="{{url('images/s5.jpg')}}" class="img_responsive" width="100%"/>
-							<div class="Wrap_iconPage text-right">
-								<i class="fa fa-arrow-circle-right  fa-2x" aria-hidden="true"  title="Show Services"></i>
+							<div class="cont">
+								<img src="{{url('images/s5.jpg')}}" class="img_responsive" width="100%"/>
+								<div class="overlay1">
+									<div class="text">
+										<table class="table" style="color: white;">
+												<tr>
+													<td></td>
+													<td></td>
+													<td><i class="fa fa-cart-arrow-down fa-2x"></i></td>
+												</tr>
+											@if(!empty($data)) 
+												@foreach($data['Video'] as $key => $value) 
+												<tr>
+													<td><b>{{$value['name']}}</b></td>
+													<td style="width: 200px;">&#8369 {{$value['price']}}</td>
+													<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
+												</tr>
+												@endforeach
+											@endif
+										</table>		
+									</div>
+								</div>
 							</div>
+							<div class="Wrap_iconPage text-right">
+								<i class="fa fa-search-plus  fa-2x" aria-hidden="true"  title="Show Services"></i>
+								<a href="" class="next-step" title="Show Cart"><i class="fa fa-shopping-cart fa-2x"></i></a>
+							</div>
+
 						</div>
 					</div>
 					<br><br><br>
-					<div class="row">
-						<div class="col-md-3">
-							<table class="table">
-								<tr>
-									<td></td>
-									<td>Price</td>
-									<td>Add To Cart</td>
-								</tr>
-								@if(!empty($data)) 
-									@foreach($data['Photo'] as $key => $value) 
-									<tr>
-										<td>{{$value['name']}}</td>
-										<td>&#8369 {{$value['price']}}</td>
-										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
-									</tr>
-									@endforeach
-								@endif
-							</table>
-						</div>
-						<div class="col-md-3 ">
-							<table class="table">
-								<tr>
-									<td></td>
-									<td>Price</td>
-									<td>Add To Cart</td>
-								</tr>
-								@if(!empty($data)) 
-									@foreach($data['Archi'] as $key => $value) 
-									<tr>
-										<td>{{$value['name']}}</td>
-										<td>&#8369 {{$value['price']}}</td>
-										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
-									</tr>
-									@endforeach
-								@endif
-							</table>		
-						</div>
-						<div class="col-md-3 ">
-							<table class="table">
-								<tr>
-									<td></td>
-									<td>Price</td>
-									<td>Add To Cart</td>
-								</tr>
-								@if(!empty($data)) 
-									@foreach($data['Market'] as $key => $value) 
-									<tr>
-										<td>{{$value['name']}}</td>
-										<td>&#8369 {{$value['price']}}</td>
-										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
-									</tr>
-									@endforeach
-								@endif
-							</table>	
-						</div>
-						<div class="col-md-3 ">
-							<table class="table">
-								<tr>
-									<td></td>
-									<td>Price</td>
-									<td>Add To Cart</td>
-								</tr>
-								@if(!empty($data)) 
-									@foreach($data['Video'] as $key => $value) 
-									<tr>
-										<td>{{$value['name']}}</td>
-										<td>&#8369 {{$value['price']}}</td>
-										<td style="text-align: center;"><input type="checkbox" id="{{$value['id']}}"></td>
-									</tr>
-									@endforeach
-								@endif
-							</table>		
-						</div>
-					</div>
 					<div class="row">
 						<div class="col-md-3">
 						</div>
@@ -157,7 +178,7 @@
 						</div>
 						<div class="col-md-3">
 							 <ul class="list-inline pull-right">
-	                            <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+	                            {{-- <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li> --}}
 	                        </ul>
 						</div>
 					</div>
@@ -171,10 +192,10 @@
 	            </ul>
 	        </div>
 	        <div class="tab-pane" role="tabpanel" id="step3">
-	            <div class="container" id="checkout"></div>
-	            <ul class="list-inline pull-right">
-	                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-	                <li><button type="button" class="btn btn-primary btn-info-full next-step">Submit</button></li>
+	            <div class="container" id="checkout"></div>    
+            	<ul class="list-inline pull-right">
+	                <li><p style="color: green;display: none; " id="emptyCartNotif"><i class="fa fa-warning"></i> Your Cart is Empty. </p><button type="button" class="btn btn-default prev-step">Previous</button></li>
+	                <li><button type="button" class="btn btn-primary btn-info-full next-step" id="submitOrder" onclick="orderNow()">Submit Order</button></li>
 	            </ul>
 	        </div>
 	        <div class="tab-pane" role="tabpanel" id="complete">
@@ -184,7 +205,15 @@
 	        <div class="clearfix"></div>
 	    </div>
     </div>
+    <div class="container" id="formBody">
+    	<img src="{{asset('images/loading-spinner.gif')}}" class="img-responsive customImage" > <br> <hr>
+    	<p style="text-align: center;">Processing your orders...</p>
+    </div>
+     <div class="container" id="formSuccess">
+    	   <img src="{{asset('images/gi.png')}}" class="img-responsive customImage" > <br> <hr>
+    	<p style="text-align: center;">Success! <br> Your orders are now saved. <br><br> <a href="{{url('property-details/'.session('object_id').'')}}" class="btn btn-info">Go back to Property Overview</a></p>
 
+    </div>
 
     <div id="brochure1" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
@@ -254,8 +283,7 @@
 		    </div>
 		</div>
 	</div>
-	<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-	<script src="{{asset('js/jquery.iframe-transport.min.js') }}"></script>
-	<script src="{{asset('js/jquery.fileupload.min.js') }}"></script>
+
+	
 @endsection
 

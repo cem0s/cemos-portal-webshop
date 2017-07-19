@@ -21,9 +21,10 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        // $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
-        // $all_property = $object_repo->findAll();
-        return view('pages.property.property-overview');
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $all_property = $object_repo->getAllObjects();
+
+        return view('pages.property.property-overview')->with('objects', $all_property['property']);
     }
 
     public function propertyDetails(Request $request)
@@ -41,6 +42,16 @@ class PropertyController extends Controller
         return view('pages.property.add-property');
     }
 
+    public function editProperty(Request $request)
+    {
+        $object_id = $request->route('object_id');
+
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $object_data = $object_repo->getObjectByid($object_id);
+
+        return view('pages.property.edit-property')->with('object', $object_data);
+    }
+
     /* TO DO:
     * Identify what type of object to be created
     * Redirect to property details
@@ -52,7 +63,7 @@ class PropertyController extends Controller
         $data['company_id'] = $request->session()->get('company_id');
         $data['user_id'] = $request->session()->get('user_id');
         $data['slug'] = strtolower(str_replace(' ', '-', $data['address1']));
-        $data['object_type'] = "residential"; // to be determine what type
+        $data['object_type'] = $data['buildingtype'];
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
         $object_data = $object_repo->create($data);
 
@@ -62,6 +73,18 @@ class PropertyController extends Controller
         }
 
         return view('pages.property.add-property');
+    }
+
+    public function postEditProperty(Request $request, $object_id = 0)
+    {
+        $data = $request->all();
+
+        $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $data['slug'] = strtolower(str_replace(' ', '-', $data['address1']));
+        $data['object_type'] = $data['buildingtype'];
+        $object_data = $object_repo->update($object_id, $data);
+
+        return redirect()->route('property-details',$object_data->getId()); 
     }
 
 

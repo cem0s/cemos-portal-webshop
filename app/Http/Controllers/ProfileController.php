@@ -46,6 +46,8 @@ class ProfileController extends Controller
       //Move the file to the destination path
     	//$file->move($destinationPath,$file->getClientOriginalName());
 
+        //To crop image
+       // Image::make($file)->crop(226, 226)->save($destinationPath.$file->getClientOriginalName());
         Image::make($file)->resize(226, 226)->save($destinationPath.$file->getClientOriginalName());
 
       //Updates the profile picture path in the user table
