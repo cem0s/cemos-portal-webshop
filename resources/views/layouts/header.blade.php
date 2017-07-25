@@ -30,7 +30,7 @@
 				    	<a href="{{url('profile')}}" >Profile</a>
 				    </li>
 				    <li>
-				    	<a href="#">Credit Points: {{ Session::get('credit_points') }} </a>
+				    	<a href="#">Credit Points: <span id="points">{{ Session::get('credit_points') }} </span> </a>
 				    </li>
 				    <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">Log out</a></li>
 				  </ul>

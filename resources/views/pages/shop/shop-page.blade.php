@@ -8,7 +8,6 @@
 @endsection
 
 @section('body')
-
 	<div class="wizard">
         <div class="wizard-inner">
             <div class="connecting-line"></div>
