@@ -66,6 +66,13 @@ class Order
      */
     private $orderStatusId;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_option", type="string", length=255, nullable=true)
+     */
+    private $paymentOption;
+
 
     /**
      * @var \DateTime
@@ -215,6 +222,29 @@ class Order
         $this->orderStatusId = $orderStatusId;
 
         return $this;
+    }
+
+    /**
+     * Set paymentOption
+     *
+     * @param string $paymentOption
+     * @return Product
+     */
+    public function setPaymentOption($paymentOption='')
+    {
+        $this->paymentOption = $paymentOption;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentOption
+     *
+     * @return string
+     */
+    public function getPaymentOption()
+    {
+        return $this->paymentOption;
     }
 
     /**

@@ -21,6 +21,7 @@ class OrderRepository extends EntityRepository
 		$order->setObjectId($data['object_id']);
 		$order->setUserId($data['user_id']);
 		$order->setOrderStatusId(1);
+		$order->setPaymentOption($data['payment_method']);
 		$this->_em->persist($order);
 		$this->_em->flush();
 

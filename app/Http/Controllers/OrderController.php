@@ -28,13 +28,14 @@ class OrderController extends Controller
      */
     public function order()
     {
-
+        $data = $_GET;
     	$cartItems = Cart::content();
     	$userInfo = session()->all();
     	$order = array(
     		'company_id' => $userInfo['company_id'],
     		'user_id' => $userInfo['user_id'],
     		'object_id' => $userInfo['object_id'],
+            'payment_method' => $data['data'],
     		);
 
     	$orderId = $this->orderRepo->createOrder($order); 
