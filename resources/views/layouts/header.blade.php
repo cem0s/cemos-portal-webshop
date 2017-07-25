@@ -29,6 +29,9 @@
 				    <li>
 				    	<a href="{{url('profile')}}" >Profile</a>
 				    </li>
+				    <li>
+				    	<a href="#">Credit Points: {{ Session::get('credit_points') }} </a>
+				    </li>
 				    <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">Log out</a></li>
 				  </ul>
 				</div>
