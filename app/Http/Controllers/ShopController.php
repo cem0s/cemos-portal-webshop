@@ -759,6 +759,7 @@ class ShopController extends Controller
                 $html .= "</div>";
             $html .= "</div>";
         $html .= "</div>";
+        $html .= "<div id='error_msg'></div>";
 
         $html .= "<script src='../js/payment-method.js'></script>";
         
