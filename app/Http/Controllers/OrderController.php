@@ -13,12 +13,14 @@ class OrderController extends Controller
 {
 
 	protected $orderRepo;
-	protected $orderProductRepo;
+    protected $orderProductRepo;
+	protected $creditRepo;
 
 	public function __construct(EntityManager $em)
 	{
 		$this->orderRepo = $em->getRepository('App\Entity\Commerce\Order');
-		$this->orderProductRepo = $em->getRepository('App\Entity\Commerce\OrderProduct');
+        $this->orderProductRepo = $em->getRepository('App\Entity\Commerce\OrderProduct');
+		$this->creditRepo = $em->getRepository('App\Entity\Management\CreditPoints');
 	}
 
 	/**
@@ -26,7 +28,7 @@ class OrderController extends Controller
      * @author Gladys Vailoces <gladys@cemos.ph> 
      * @return boolean
      */
-    public function order()
+    public function order(Request $request)
     {
         $data = $_GET;
     	$cartItems = Cart::content();
@@ -38,29 +40,41 @@ class OrderController extends Controller
             'payment_method' => $data['data'],
     		);
 
-    	$orderId = $this->orderRepo->createOrder($order); 
+        $credit = $userInfo['credit_points'];
+        
+        
+        $remain = $credit - Cart::total();
+        
+        if($remain<0){
+            echo 0;
+        }else{
+            $orderId = $this->orderRepo->createOrder($order); 
 
-    	if(Cart::count() > 0) {
-    		foreach ($cartItems as $key => $value) {
-	    		$this->orderProductRepo->createOrderLine($value, $orderId);
-	    	}
-    	}
-    	//Transfer files for floorplanner
+            if(Cart::count() > 0) {
+                foreach ($cartItems as $key => $value) {
+                    $this->orderProductRepo->createOrderLine($value, $orderId);
+                }
+            }
 
-    	//Send Email to client
-         $data = array(
-                'url' => config('app.url')."/order-status/".$userInfo['object_id'],
-                'cartContents' => Cart::content(),
-                'subtotal' => Cart::subtotal(),
-                'total' => Cart::total(),
-                'tax' => Cart::tax()
-            );
+            // deduct the credit 
+            $this->creditRepo->update($remain, $userInfo['company_id']);
+            $request->session()->put('credit_points',$remain); 
+            //Transfer files for floorplanner
 
-        //Gladys: Send activation code through email,
-        Mail::to("vailoces.gladys@gmail.com")->send(new SendOrderDetails($data)); 
-     
+            //Send Email to client
+             $data = array(
+                    'url' => config('app.url')."/order-status/".$userInfo['object_id'],
+                    'cartContents' => Cart::content(),
+                    'subtotal' => Cart::subtotal(),
+                    'total' => Cart::total(),
+                    'tax' => Cart::tax()
+                );
 
-    	echo 1;
+            //Gladys: Send activation code through email,
+            Mail::to("vailoces.gladys@gmail.com")->send(new SendOrderDetails($data)); 
+
+            echo 1;
+        }
 
     }
 

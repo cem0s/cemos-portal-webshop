@@ -54,4 +54,21 @@ class CreditPointsRepository extends EntityRepository
 
 		return $data;
 	}
+
+	public function update($credit = 0, $company_id = 0)
+	{
+		$creditRepo = $this->_em->getRepository('App\Entity\Management\CreditPoints');
+        $criteria = array(
+            'companyId' => $company_id
+        );
+
+        $creditProps = $creditRepo->findOneBy($criteria);
+
+		$creditProps->setPoints($credit);
+
+		$this->_em->merge($creditProps);
+		$this->_em->flush();
+
+		return $creditProps;
+	}
 }
