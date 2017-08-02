@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="cemos_portal" ng-cloak>
 	<head>
 	    <meta charset="utf-8">
@@ -19,6 +20,7 @@
 		<link href="{{ asset('css/calendarCemos.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/poverviewhover.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/dropzone.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/fancybox.min.css') }}" rel="stylesheet">
 		
 
 		<title>@yield('title')</title>
@@ -31,12 +33,14 @@
 		<script src="{{asset('js/floorplanner-dropzone.js')}}"></script>
 		<script src="{{asset('js/waypoints.min.js') }}"></script> 
 		<script src="{{asset('js/jquery.counterup.min.js') }}"></script>
+
 		<script>
 		    jQuery(document).ready(function( $ ) {
 		        $('.counter').counterUp({
 		            delay: 10,
 		            time: 1000
 		        });
+
 		    });
 		</script>
 

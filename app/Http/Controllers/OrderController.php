@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendOrderDetails;
+use App\Dropbox;
 use Cart;
 use CustomPaginator;
 
@@ -31,6 +32,7 @@ class OrderController extends Controller
 
     	$cartItems = Cart::content();
     	$userInfo = session()->all();
+        $dropbox = new Dropbox;
     	$order = array(
     		'company_id' => $userInfo['company_id'],
     		'user_id' => $userInfo['user_id'],
@@ -39,16 +41,28 @@ class OrderController extends Controller
 
     	$orderId = $this->orderRepo->createOrder($order); 
 
-    	if(Cart::count() > 0) {
-    		foreach ($cartItems as $key => $value) {
-	    		$this->orderProductRepo->createOrderLine($value, $orderId);
-	    	}
-    	}
-    	//Transfer files for floorplanner
+        if($orderId > 0) {
+            if(Cart::count() > 0) {
+                foreach ($cartItems as $key => $value) {
+                   $this->orderProductRepo->createOrderLine($value, $orderId);
+                }
+            }
+        } else {
+            echo 0;
+        }
+    	
+
+        //Initialize creation of order folders: product-images (for floorplans), raw, edited, delivered
+        //$dropbox->createOrderFolders($userInfo, $orderId);
+
+        //Upload Images for floorplans to dropbox
+    	$this->checkFloorPlannerImages($orderId);
+
+        $this->saveFloorPlanImages($userInfo, $orderId, 'floor plans');
 
     	//Send Email to client
          $data = array(
-                'url' => config('app.url')."/order-status/".$userInfo['object_id'],
+                'url' => config('app.url')."/cemos-portal/order-status/".$userInfo['object_id'],
                 'cartContents' => Cart::content(),
                 'subtotal' => Cart::subtotal(),
                 'total' => Cart::total(),
@@ -57,7 +71,10 @@ class OrderController extends Controller
 
         //Gladys: Send activation code through email,
         Mail::to("vailoces.gladys@gmail.com")->send(new SendOrderDetails($data)); 
-     
+        
+        if(count(Mail::failures()) > 0) {
+            echo 0;
+        }
 
     	echo 1;
 
@@ -70,5 +87,71 @@ class OrderController extends Controller
     	$paginatedSearchResults = CustomPaginator::getPaginator($data['orderData'], 10);
     	
     	return view('pages.order.order-status')->with('orderData', array('oData' => $paginatedSearchResults, 'objData' => $data['objData']));
+    }
+
+    private function checkFloorPlannerImages($orderId)
+    {
+        $cartItems = Cart::content();
+        $tmpDir = public_path().'/tmp/';
+        $userInfo = session()->all();
+        $drop = new Dropbox;
+        $withPlans = false;
+        if(Cart::count() > 0) {
+            foreach ($cartItems as $key => $value) {
+                if(strtolower($value->name) == "floor planner"){
+                   $withPlans = true;
+                   $data = $value->options->all();
+                   if(!empty($data['floors'])) {
+                        $countFloors = count($data['floors']);
+                        $tempCount = 1;
+                        foreach ($data['floors'] as $key2 => $value2) {
+                            if($tempCount <= $countFloors) {
+                               $drop->uploadFile($tmpDir.$value2['file_name_'.$tempCount], "product-images", $userInfo, $orderId, $value->name);
+                                $tempCount++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $withPlans;
+    }
+
+    public function saveFloorPlanImages($user, $orderId, $folder)
+    {
+        $destination = public_path('images/').$user['company_id'].'/'.$user['object_id'].'/'.$orderId.'/'.$folder;
+        $tmpDir = public_path().'/tmp/';
+
+        if(!file_exists($destination)) {
+            mkdir($destination, 0777, true);
+        }
+
+        if(Cart::count() > 0) {
+            foreach (Cart::content() as $key => $value) {
+                if(strtolower($value->name) == "floor planner"){
+                   $data = $value->options->all();
+                   if(!empty($data['floors'])) {
+                        $countFloors = count($data['floors']);
+                        $tempCount = 1;
+                        foreach ($data['floors'] as $key2 => $value2) {
+                            if($tempCount <= $countFloors) {
+                               copy($tmpDir.$value2['file_name_'.$tempCount], $destination.'/'.$value2['file_name_'.$tempCount]);            
+                               unlink($tmpDir.$value2['file_name_'.$tempCount]);
+                               unlink($tmpDir.'thumbnail/'.$value2['file_name_'.$tempCount]);
+                               $tempCount++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    public function deleteOrderProduct(Request $request)
+    {
+        $id = $request->all()['id'];
+
+        echo $this->orderProductRepo->deleteOrderProduct($id);
     }
 }

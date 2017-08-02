@@ -55,4 +55,10 @@
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script src="{{asset('js/jquery.iframe-transport.min.js') }}"></script>
 <script src="{{asset('js/jquery.fileupload.min.js') }}"></script>
-
+<script src="{{asset('js/fancybox.min.js') }}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox();
+	
+	});
+</script>

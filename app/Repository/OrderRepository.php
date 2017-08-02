@@ -17,26 +17,36 @@ class OrderRepository extends EntityRepository
 	public function createOrder($data)
 	{
 		$order = new \App\Entity\Commerce\Order();
-		$order->setCompanyId($data['company_id']);
-		$order->setObjectId($data['object_id']);
-		$order->setUserId($data['user_id']);
-		$order->setOrderStatusId(1);
-		$this->_em->persist($order);
-		$this->_em->flush();
+		try {
 
-		//Log activity
-		$this->addLog(array(
-				'user_id' => $data['user_id'],
-				'company_id' => $data['company_id'],
-				'data' => 'You created new order for object id '.$data['object_id'].' with order id '.$order->getId().'.',
-				'category' => 'order',
-				'action' => 'create' 
-			));
+			$order->setCompanyId($data['company_id']);
+			$order->setObjectId($data['object_id']);
+			$order->setUserId($data['user_id']);
+			$order->setOrderStatusId(1);
+			$this->_em->persist($order);
+			$this->_em->flush();
 
+			//Log activity
+			$this->addLog(array(
+					'user_id' => $data['user_id'],
+					'company_id' => $data['company_id'],
+					'data' => 'You created new order for object id '.$data['object_id'].' with order id '.$order->getId().'.',
+					'category' => 'order',
+					'action' => 'create' 
+				));
 
-		return $order->getId();
+			return $order->getId();
+
+		} catch (Exception $e) {
+			return 0;
+		}
 	}
 
+	/**
+     * This function gets all the orders with orderlines for displaying in cemos portal
+     * @author Gladys Vailoces <gladys@cemos.ph> 
+     * @return array
+     */
 	public function getOrders($objId)
 	{
 		$orderLines = array();
@@ -65,6 +75,11 @@ class OrderRepository extends EntityRepository
 
 	}
 
+	/**
+	* This function can be reusable to get all the orders by objId
+	* @author Gladys Vailoces
+	* @return array
+	*/
 	public function getOrdersByObjId($objId)
 	{
 		$qb = $this->_em->createQueryBuilder();

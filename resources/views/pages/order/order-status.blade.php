@@ -38,7 +38,6 @@
 			@if(count($orderData['oData']) > 0)
 				
 				@foreach($orderData['oData'] as $key =>  $value)
-					
 				<tr>
 					<td>
 					@if($key == 0)
@@ -53,15 +52,37 @@
 					</td>
 					<td>&#8369 {{$value['product']['price']}}</td>
 					<td>
-						@if(isset($lineValue['supplier']['name']))
-							{{$value['supplier']['name']}}
-						@else 
-							No Supplier Yet.
+						@if(strtolower($value['status']['name']) == "delivered")
+							@foreach($value['suppliers'] as $sKey => $sValue)
+								Step 
+								@if($sKey == 0)
+									1
+								@else 
+									{{++$sKey}}
+								@endif
+								<i class="fa fa-user"> {{$sValue}}</i> <br>
+							@endforeach
+						@else
+							@if(isset($value['supplier']['name']))
+								{{$value['supplier']['name']}}
+							@else 
+								No Supplier Yet.
+							@endif
 						@endif
 
 					</td>
-					<td>Step {{$value['step']}} - {{$value['status']['name']}}</td>
-					<td style="width: 150px;"><a href="" class="btn btn-primary" title="View"><i class="fa fa-search" aria-hidden="true"></i></a> <a href="" class="btn btn-primary" title="Approve"><i class="fa fa-check" aria-hidden="true"></i></a> <a href="" class="btn btn-primary" title="Cancel"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+					<td>{{$value['status']['name']}}</td>
+					<td style="width: 150px;">
+						
+						@if(strtolower($value['status']['name']) == "delivered")
+							<a href="javascript:void(0)" onclick="viewImages({{$orderData["objData"]['company_id']}},{{$orderData["objData"]['id']}}, {{$value['orderId']}}, {{$value['id']}})" data-toggle="modal" data-target="#view-modal" class="btn btn-primary" title="View"><i class="fa fa-search" aria-hidden="true"></i></a> 
+							<a href="" class="btn btn-primary" title="Approve"><i class="fa fa-check" aria-hidden="true"></i></a> 
+						@endif
+						@if(strtolower($value['status']['name']) == "new")
+							<a href="javascript:void(0)" class="btn btn-primary" onclick="deleteProduct({{$value['id']}}, '{{$value['product']['name']}}' )" title="Cancel"><i class="fa fa-trash" aria-hidden="true"></i></a> 
+						@endif
+						
+					</td>
 				</tr>
 				
 				@endforeach 
@@ -73,6 +94,27 @@
 		</tbody>
 	</table>
 	 <?php echo $orderData['oData']->setPath(url('order-status/'.$orderData['objData']['id']))->render(); ?>
+</div>
+
+<!-- Modal -->
+<div id="view-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Delivered Images</h4>
+      </div>
+      <div class="modal-body">
+       		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 @endsection

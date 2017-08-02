@@ -109,3 +109,56 @@ function removeItem(id)
         }
     });
 }
+
+
+function deleteProduct(id, name)
+{
+
+    $('#prodt').html(name);
+    getModalForConfirmation(id);
+    $('#modal-confirm').modal('show');
+}
+
+function getModalForConfirmation(id)
+{
+    var modal = '';
+
+    modal+='<div class="modal fade" id="modal-confirm">'
+        modal+='<div class="modal-dialog">';
+            modal+='<div class="modal-content">';
+                modal+='<div class="modal-header">';
+                    modal+='<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                       modal+='<span aria-hidden="true">&times;</span></button>';
+                    modal+='<h4 class="modal-title">Confirmation</h4>';
+                modal+='</div>';
+                modal+='<div class="modal-body">';
+                    modal+='Are you sure to cancel this <span id="prodt"></span> product? This cannot be undone.<br>';
+                modal+='</div>';
+                modal+='<div class="modal-footer">';
+                    modal+='<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>';
+                    modal+='<button type="button" class="btn btn-primary" id="c-button" onclick="confirmCancel('+id+')">Yes</button>';
+                modal+='</div>';
+            modal+='</div>';
+       modal+=' </div>';
+   modal+=' </div>';
+
+   $('body').append(modal);
+}
+
+function confirmCancel(id)
+{
+    $.ajax({
+        url: '/cemos-portal/delete-order-product',
+        data: {id:id},
+        beforeSend:function() {
+            $('#c-button').css('disabled',true);
+            $('#c-button').html('Deleting...');
+        },
+        success: function() {
+            $('#c-button').css('disabled',false);
+            $('#c-button').html('Yes');
+            $('#modal-confirm').modal('hide');
+            location.reload();
+        }
+    });
+}

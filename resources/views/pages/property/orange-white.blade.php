@@ -21,6 +21,7 @@
 						<i class="fa fa-bars" title="Product status"></i>
 					</a>
 				</p>
+				<p> <b>{{$value['address1']}}, {{$value['town']}}, {{$value['country']}}, {{$value['zipcode']}}</b></p>
 			</div>
 	</div>
 </div>	

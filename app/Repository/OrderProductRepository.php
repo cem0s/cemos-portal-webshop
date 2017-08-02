@@ -17,27 +17,36 @@ class OrderProductRepository extends EntityRepository
 	public function createOrderLine($data, $orderId)
 	{
 		$oData = get_object_vars($data);
+
 		$dataArray = array();
 		if(isset($oData['options'])) {
 			foreach ($oData['options'] as $key => $value) {
 				$dataArray[$key] = $value;
 			}
 		}
-		
-		$orderLine = new \App\Entity\Commerce\OrderProduct();
-		$orderLine->setQuantity($oData['qty']);
-		$orderLine->setPrice($oData['price']);
-		$orderLine->setData(serialize($dataArray));
-		$orderLine->setStep(1);
-		$orderLine->setOrderId($orderId);
-		$orderLine->setSupplierId(0);
-		$orderLine->setSupplierUserId(0);
-		$orderLine->setProductId($oData['id']);
-		$orderLine->setOrderProductStatusId(2);
-		$this->_em->persist($orderLine);
-		$this->_em->flush();
+	
+	
+		try {
+			
+			$orderLine = new \App\Entity\Commerce\OrderProduct();
+			$orderLine->setQuantity($oData['qty']);
+			$orderLine->setPrice($oData['price']);
+			$orderLine->setData(serialize($dataArray));
+			$orderLine->setStep(1);
+			$orderLine->setOrderId($orderId);
+			$orderLine->setSupplierId(0);
+			$orderLine->setSupplierUserId(0);
+			$orderLine->setProductId($oData['id']);
+			$orderLine->setOrderProductStatusId(2);
+			$this->_em->persist($orderLine);
+			$this->_em->flush();
 
-		return 1;
+			return 1;
+
+		} catch (Exception $e) {
+
+			return 0;
+		}
 
 	}
 
@@ -45,6 +54,7 @@ class OrderProductRepository extends EntityRepository
 	{
 		$result = array();
 		$repo = $this->_em->getRepository(\App\Entity\Commerce\OrderProduct::class);
+		$stepRepo = $this->_em->getRepository(\App\Entity\Commerce\OrderProductStep::class);
 		$productRepo = $this->_em->getRepository(\App\Entity\Commerce\Product::class);
 		$statusRepo = $this->_em->getRepository(\App\Entity\Commerce\Status::class);
 		$compRepo = $this->_em->getRepository(\App\Entity\Management\Company::class);
@@ -63,11 +73,33 @@ class OrderProductRepository extends EntityRepository
 					'supplierUserId' => $value->getSupplierUserId(),
 					'status' => $statusRepo->getStatusById($value->getOrderProductStatusId()),
 					'createdAt' => $value->getCreatedAt()->format('c'),
+					'suppliers' => $stepRepo->getSuppliersByOrderPId($value->getId())
 				);
 			}
 		}
 		
 		return $result;
+	}
+
+	public function deleteOrderProduct($id)
+	{
+		$repo = $this->_em->getRepository('App\Entity\Commerce\OrderProduct');
+		$orderRepo = $this->_em->getRepository('App\Entity\Commerce\Order');
+		$res = $repo->find($id);
+
+		$orderId =  $res->getOrderId();
+		$this->_em->remove($res);
+		$this->_em->flush();
+
+		$checkForOrders = $repo->findBy(array('orderId' => $orderId));
+		
+		if(count($checkForOrders) <= 0){
+			$res2 = $orderRepo->find($orderId);
+			$this->_em->remove($res2);
+			$this->_em->flush();
+		}
+
+		echo true;
 	}
 }
 

@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth','web']], function(){
 	Route::get('/calendar', 'CalendarController@index')->name('shop-cart');
 	Route::get('/order', 'OrderController@order')->name('order');
 	Route::get('/order-status/{object_id}', 'OrderController@orderStatus')->name('order-status');
+	Route::get('/delete-order-product', 'OrderController@deleteOrderProduct')->name('delete-order-product');
 
 	Route::post('/update-pic', 'ProfileController@updatePic')->name('update-pic');
 	Route::post('/add-property', 'PropertyController@postAddProperty')->name('add-property');
@@ -44,5 +45,7 @@ Route::group(['middleware' => ['auth','web']], function(){
 	Route::post('/upload', 'ShopController@uploadFloors')->name('upload-floors');
 
 	Route::delete('/upload', 'ShopController@deleteFloorImage')->name('delete-floor');
+
+	Route::get('/get-images', 'FileController@getImages')->name('get-images');
 
 });

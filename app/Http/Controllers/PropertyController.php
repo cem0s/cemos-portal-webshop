@@ -23,7 +23,7 @@ class PropertyController extends Controller
     {
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
         $all_property = $object_repo->getAllObjects();
-
+     
         return view('pages.property.property-overview')->with('objects', $all_property['property']);
     }
 
