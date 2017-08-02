@@ -52,6 +52,13 @@ class LoginController extends Controller
      * @var
      */
     protected $lockoutTime;
+
+    /**
+     * creditRepo
+     *
+     * @var
+     */
+    protected $creditRepo;
  
 
     /**
@@ -63,6 +70,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->userRepo = $em->getRepository('App\Entity\Management\User');
+        $this->creditRepo = $em->getRepository('App\Entity\Management\CreditPoints');
         $this->lockoutTime  = 1;    //lockout for 1 minute (value is in minutes)
         $this->maxLoginAttempts = 2;  //lockout after 2 attempts
     }
@@ -112,11 +120,15 @@ class LoginController extends Controller
         { 
             $user = $this->userRepo->getUserById($checkIfExists['user_id']);
 
+
             //Add necessary data to session
             $request->session()->put('email',$credentials['email']); 
             $request->session()->put('user_id',$checkIfExists['user_id']); 
             $request->session()->put('company_id',$user->getCompanyId()); 
 
+            $credit_points = $this->creditRepo->getCreditByCompany($user->getCompanyId());
+            $request->session()->put('credit_points',$credit_points['points']); 
+            
             //Auth login uses the user object variable.
             Auth::login($user);
             $request->session()->regenerate();

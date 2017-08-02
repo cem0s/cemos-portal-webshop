@@ -17,12 +17,14 @@ class OrderRepository extends EntityRepository
 	public function createOrder($data)
 	{
 		$order = new \App\Entity\Commerce\Order();
+
 		try {
 
 			$order->setCompanyId($data['company_id']);
 			$order->setObjectId($data['object_id']);
 			$order->setUserId($data['user_id']);
 			$order->setOrderStatusId(1);
+			$order->setPaymentOption($data['payment_method']);
 			$this->_em->persist($order);
 			$this->_em->flush();
 
@@ -40,6 +42,7 @@ class OrderRepository extends EntityRepository
 		} catch (Exception $e) {
 			return 0;
 		}
+
 	}
 
 	/**

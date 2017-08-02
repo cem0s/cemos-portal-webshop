@@ -721,7 +721,48 @@ class ShopController extends Controller
                 $html .= "</tbody>";
             $html .= "</table>";
         $html .= "</div>";
-    
+
+        $html .= "<div class='row'>";
+             $html .= "<hr>";
+            $html .= "<div class='col-xs-12'>";
+                $html .= "<p class='lead'>Payment Methods:</p>";
+
+                $html .= "<div class='form-group'>";
+                  $html .= "<div class='radio'>";
+                    $html .= "<label style='margin-right: 15px;'>";
+                      $html .= "<input type='radio' name='credit_points' id='visa' value='visa'>";
+                      $html .= "<img src='../images/credit/visa.png' alt='Visa' title='Visa'>";
+                    $html .= "</label>";
+
+                    $html .= "<label style='margin-right: 15px;'>";
+                      $html .= "<input type='radio' name='credit_points' id='mastercard' value='mastercard'>";
+                      $html .= "<img src='../images/credit/mastercard.png' alt='Mastercard' title='Mastercard'>";
+                    $html .= "</label>";
+
+                    $html .= "<label style='margin-right: 15px;'>";
+                      $html .= "<input type='radio' name='credit_points' id='paypal' value='paypal'>";
+                      $html .= "<img src='../images/credit/paypal2.png' alt='Paypal' title='Paypal'>";
+                    $html .= "</label>";
+
+                    $html .= "<label style='margin-right: 15px;'>";
+                      $html .= "<input type='radio' name='credit_points' id='credit-points' value='credit-points'>";
+                      $html .= "<img src='../images/credit/credit-points2.png' alt='Credit Points' title='Credit Points'>";
+                    $html .= "</label>";
+
+                    $html .= "<label style='margin-right: 15px;'>";
+                      $html .= "<input type='radio' name='credit_points' id='invoice' value='invoice'>";
+                      $html .= "<img src='../images/credit/invoice2.png' alt='Invoice' title='Invoice'>";
+                    $html .= "</label>";
+                  $html .= "</div>";
+                $html .= "</div>";
+
+                $html .= "</div>";
+            $html .= "</div>";
+        $html .= "</div>";
+        $html .= "<div id='error_msg'></div>";
+
+        $html .= "<script src='../js/payment-method.js'></script>";
+        
         return $html;
 
     }
