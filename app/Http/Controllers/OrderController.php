@@ -48,7 +48,7 @@ class OrderController extends Controller
         $remain = $credit - Cart::total();
         
         if($remain<0){
-            echo 0;
+            echo false;
         }else{
             $orderId = $this->orderRepo->createOrder($order); 
 
@@ -58,15 +58,6 @@ class OrderController extends Controller
                 }
             }
 
-
-        if($orderId > 0) {
-            if(Cart::count() > 0) {
-                foreach ($cartItems as $key => $value) {
-                   $this->orderProductRepo->createOrderLine($value, $orderId);
-                }
-            }
-        } else {
-            echo 0;
         }
     	
 
@@ -113,7 +104,7 @@ class OrderController extends Controller
 
 
             echo 1;
-        }
+        
 
     }
 

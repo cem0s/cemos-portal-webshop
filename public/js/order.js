@@ -17,6 +17,7 @@ function orderNow()
 				$('#formSuccess').css('display','inline');
 			} else {
 				alert('Error in adding order products. Kindly contact the web admin.');
+				location.reload();
 			}
 		}
 	});
