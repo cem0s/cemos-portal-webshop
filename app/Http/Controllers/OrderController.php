@@ -69,9 +69,19 @@ class OrderController extends Controller
 
         $this->saveFloorPlanImages($userInfo, $orderId, 'floor plans');
 
-    	//Send Email to client
+        
+        if(count(Mail::failures()) > 0) {
+            echo 0;
+        }
+
+        // deduct the credit 
+        $this->creditRepo->update($remain, $userInfo['company_id']);
+        $request->session()->put('credit_points',$remain); 
+        //Transfer files for floorplanner
+
+        //Send Email to client
          $data = array(
-                'url' => config('app.url')."/cemos-portal/order-status/".$userInfo['object_id'],
+                'url' => config('app.url')."/order-status/".$userInfo['object_id'],
                 'cartContents' => Cart::content(),
                 'subtotal' => Cart::subtotal(),
                 'total' => Cart::total(),
@@ -80,30 +90,9 @@ class OrderController extends Controller
 
         //Gladys: Send activation code through email,
         Mail::to("vailoces.gladys@gmail.com")->send(new SendOrderDetails($data)); 
-        
-        if(count(Mail::failures()) > 0) {
-            echo 0;
-        }
-
-            // deduct the credit 
-            $this->creditRepo->update($remain, $userInfo['company_id']);
-            $request->session()->put('credit_points',$remain); 
-            //Transfer files for floorplanner
-
-            //Send Email to client
-             $data = array(
-                    'url' => config('app.url')."/order-status/".$userInfo['object_id'],
-                    'cartContents' => Cart::content(),
-                    'subtotal' => Cart::subtotal(),
-                    'total' => Cart::total(),
-                    'tax' => Cart::tax()
-                );
-
-            //Gladys: Send activation code through email,
-            Mail::to("vailoces.gladys@gmail.com")->send(new SendOrderDetails($data)); 
 
 
-            echo 1;
+        echo 1;
         
 
     }
