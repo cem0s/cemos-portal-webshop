@@ -70,9 +70,7 @@ class OrderController extends Controller
         $this->saveFloorPlanImages($userInfo, $orderId, 'floor plans');
 
         
-        if(count(Mail::failures()) > 0) {
-            echo 0;
-        }
+      
 
         // deduct the credit 
         $this->creditRepo->update($remain, $userInfo['company_id']);
@@ -90,7 +88,10 @@ class OrderController extends Controller
 
         //Gladys: Send activation code through email,
         Mail::to("vailoces.gladys@gmail.com")->send(new SendOrderDetails($data)); 
-
+        
+        if(count(Mail::failures()) > 0) {
+            echo 0;
+        }
 
         echo 1;
         
