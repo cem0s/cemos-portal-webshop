@@ -298,18 +298,18 @@ body{
 }
 
 #prod-status .product_th{
-	font-size:12;
+	font-size:12px;
 	font-family:arial;
 }
 
 #prod-status .product_name p{
-	font-size:12;
+	font-size:12px;
 	font-family:arial;
 	color:#4D4D4D;
 	margin:0;
 }
 #prod-status .product_date p{
-	font-size:10;
+	font-size:10px;
 	font-family:arial;
 	color:#C8592A;
 	font-style:italic;
@@ -1041,7 +1041,7 @@ span.round-tab:hover {
 .text {
   white-space: nowrap; 
   color: white;
-  font-size: 20px;
+  font-size: 14px;
   position: absolute;
   overflow: hidden;
   top: 50%;
@@ -1396,5 +1396,9 @@ span.round-tab:hover {
 	display: inline-block; 
 	width: 32%;
 	font-size: 30px;
+}
+
+.prop-name {
+	font-weight: 200;
 }
 

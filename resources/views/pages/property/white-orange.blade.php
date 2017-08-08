@@ -22,7 +22,7 @@
 					<i class="fa fa-bars" title="Product status"></i>
 				</a>
 			</p>
-			<p> <b>{{$value['address1']}}, {{$value['town']}}, {{$value['country']}}, {{$value['zipcode']}}</b></p>
+			<p class="prop-name"> {{$value['address1']}}, {{$value['town']}}, {{$value['country']}}, {{$value['zipcode']}}</p>
 		</div>
 	</div>
 </div>

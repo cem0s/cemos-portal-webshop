@@ -78,6 +78,7 @@ class UserController extends Controller
     public function show($id)
     {
         $userData = $this->userRepo->getAllUserInfo($id);
+
         return response()->json($userData, 201);
     }
 

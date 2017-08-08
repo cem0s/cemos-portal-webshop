@@ -55,7 +55,7 @@
 				<div class="tab-content">
 					<div class="tab-pane active" id="1a">
 						<div id ="Profile_account" class="prod-status-table "><!--table--> <!--tab 1--> 
-							<div class="table-responsive table_bg">
+							<div class=" table_bg">
 								<h4><i class="fa fa-list-alt fa-fw" aria-hidden="true"></i> Activity Log</h4><hr>
 									<div style="height:390px;overflow-y:scroll;;">
 										@if(isset($userData['logs']) && !empty($userData['logs']))
@@ -88,7 +88,7 @@
 					</div>
 					<div class="tab-pane" id="2a">
 						<div id ="Profile_account" class="prod-status-table "><!--table--> <!--tab 2--> 
-							<div class="table-responsive table_bg">
+							<div class="table_bg">
 							<h4><i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i> Overview</h4><hr>
 								<table id="prod-status" class="table">
 									  <thead>
@@ -208,7 +208,7 @@
 					</div>
 					<div class="tab-pane" id="3a">
 						<div id ="Profile_account" class="prod-status-table "><!--table--> <!--tab 1--> 
-							<div class="table-responsive table_bg">
+							<div class="table_bg">
 								<table id="prod-status" class="table table-striped table-bordered table-hover">
 									  <thead>
 										<tr class="product_th text-uppercase">

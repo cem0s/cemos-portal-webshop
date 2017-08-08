@@ -24,25 +24,25 @@
 					</div>
 				</div>
 			</a>
-			<a href="#delivered"> 
-				<div class="col-md-3">
-					<div class="card" style="width: 26rem;">
-					 	<div class="card-block">
-						    <h3 class="card-title"><i class="fa fa-check fa-3x black" aria-hidden="true" title="Delivered" style="color: #C8592A;"></i></h3>
-						    <p class="card-text">Delivered </p>
-						   <span class="counter counterUpCss" style="display: inline-block; width: 32%">50</span>
-					  </div>
-					</div>
-				</div>
-			</a>
 			<a href="#status">
 				<div class="col-md-3">
 					<div class="card" style="width: 26rem;">
 						<div class="card-block">
 						    <h3 class="card-title"><i class="fa fa-list fa-3x black" aria-hidden="true" title="Status" style="color: #C8592A;"></i></h3>
 						    <p class="card-text">Order Status</p>
-						   <span class="counter counterUpCss" style="display: inline-block; width: 32%">50</span>
+						   <span class="counter counterUpCss" style="display: inline-block; width: 32%">{{count($data['orders'])}}</span>
 						</div>
+					</div>
+				</div>
+			</a>
+			<a href="#delivered"> 
+				<div class="col-md-3">
+					<div class="card" style="width: 26rem;">
+					 	<div class="card-block">
+						    <h3 class="card-title"><i class="fa fa-check fa-3x black" aria-hidden="true" title="Delivered" style="color: #C8592A;"></i></h3>
+						    <p class="card-text">Delivered </p>
+						   <span class="counter counterUpCss" style="display: inline-block; width: 32%">{{($data['deliverdCount'])}}</span>
+					  </div>
 					</div>
 				</div>
 			</a>
@@ -92,7 +92,7 @@
 											
 										</td>
 										<td class="align_middle" width="15%">
-											<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
+											<a href="{{url('property-details')}}/{{$value['id']}}" class="btn btn-primary"><i class="fa fa-arrow-right"></i></a>
 										</td>
 									</tr><!--end of stripe-->
 					  			@endforeach
@@ -112,152 +112,84 @@
 				<table id="prod-status" class="table table-striped table-bordered table-hover">
 					  <thead>
 						<tr class="product_th text-capitalize">
-							  <th>Order  Id</th>
-							  <th>Product</th>
+							  <th></th>
+							  <th>Property</th>
 							  <th>Requestor</th>
 							  <th></th>
 						</tr>
 					  </thead>
-					  <tbody>
-							<tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>0991</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-										Photography						
-								</td>
-								<td class="align_middle" width="20%">
-									Gladys Vailoces
-								</td>
-								<td class="align_middle" width="15%">
-									<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
-								</td>
-							</tr><!--end of stripe-->
-							<tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>0992</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-									Floorplanner			
-								</td>
-								<td class="align_middle" width="20%">
-									Gladys Vailoces
-								</td>
-								<td class="align_middle" width="15%">
-									<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
-								</td>
-							</tr><!--end of stripe--><tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>0993</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-									Measurement						
-								</td>
-								<td class="align_middle" width="20%">
-									Gladys Vailoces
-								</td>
-								<td class="align_middle" width="15%">
-									<button class="btn btn-primary"><i class="fa fa-arrow-right"></i></button>
-								</td>
-							</tr><!--end of stripe-->
-						
+					   <tbody>
+					  		@if(isset($data['orders']) && !empty($data['orders']))
+					  			@foreach($data['orders'] as $key => $value)
+					  				@if($value['status'] == "Delivered")
+							  			<tr>
+											<th scope="row" width="25%">
+												<div class="product_name"><p>Order # {{$value['id']}}</p></div>
+												<div class="product_date"> <p>Created on {{date('F d, Y H:i:s A', strtotime($value['createdAt']))}}</p></div>
+											</th>
+											<td class="align_middle" width="40%">
+													{{$value['address1']}},	{{$value['town']}},	{{$value['country']}}, {{$value['zipcode']}}				 	
+											</td>
+											<td class="align_middle" width="20%">
+													{{$value['firstName']}}	{{$value['lastName']}} - {{$value['company']}}
+												
+											</td>
+											<td class="align_middle" width="15%">
+												<a href="{{url('order-details')}}/{{$value['id']}}" class="btn btn-primary"><i class="fa fa-arrow-right"></i></a>
+											</td>
+										</tr><!--end of stripe-->
+									@endif
+					  			@endforeach
+					  		@else 
+					  		<tr><td>
+					  			No data found.
+					  		</td></tr>
+							@endif
 					  </tbody>
+					
 				</table>
 			</div>
 		</div><!--end of tab2-->
 					
-		<div id="status" class="custParagraph">Status</div><hr>			
+		<div id="status" class="custParagraph">ORDER Status</div><hr>			
 		<div id ="menu2" class="table_border prod-status-table "><!-- tab3-->
 			<div class="table-responsive table_bg">
 				<table id="prod-status" class="table table-striped table-bordered table-hover">
 					  <thead>
 						<tr class="product_th text-capitalize">
-							  <th>Order Product</th>
-							  <th>Product</th>
-							  <th>Progress</th>
-							  <th>Suppliers</th>
+							  <th></th>
+							  <th>Property</th>
+							  <th>Requestor</th>
+							  <th></th>
 						</tr>
 					  </thead>
-					  <tbody>
-							<tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>1</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-									Photography			
-								</td>
-								<td class="align_middle" width="20%">
-									<div class="progress progressBar">
-										<div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-										</div>
-									</div>
-									<div class="percent">
-										<p >40 complete</p>
-									</div>
-								</td>
-								<td class="align_middle" width="15%">
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>	
-								</td>
-							</tr><!--end of stripe-->
-							<tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>2</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-									Measurement				
-								</td>
-								<td class="align_middle" width="20%">
-									<div class="progress progressBar">
-										<div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 70;">
-										</div>
-									</div>
-									<div class="percent">
-										<p >70% complete</p>
-									</div>
-								</td>
-								<td class="align_middle" width="15%">
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>	
-								</td>
-							</tr><!--end of stripe--><tr>
-								<th scope="row" width="25%">
-									<div class="product_name"><p>3</p></div>
-									<div class="product_date"> <p>Created jan  1, 2005</p></div>
-								</th>
-								<td class="align_middle" width="40%">
-									 360 Styleswitcher							
-								</td>
-								<td class="align_middle" width="20%">
-									<div class="progress progressBar">
-										<div class="progress-bar " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-										</div>
-									</div>
-									<div class="percent">
-										<p >60% complete</p>
-									</div>
-								</td>
-								<td class="align_middle" width="15%">
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>
-									<i class="fa fa-user fa-lg white_bg" aria-hidden="true"></i>	
-								</td>
-							</tr><!--end of stripe-->
-						
+					   <tbody>
+					  		@if(isset($data['orders']) && !empty($data['orders']))
+					  			@foreach($data['orders'] as $key => $value)
+							  			<tr>
+											<th scope="row" width="25%">
+												<div class="product_name"><p>Order # {{$value['id']}}</p></div>
+												<div class="product_date"> <p>Created on {{date('F d, Y H:i:s A', strtotime($value['createdAt']))}}</p></div>
+											</th>
+											<td class="align_middle" width="40%">
+													{{$value['address1']}},	{{$value['town']}},	{{$value['country']}}, {{$value['zipcode']}}				 	
+											</td>
+											<td class="align_middle" width="20%">
+													{{$value['firstName']}}	{{$value['lastName']}} - {{$value['company']}}
+												
+											</td>
+											<td class="align_middle" width="15%">
+												{{$value['status']}}
+											</td>
+										</tr><!--end of stripe-->
+					  			@endforeach
+					  		@else 
+					  		<tr><td>
+					  			No data found.
+					  		</td></tr>
+							@endif
 					  </tbody>
+					
 				</table>
 			</div>
 		</div><!--end of tab3-->

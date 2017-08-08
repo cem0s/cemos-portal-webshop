@@ -8,12 +8,13 @@ use Doctrine\ORM\EntityManager;
 class DashboardController extends Controller
 {
 
-	protected $objectRepo;
+
+    protected $em;
  
 
     public function __construct(EntityManager $em)
     {
-        $this->objectRepo =  $em->getRepository('App\Entity\Realestate\Object');
+        $this->em =  $em;
 
     }
 
@@ -25,9 +26,24 @@ class DashboardController extends Controller
     public function index()
     {
     	$data = array();
+        $objectRepo = $this->em->getRepository('App\Entity\Realestate\Object');
+        $orderRepo = $this->em->getRepository('App\Entity\Commerce\Order');
+        $orderPRepo = $this->em->getRepository('App\Entity\Commerce\OrderProduct');
 
-    	$data['property'] = $this->objectRepo->getAllObjects();
-    	
+    	$data['property'] = $objectRepo->getAllObjects();
+        $data['orders'] = $orderRepo->getAllOrders();
+        $deliverdCount = 0;
+
+        if(!empty($data['orders'])) {
+            foreach ($data['orders'] as $key => $value) {
+                if($value['status'] == "Delivered"){
+                   $deliverdCount++;
+                }
+            }
+        }
+
+    	$data['deliverdCount'] = $deliverdCount;
+
         return view('pages.dashboard.dashboard')->with('data', $data);
     }
 }
