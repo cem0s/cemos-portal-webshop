@@ -52,7 +52,7 @@
 					</td>
 					<td>&#8369 {{$value['product']['price']}}</td>
 					<td>
-						@if(strtolower($value['status']['name']) == "delivered")
+						@if(strtolower($value['status']['name']) == "delivered" || strtolower($value['status']['name']) == "approved")
 							@foreach($value['suppliers'] as $sKey => $sValue)
 								Step 
 								@if($sKey == 0)
@@ -76,10 +76,13 @@
 						
 						@if(strtolower($value['status']['name']) == "delivered")
 							<a href="javascript:void(0)" onclick="viewImages({{$orderData["objData"]['company_id']}},{{$orderData["objData"]['id']}}, {{$value['orderId']}}, {{$value['id']}})" data-toggle="modal" data-target="#view-modal" class="btn btn-primary" title="View"><i class="fa fa-search" aria-hidden="true"></i></a> 
-							<a href="" class="btn btn-primary" title="Approve"><i class="fa fa-check" aria-hidden="true"></i></a> 
+							<a href="javascript:void(0)" class="btn btn-primary" onclick="approveProduct({{$value['id']}}, '{{$value['product']['name']}}' )" title="Cancel"><i class="fa fa-check" aria-hidden="true"></i></a> 
 						@endif
 						@if(strtolower($value['status']['name']) == "new")
 							<a href="javascript:void(0)" class="btn btn-primary" onclick="deleteProduct({{$value['id']}}, '{{$value['product']['name']}}' )" title="Cancel"><i class="fa fa-trash" aria-hidden="true"></i></a> 
+						@endif
+						@if(strtolower($value['status']['name']) == "approved")
+							<a href="javascript:void(0)" class="btn btn-primary" onclick="download({{$value['id']}}, '{{$value['product']['name']}}' )" title="Download"><i class="fa fa-cloud-download" aria-hidden="true"></i></a> 
 						@endif
 						
 					</td>

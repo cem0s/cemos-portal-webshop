@@ -44,15 +44,15 @@ function viewImages(cId, objId, oId, opId)
 
 			//html += '<div class="row">';
 				$.each(d, function (i, v){
-					
-					if(v.type.search('image') == 1){
+						console.log(v.type);
+					if(v.type.indexOf('image') != -1){
 						//html += '<div class="col-md-3">';
 						html += '<a target="_blank" href="'+v.path+'">';
 							html += '<img src = "'+v.path+'" width="200" height="200">';	
 						html += '</a>';
 						//html += '</div>';
 					} else {
-						html += ' <video type="video" width="200px" height="200px" controls>';
+						html += ' <video type="video" width="200" height="200" controls>';
 							html += ' <source src="'+v.path+'" type="'+v.type+'">Your browser does not support the video tag.';
 						html += ' </video>';
 					}

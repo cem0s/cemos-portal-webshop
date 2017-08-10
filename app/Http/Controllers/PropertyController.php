@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Doctrine\ORM\EntityManager;
+use App\Common;
 
 class PropertyController extends Controller
 {
     protected $em;
+    protected $common;
 
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $this->common = new Common();
     }
 
     /**
@@ -23,6 +26,14 @@ class PropertyController extends Controller
     {
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
         $all_property = $object_repo->getAllObjects();
+
+        if($this->common->checkIfAdmin()) {
+            $all_property = $object_repo->getAllObjects();
+        } else if($this->common->checkIfRealtorAdmin()) {
+            $all_property = $object_repo->getObjectsByCompanyId(session('company_id'));
+        }
+
+        $all_property = $object_repo->getObjectsByUserId(session('user_id'));
      
         return view('pages.property.property-overview')->with('objects', $all_property['property']);
     }

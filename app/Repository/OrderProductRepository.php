@@ -122,6 +122,76 @@ class OrderProductRepository extends EntityRepository
 
 		return array();
 	} 
+
+	/**
+     * Updates order product status by order product id
+     * @author Gladys Vailoces <gladys@cemos.ph> 
+     * @param integer $statusId
+     * @param integer $orderId
+     * @param integer $orderPId
+     * @return void
+     */
+	public function updateOrderProductStatusById($statusId = 0, $orderPId = 0, $step = 0)
+	{
+
+		$repo = $this->_em->getRepository(\App\Entity\Commerce\OrderProduct::class);
+		$nRepo = $this->_em->getRepository(\App\Entity\Management\Notification::class);
+
+		$result = $repo->find($orderPId);	
+		if(!empty(array($result))) {
+			if(($result->getProductId() == 10 && $step == 3 ) || ($result->getProductId() == 11 && $step == 3 ) ||
+				($result->getProductId() == 1 && $step == 4 ) || ($result->getProductId() == 2 && $step == 4 ) ||
+				($result->getProductId() == 3 && $step == 4 ) || ($result->getProductId() == 4 && $step == 4 ) ||
+				($result->getProductId() == 5 && $step == 4 ) || ($result->getProductId() == 6 && $step == 4 ) ||
+				($result->getProductId() == 8 && $step == 4 ) || ($result->getProductId() == 9 && $step == 4 ) ||
+				($result->getProductId() == 7 && $step == 3)  
+			) {
+				$statusId = 8;
+			}
+			
+			if($statusId == 4){
+				$result->setOrderProductStatusId($statusId);
+				$result->setSupplierId(0);
+				$result->setSupplierUserId(0);
+			} else {
+				$result->setOrderProductStatusId($statusId);
+				$result->setSupplierId(0);
+				$result->setSupplierUserId(0);
+				$result->setStep($step);
+			}
+			
+			$this->_em->merge($result);
+			$this->_em->flush();
+
+			//This checks if the the order status should be updated to delivered if 
+			//all the order products under it is delivered.
+			$this->checkForUpdateOrderStatus($result->getOrderId());
+		}
+		
+	}
+
+	public function checkForUpdateOrderStatus($id)
+	{
+		$repo = $this->_em->getRepository(\App\Entity\Commerce\OrderProduct::class);
+		$orderRepo = $this->_em->getRepository(\App\Entity\Commerce\Order::class);
+		$results = $repo->findBy(array('orderId'=> $id));
+		$isDelivered = false;
+		$pCount = count($results);
+		$c = 0;
+		if(!empty($results)) {
+			foreach ($results as $key => $value) {
+				if($value->getOrderProductStatusId() == 10){
+					$c++;
+				} 
+			}
+		}
+
+		if($pCount == $c) {
+			$orderRepo->updateOrderStatus(array('orderId' => $id,'id' => 9));
+		} else {
+			$orderRepo->updateOrderStatus(array('orderId' => $id,'id' => 5));
+		}
+	}
 }
 
 ?>

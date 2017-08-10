@@ -1,44 +1,22 @@
 
-app.controller('userController', ['$scope', '$filter', '$http', 'userService' , '$window', function($scope, $filter, $http, userService, $window) {
+app.controller('userController', ['$scope', '$filter', '$http', 'userService' , 'companyService' ,'$window', function($scope, $filter, $http, userService, companyService , $window) {
    
-    // $scope.updateBrands = function(){
-    //     $('#myModal').modal('hide');
-    //     $('#myModal').find("input,textarea,select").val('').end();
-    //     $scope.saving = false;
+    $scope.getCompanies = function(){
+        
 
-    //     brandService.getAllBrands()
-    //         .then(function(response) {
-    //              $scope.allBrands = response.data.brand;
-    //         }).catch(function(data) {
-    //             alert('Unable to retrieve brand list.');
-    //     });      
+        companyService.getCompanies()
+            .then(function(response) {
+                 $scope.company = response.data;
+                 
+            }).catch(function(data) {
+                alert('Unable to retrieve company list.');
+        });      
 
-    // };
-    // $scope.updateBrands();
+    };
+    $scope.getCompanies();
 
 
-    //show modal form
-    // $scope.toggle = function(modalstate, id) {
-    //     $scope.modalstate = modalstate;
-
-    //     switch (modalstate) {
-    //         case 'add':
-    //             $scope.form_title = "Add New Brand";
-    //             break;
-    //         case 'edit':
-    //             $scope.form_title = "Brand Detail";
-    //             $scope.id = id;
-    //             brandService.getBrandById(id)
-    //                 .then(function(response) {
-    //                     $scope.brand = response.data;
-    //                 });
-    //             break;
-    //         default:
-    //             break;
-    //     }
     
-    //     $('#myModal').modal('show');
-    // }
 
     //save new record / update existing record
     $scope.save = function(modalstate) 

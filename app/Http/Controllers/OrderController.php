@@ -79,7 +79,7 @@ class OrderController extends Controller
 
         //Send Email to client
          $data = array(
-                'url' => config('app.url')."/order-status/".$userInfo['object_id'],
+                'url' => config('app.url')."/cemos-portal/order-status/".$userInfo['object_id'],
                 'cartContents' => Cart::content(),
                 'subtotal' => Cart::subtotal(),
                 'total' => Cart::total(),
@@ -171,5 +171,10 @@ class OrderController extends Controller
         $id = $request->all()['id'];
 
         echo $this->orderProductRepo->deleteOrderProduct($id);
+    }
+
+    public function approveProduct($id)
+    {
+        echo $this->orderProductRepo->updateOrderProductStatusById(10, $id);
     }
 }

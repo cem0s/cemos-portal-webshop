@@ -173,4 +173,88 @@ class ObjectRepository extends EntityRepository
 			);
 	}
 
+	public function getObjectsByUserId($id)
+	{
+		$data = array();
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('o')
+		   ->from('App\Entity\Realestate\Object', 'o')
+		   ->where('o.userId = :userId')
+		   ->setParameter('userId', $id);
+
+		$queryResult = $qb->getQuery()->getArrayResult();
+		
+		$userRepo = $this->_em->getRepository('App\Entity\Management\User');
+		$objectTypeRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectType');
+
+		if(!empty($queryResult)){
+			foreach ($queryResult as $key => $value) {
+				$data[] = array(
+						'id' => $value['id'],
+						'name' => $value['name'],
+						'address1' => $value['address1'],
+						'address2' => $value['address2'],
+						'zipcode' => $value['zipcode'],
+						'country' => $value['country'],
+						'town' => $value['town'],
+						'slug' => $value['slug'],
+						'objecttype' => $objectTypeRepo->getObjectTypeById($value['objectTypeId']),
+						'object_property' => "",
+						'user' => $userRepo->getAllUserInfo($value['userId']),
+						'createdat' => $value['createdAt']->format('c'),
+						'discr' => $value['discr']
+					);
+			}
+		}
+
+		
+		return array(
+				'property' => $data,
+				'count' => count($qb->getQuery()->getArrayResult())
+			);
+	}
+
+	public function getObjectsByCompanyId($id)
+	{
+		$data = array();
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('o')
+		   ->from('App\Entity\Realestate\Object', 'o')
+		   ->where('o.customerId = :customerId')
+		   ->setParameter('customerId', $id);
+
+		$queryResult = $qb->getQuery()->getArrayResult();
+		
+		$userRepo = $this->_em->getRepository('App\Entity\Management\User');
+		$objectTypeRepo = $this->_em->getRepository('App\Entity\Realestate\ObjectType');
+
+		if(!empty($queryResult)){
+			foreach ($queryResult as $key => $value) {
+				$data[] = array(
+						'id' => $value['id'],
+						'name' => $value['name'],
+						'address1' => $value['address1'],
+						'address2' => $value['address2'],
+						'zipcode' => $value['zipcode'],
+						'country' => $value['country'],
+						'town' => $value['town'],
+						'slug' => $value['slug'],
+						'objecttype' => $objectTypeRepo->getObjectTypeById($value['objectTypeId']),
+						'object_property' => "",
+						'user' => $userRepo->getAllUserInfo($value['userId']),
+						'createdat' => $value['createdAt']->format('c'),
+						'discr' => $value['discr']
+					);
+			}
+		}
+
+		
+		return array(
+				'property' => $data,
+				'count' => count($qb->getQuery()->getArrayResult())
+			);
+	}
+
 }

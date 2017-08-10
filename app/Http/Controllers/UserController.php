@@ -64,7 +64,7 @@ class UserController extends Controller
             );
 
         //Gladys: Send activation code through email,
-        //Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data)); 
+        Mail::to("vailoces.gladys@gmail.com")->send(new SendActivationCode($data)); 
      
         return response()->json($userData['userObj'], 201);
     }

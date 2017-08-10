@@ -124,6 +124,88 @@ class OrderRepository extends EntityRepository
 		return array();
 	}
 
+	/**
+	* Fetch orders by user id
+	* @author Gladys Vailoces
+	* @return array
+	*/
+	public function getOrdersByUserId($userId)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('o.id, c.name as company, u.firstName, u.lastName, o.createdAt, s.name as status, p.name as objectName, p.address1, p.town, p.country, p.zipcode')
+		   ->from('App\Entity\Commerce\Order', 'o')
+		   ->leftJoin('App\Entity\Management\Company','c','WITH','c.id = o.companyId')
+		   ->leftJoin('App\Entity\Management\User','u','WITH','u.id = o.userId')
+		   ->leftJoin('App\Entity\Commerce\Status','s','WITH','s.id = o.orderStatusId')
+		   ->leftJoin('App\Entity\Realestate\Object','p','WITH','p.id = o.objectId')
+		   ->where('o.userId = :userId')
+		   ->setParameter('userId', $userId);
+
+		     
+		$queryResult = $qb->getQuery()->getArrayResult();
+		if(!empty($queryResult)) {
+			foreach ($queryResult as $key => $value) {
+				$queryResult[$key]['createdAt'] = $value['createdAt']->format('c');
+			}
+			return $queryResult;
+		} 
+		
+		return array();
+	}
+
+	/**
+	* Fetch orders by company id
+	* @author Gladys Vailoces
+	* @return array
+	*/
+	public function getOrdersByCompanyId($id)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('o.id, c.name as company, u.firstName, u.lastName, o.createdAt, s.name as status, p.name as objectName, p.address1, p.town, p.country, p.zipcode')
+		   ->from('App\Entity\Commerce\Order', 'o')
+		   ->leftJoin('App\Entity\Management\Company','c','WITH','c.id = o.companyId')
+		   ->leftJoin('App\Entity\Management\User','u','WITH','u.id = o.userId')
+		   ->leftJoin('App\Entity\Commerce\Status','s','WITH','s.id = o.orderStatusId')
+		   ->leftJoin('App\Entity\Realestate\Object','p','WITH','p.id = o.objectId')
+		   ->where('o.companyId = :companyId')
+		   ->setParameter('companyId', $id);
+
+		     
+		$queryResult = $qb->getQuery()->getArrayResult();
+		if(!empty($queryResult)) {
+			foreach ($queryResult as $key => $value) {
+				$queryResult[$key]['createdAt'] = $value['createdAt']->format('c');
+			}
+			return $queryResult;
+		} 
+		
+		return array();
+	}
+
+	/**
+     * Updates order status
+     * @author Gladys Vailoces <gladys@cemos.ph> 
+     * @param array $data
+     * @return boolean
+     */
+	public function updateOrderStatus($data)
+	{
+		$result = $this->_em->find(\App\Entity\Commerce\Order::class, $data['orderId']);
+		$orderProductRepo = $this->_em->getRepository('App\Entity\Commerce\OrderProduct');
+
+		if(count($result)>0){
+			$result->setOrderStatusId($data['id']);
+			$this->_em->merge($result);
+			$this->_em->flush();
+			
+			if($data['id'] == 3){
+				$orderProductRepo->updateOrderProductStatusByOrderId(4, $data['orderId']);
+			}
+			return 1;
+		}
+		return 0;
+	}
+
 
 	 /**
      * This logs all activity

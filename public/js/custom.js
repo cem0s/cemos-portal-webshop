@@ -119,6 +119,12 @@ function deleteProduct(id, name)
     $('#modal-confirm').modal('show');
 }
 
+function approveProduct(id, name)
+{
+    getModalForApprove(id);
+    $("#modal-approve").modal('show');
+}
+
 function getModalForConfirmation(id)
 {
     var modal = '';
@@ -145,6 +151,51 @@ function getModalForConfirmation(id)
    $('body').append(modal);
 }
 
+function getModalForApprove(id)
+{
+    var modal = '';
+
+    modal+='<div class="modal fade" id="modal-approve">'
+        modal+='<div class="modal-dialog">';
+            modal+='<div class="modal-content">';
+                modal+='<div class="modal-header">';
+                    modal+='<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                       modal+='<span aria-hidden="true">&times;</span></button>';
+                    modal+='<h4 class="modal-title">Confirmation</h4>';
+                modal+='</div>';
+                modal+='<div class="modal-body">';
+                    modal+='Are you sure you want to approve this product?';
+                modal+='</div>';
+                modal+='<div class="modal-footer">';
+                    modal+='<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>';
+                    modal+='<button type="button" class="btn btn-primary" id="c-button" onclick="approve('+id+')">Yes</button>';
+                modal+='</div>';
+            modal+='</div>';
+       modal+=' </div>';
+   modal+=' </div>';
+
+
+   modal+='<div class="modal fade" id="approving">'
+        modal+='<div class="modal-dialog">';
+            modal+='<div class="modal-content">';
+                modal+='<div class="modal-header">';
+                    modal+='<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                       modal+='<span aria-hidden="true">&times;</span></button>';
+                    modal+='<h4 class="modal-title"></h4>';
+                modal+='</div>';
+                modal+='<div class="modal-body">';
+                    modal+='Please wait while approving your order...';
+                modal+='</div>';
+                modal+='<div class="modal-footer">';
+                    modal+='<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>';
+                modal+='</div>';
+            modal+='</div>';
+       modal+=' </div>';
+   modal+=' </div>';
+
+   $('body').append(modal);
+}
+
 function confirmCancel(id)
 {
     $.ajax({
@@ -158,6 +209,21 @@ function confirmCancel(id)
             $('#c-button').css('disabled',false);
             $('#c-button').html('Yes');
             $('#modal-confirm').modal('hide');
+            location.reload();
+        }
+    });
+}
+
+function approve(id)
+{
+    $.ajax({
+        url: '/cemos-portal/approve-product/'+id,
+        beforeSend: function (){
+            $('#modal-approve').modal('hide');
+            $('#approving').modal('show');
+        },
+        success: function(){
+            $('#approving').modal('hide');
             location.reload();
         }
     });

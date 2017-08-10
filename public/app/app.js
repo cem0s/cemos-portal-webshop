@@ -6,9 +6,6 @@ app.service('userService', ['$http', 'API_URL', function ($http, API_URL) {
 		
 	var userApi = API_URL + 'user';
 
-	// this.getBrands = function () {
-	// 	return $http.get(API_URL + 'brand/allBrands');
-	// }
 
 	this.getUserById = function (id) {
 		return $http.get(userApi + '/' + id);
@@ -23,14 +20,18 @@ app.service('userService', ['$http', 'API_URL', function ($http, API_URL) {
 		return $http.put(userApi + '/' + userData.user.id, userData);
 	}
 
-	// this.deleteBrand= function (id) {
-	// 	return $http.delete(brand_api + '/' + id);
-	// }
 
-	// this.getAllBrands= function () {
-	// 	return $http.get(API_URL + 'brand/allBrands');
-	// }
 
+}]);
+
+
+app.service('companyService', ['$http', 'API_URL', function ($http, API_URL) {
+        
+    var compApi = API_URL + 'company';
+
+    this.getCompanies = function () {
+        return $http.get(compApi);
+    }
 
 
 }]);

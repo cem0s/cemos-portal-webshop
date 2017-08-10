@@ -91,7 +91,7 @@ class Dropbox {
 			
 			}
 		}
-		
+
 		echo json_encode($files);
 	}
 

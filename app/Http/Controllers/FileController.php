@@ -18,7 +18,8 @@ class FileController extends Controller
 		    	"orderPId"=> $request->all()['orderPId']
     		);
 
-    	$files = $dbox->getFiles($data,'delivered');
+
+    	echo $dbox->getFiles($data,'delivered-wmark');
 
     }
 }

@@ -135,7 +135,7 @@
 												
 											</td>
 											<td class="align_middle" width="15%">
-												<a href="{{url('order-details')}}/{{$value['id']}}" class="btn btn-primary"><i class="fa fa-arrow-right"></i></a>
+												
 											</td>
 										</tr><!--end of stripe-->
 									@endif

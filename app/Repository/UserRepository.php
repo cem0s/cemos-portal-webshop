@@ -35,13 +35,13 @@ class UserRepository extends EntityRepository
 			$addressRepo = $this->_em->getRepository('App\Entity\Management\Address');
 
 			//Create the company
-			$companyId = $companyRepo->create($data);
+			//$companyId = $companyRepo->create($data);
 
 			//Create new address
-			$addressId = $addressRepo->create($data, $companyId);
+			$addressId = $addressRepo->create($data, $data['company_name']);
 
 			//Create new invoice address
-			$invoiceAddressId = $addressRepo->createInvoiceAddress($data, $companyId);
+			$invoiceAddressId = $addressRepo->createInvoiceAddress($data, $data['company_name']);
 
 			//Create the user
 			$user = new \App\Entity\Management\User();
@@ -52,7 +52,7 @@ class UserRepository extends EntityRepository
 			$user->setEmailVerified(0);
 			$user->setPassword(Hash::make($data['password']));
 			$user->setActive(0);
-			$user->setCompanyId($companyId);
+			$user->setCompanyId($data['company_name']);
 			
 			$this->_em->persist($user);
 			$this->_em->flush();

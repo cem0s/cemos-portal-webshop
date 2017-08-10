@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 Route::resource('user', 'UserController');
 Route::get('/activate/{code}', 'UserController@activate')->name('activate');
-
+Route::get('/company', 'CompanyController@index')->name('company');
 Auth::routes();
 
 Route::group(['middleware' => ['auth','web']], function(){
@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth','web']], function(){
 	Route::get('/order', 'OrderController@order')->name('order');
 	Route::get('/order-status/{object_id}', 'OrderController@orderStatus')->name('order-status');
 	Route::get('/delete-order-product', 'OrderController@deleteOrderProduct')->name('delete-order-product');
+	Route::get('/approve-product/{id}', 'OrderController@approveProduct')->name('approve-product');
 
 	Route::post('/update-pic', 'ProfileController@updatePic')->name('update-pic');
 	Route::post('/add-property', 'PropertyController@postAddProperty')->name('add-property');

@@ -59,6 +59,13 @@ class LoginController extends Controller
      * @var
      */
     protected $creditRepo;
+
+     /**
+     * companyRepo
+     *
+     * @var
+     */
+    protected $companyRepo;
  
 
     /**
@@ -71,6 +78,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->userRepo = $em->getRepository('App\Entity\Management\User');
         $this->creditRepo = $em->getRepository('App\Entity\Management\CreditPoints');
+        $this->companyRepo = $em->getRepository('App\Entity\Management\Company');
         $this->lockoutTime  = 1;    //lockout for 1 minute (value is in minutes)
         $this->maxLoginAttempts = 2;  //lockout after 2 attempts
     }
@@ -125,12 +133,18 @@ class LoginController extends Controller
             $request->session()->put('email',$credentials['email']); 
             $request->session()->put('user_id',$checkIfExists['user_id']); 
             $request->session()->put('company_id',$user->getCompanyId()); 
+            $request->session()->put('group_id',$user->getGroupId()); 
 
             $credit_points = $this->creditRepo->getCreditByCompany($user->getCompanyId());
             $request->session()->put('credit_points',$credit_points['points']); 
             
             //Auth login uses the user object variable.
             Auth::login($user);
+
+            
+            $types = $this->companyRepo->getCompanyType($user->getCompanyId());
+            $request->session()->put('user_type',$types); 
+
             $request->session()->regenerate();
             $this->clearLoginAttempts($request);
 
