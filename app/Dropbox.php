@@ -75,24 +75,33 @@ class Dropbox {
 	{
 		$dropBoxRoot = '/'.$data['companyId'].'/'.$data['objectId'].'/'.$data['orderId'].'/'.$data['orderPId'];
 		$results = $this->client->getMetadataWithChildren($dropBoxRoot.'/'.$container);
-		$files = array();
+
 		if((isset($results['contents'])) && (count($results['contents']) > 0)) {
-			foreach ($results['contents'] as $key => $value) {
-				if(strpos($value['mime_type'], 'video') !== false) {
-					$files[$key]['type'] = $value['mime_type'];	
-				} else {
-					$files[$key]['type'] = $value['mime_type'];
-				}
+			foreach ($results['contents'] as $key => $value) {				
+				$results['contents'][$key]['type'] = $value['mime_type'];
 				$getF = $this->client->createTemporaryDirectLink($value['path']);
 
 				if(isset($getF[0])) {
-					$files[$key]['path'] = $getF[0];
+					$results['contents'][$key]['file_path'] = $getF[0];
 				}
 			
 			}
 		}
 
-		echo json_encode($files);
+		if(isset($data['isArray']) && $data['isArray']) {
+			return $results;
+		}
+		echo json_encode($results);
+	}
+
+	/**
+     * Download file
+     * @author Gladys Vailoces <gladys@cemos.ph> 
+     * @return 
+     */
+	public function getFile($path, $destination)
+	{
+		return $this->client->getFile($path, $destination);
 	}
 
 }

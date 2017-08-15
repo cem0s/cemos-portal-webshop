@@ -48,5 +48,9 @@ Route::group(['middleware' => ['auth','web']], function(){
 	Route::delete('/upload', 'ShopController@deleteFloorImage')->name('delete-floor');
 
 	Route::get('/get-images', 'FileController@getImages')->name('get-images');
+	Route::get('/view-360/{path}', 'FileController@view360')->name('view-360');
+	Route::get('/zip-file','FileController@zipFile')->name('zip-file');
+
+	Route::get('/error-page','ErrorController@errorPage')->name('error-page');
 
 });

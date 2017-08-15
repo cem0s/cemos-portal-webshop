@@ -75,14 +75,21 @@
 					<td style="width: 150px;">
 						
 						@if(strtolower($value['status']['name']) == "delivered")
-							<a href="javascript:void(0)" onclick="viewImages({{$orderData["objData"]['company_id']}},{{$orderData["objData"]['id']}}, {{$value['orderId']}}, {{$value['id']}})" data-toggle="modal" data-target="#view-modal" class="btn btn-primary" title="View"><i class="fa fa-search" aria-hidden="true"></i></a> 
-							<a href="javascript:void(0)" class="btn btn-primary" onclick="approveProduct({{$value['id']}}, '{{$value['product']['name']}}' )" title="Cancel"><i class="fa fa-check" aria-hidden="true"></i></a> 
+							<a href="javascript:void(0)" onclick="viewImages({{$orderData["objData"]['company_id']}},{{$orderData["objData"]['id']}}, {{$value['orderId']}}, {{$value['id']}}, {{$value['product']['id']}})" data-toggle="modal" data-target="#view-modal" class="btn btn-primary" title="View"><i class="fa fa-search" aria-hidden="true"></i></a> 
+							<a href="javascript:void(0)" class="btn btn-primary" onclick="approveProduct({{$value['id']}}, '{{$value['product']['name']}}' )" title="Approve"><i class="fa fa-check" aria-hidden="true"></i></a> 
 						@endif
 						@if(strtolower($value['status']['name']) == "new")
 							<a href="javascript:void(0)" class="btn btn-primary" onclick="deleteProduct({{$value['id']}}, '{{$value['product']['name']}}' )" title="Cancel"><i class="fa fa-trash" aria-hidden="true"></i></a> 
 						@endif
 						@if(strtolower($value['status']['name']) == "approved")
-							<a href="javascript:void(0)" class="btn btn-primary" onclick="download({{$value['id']}}, '{{$value['product']['name']}}' )" title="Download"><i class="fa fa-cloud-download" aria-hidden="true"></i></a> 
+							<form action="{{url('zip-file')}}">
+							<input type="hidden" name="objId"  value="{{$orderData["objData"]['id']}}">
+							<input type="hidden" name="oId"  value="{{$value['orderId']}}">
+							<input type="hidden" name="orderPId" value="{{$value['id']}}">
+							<input type="hidden" name="compId"  value="{{$orderData["objData"]['company_id']}}">
+							<input type="hidden" name="slug"  value="{{$orderData["objData"]['slug']}}">
+							<button class="btn btn-primary"  type="submit"><i class="fa fa-cloud-download"></i></button>
+						</form>
 						@endif
 						
 					</td>

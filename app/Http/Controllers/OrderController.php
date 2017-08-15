@@ -103,7 +103,7 @@ class OrderController extends Controller
     	$data = $this->orderRepo->getOrders($objId);
     	//data should be in array
     	$paginatedSearchResults = CustomPaginator::getPaginator($data['orderData'], 10);
-    	
+
     	return view('pages.order.order-status')->with('orderData', array('oData' => $paginatedSearchResults, 'objData' => $data['objData']));
     }
 

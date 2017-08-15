@@ -23,7 +23,7 @@ function orderNow()
 	});
 }
 
-function viewImages(cId, objId, oId, opId)
+function viewImages(cId, objId, oId, opId, pId)
 {
 	$('.view-modal').modal('show');
 	$.ajax({
@@ -32,7 +32,8 @@ function viewImages(cId, objId, oId, opId)
 			companyId:cId,
 			objectId:objId,
 			orderId:oId,
-			orderPId:opId
+			orderPId:opId,
+			pId:pId
 		},
 		beforeSend: function ()
 		{
@@ -43,17 +44,25 @@ function viewImages(cId, objId, oId, opId)
 			var html = "";
 
 			//html += '<div class="row">';
-				$.each(d, function (i, v){
-						console.log(v.type);
+				$.each(d.contents, function (i, v){
 					if(v.type.indexOf('image') != -1){
 						//html += '<div class="col-md-3">';
-						html += '<a target="_blank" href="'+v.path+'">';
-							html += '<img src = "'+v.path+'" width="200" height="200">';	
-						html += '</a>';
+						if(pId == 3 || pId == 4) {
+							var p  = v.file_path.replace(/\//g, "+");
+							var e = p.replace(/\./g,'|')
+							html += '<a target="_blank" href="/cemos-portal/view-360/'+e+'">';
+								html += '<img src = "'+v.file_path+'" width="200" height="200">';	
+							html += '</a>';
+						} else {
+							html += '<a target="_blank" href="'+v.file_path+'">';
+								html += '<img src = "'+v.file_path+'" width="200" height="200">';	
+							html += '</a>';
+						}
+						
 						//html += '</div>';
 					} else {
 						html += ' <video type="video" width="200" height="200" controls>';
-							html += ' <source src="'+v.path+'" type="'+v.type+'">Your browser does not support the video tag.';
+							html += ' <source src="'+v.file_path+'" type="'+v.type+'">Your browser does not support the video tag.';
 						html += ' </video>';
 					}
 					
@@ -66,3 +75,4 @@ function viewImages(cId, objId, oId, opId)
 		}
 	});
 }
+

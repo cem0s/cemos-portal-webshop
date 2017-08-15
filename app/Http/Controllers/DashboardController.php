@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $objectRepo = $this->em->getRepository('App\Entity\Realestate\Object');
         $orderRepo = $this->em->getRepository('App\Entity\Commerce\Order');
         $orderPRepo = $this->em->getRepository('App\Entity\Commerce\OrderProduct');
-
+       
         if($this->common->checkIfAdmin()) {
             $data['property'] = $objectRepo->getAllObjects();
             $data['orders'] = $orderRepo->getAllOrders();
@@ -49,7 +49,7 @@ class DashboardController extends Controller
 
         if(!empty($data['orders'])) {
             foreach ($data['orders'] as $key => $value) {
-                if($value['status'] == "Delivered"){
+                if($value['status'] == "Delivered" || $value['status'] == "Approved"){
                    $deliverdCount++;
                 }
             }

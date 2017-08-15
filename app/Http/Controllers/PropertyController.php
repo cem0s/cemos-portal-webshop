@@ -25,16 +25,18 @@ class PropertyController extends Controller
     public function index()
     {
         $object_repo = $this->em->getRepository('App\Entity\Realestate\Object');
-        $all_property = $object_repo->getAllObjects();
+        $all_property = array();
 
         if($this->common->checkIfAdmin()) {
             $all_property = $object_repo->getAllObjects();
-        } else if($this->common->checkIfRealtorAdmin()) {
+        } else if($this->common->checkIfRealtorAdmin()) { 
             $all_property = $object_repo->getObjectsByCompanyId(session('company_id'));
+        } else {
+            $all_property = $object_repo->getObjectsByUserId(session('user_id'));
         }
 
-        $all_property = $object_repo->getObjectsByUserId(session('user_id'));
-     
+        
+      
         return view('pages.property.property-overview')->with('objects', $all_property['property']);
     }
 
