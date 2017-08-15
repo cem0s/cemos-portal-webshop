@@ -47,14 +47,14 @@ function viewImages(cId, objId, oId, opId, pId)
 				$.each(d.contents, function (i, v){
 					if(v.type.indexOf('image') != -1){
 						//html += '<div class="col-md-3">';
-						if(pId == 3 || pId == 4) {
-							var p  = v.file_path.replace(/\//g, "+");
+						if(pId == 3 || pId == 4) { 
+							var p  = v.path.replace(/\//g, "+");
 							var e = p.replace(/\./g,'|')
-							html += '<a target="_blank" href="/cemos-portal/view-360/'+e+'">';
+							html += '<a target="_blank" href="/cemos-portal/view-360/'+e+'" title="Click on the image to view in 360">';
 								html += '<img src = "'+v.file_path+'" width="200" height="200">';	
 							html += '</a>';
 						} else {
-							html += '<a target="_blank" href="'+v.file_path+'">';
+							html += '<a target="_blank" href="'+v.file_path+'" title="Click on the image to view">';
 								html += '<img src = "'+v.file_path+'" width="200" height="200">';	
 							html += '</a>';
 						}

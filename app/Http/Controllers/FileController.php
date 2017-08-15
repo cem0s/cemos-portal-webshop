@@ -29,12 +29,27 @@ class FileController extends Controller
 
     public function view360($path) 
     {
-       
+        $dbox = new Dropbox;
+        $texture_dir = public_path().'/texture';
         $p = str_replace('+', '/', $path);
         $f = str_replace('|', '.', $p);
-     
+        $name = basename($f);
+ 
+   
+        if(!is_dir($texture_dir)) {
+            mkdir($texture_dir, 0777, true);
+        }
+           
+        if(!file_exists($texture_dir.'/'.$name)){
+            $fd = fopen($texture_dir.'/'.$name, 'wb');
+            $down = $dbox->getFile($f, $fd);
+            fclose($fd);
+           
+        }
 
-        return view('pages.viewer.view-360')->with('path', $f);
+        $path = config('app.url').'/cemos-portal/public/texture/'.$name; 
+
+        return view('pages.viewer.view-360')->with('path', $path);
     }
 
     public function zipFile(Request $request)
@@ -106,4 +121,6 @@ class FileController extends Controller
             }
         }
     }
+
+   
 }
